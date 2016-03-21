@@ -1,4 +1,4 @@
 # To Do List
-- [ ] A faire
+- [x] A faire
 - [ ] A faire
 - [ ] A faire
