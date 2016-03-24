@@ -2,13 +2,14 @@ package edu.isep.sixcolors.model;
 
 /**
  * Player model : Represents a player of the current game
- * Contains data about the player : name, current color...
  */
 public class Player {
 	private String name;
 	
+	private Colors controlledColor;
+	
 	/**
-	 * Get the name of the player
+	 * Get the player's name
 	 * @return name
 	 */
 	public String getName() {
@@ -22,7 +23,20 @@ public class Player {
 	 * @throws 
 	 */
 	public void setName(String name) {
-		// TODO check if a string has been given, throw exception otherwise
 		this.name = name;
+	}
+
+	/**
+	 * @return the controlled color
+	 */
+	public Colors getControlledColor() {
+		return controlledColor;
+	}
+
+	/**
+	 * @param controlledColor the controlled color to set
+	 */
+	public void setControlledColor(Colors controlledColor) {
+		this.controlledColor = controlledColor;
 	}
 }
