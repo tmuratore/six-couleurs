@@ -6,6 +6,17 @@ package edu.isep.sixcolors.model;
  */
 public class Tile {
 	
+	public Tile(){
+	}
+	
+	/**
+	 * Constructor taking the initial color of the tile
+	 * @param color element of Colors enum
+	 */
+	public Tile(Colors color) {
+		this.color = color;
+	}
+	
 	/**
 	 * Colors of the square
 	 * TODO import java colors and document the colors in CLI display

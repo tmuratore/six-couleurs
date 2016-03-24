@@ -6,12 +6,24 @@ import edu.isep.sixcolors.model.*;
  */
 public class SixColors {
 	
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		Tile tile = new Tile();
 		
-		tile.setColor(Colors.Red);
+		int width = 4;
 		
-		System.out.println(tile.getColor().getInitial());
+		Board board = new Board(width);
+		
+		for(int i = 0; i<width; i++) {
+			for(int j = 0; j<width; j++) {
+				System.out.print(board.getTile(i, j).getColor().getInitial() + " ");
+			}
+			System.out.println();
+		}
+		
+		
 		
 	}
 
