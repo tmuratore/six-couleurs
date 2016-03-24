@@ -17,6 +17,8 @@ public class Tile {
 		this.color = color;
 	}
 	
+	private Player owner;
+	
 	/**
 	 * Colors of the square
 	 * TODO import java colors and document the colors in CLI display
@@ -35,6 +37,20 @@ public class Tile {
 	 */
 	public void setColor(Colors color) {
 		this.color = color;
+	}
+
+	/**
+	 * @return the tile owner
+	 */
+	public Player getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 	
 }
