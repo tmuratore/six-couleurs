@@ -39,6 +39,10 @@ public class Board {
 		return this.tiles[line][row];
 	}
 	
+	/**
+	 * Get the whole tiles arrays
+	 * @return Tile[][] tiles
+	 */
 	public Tile[][] getTiles() {
 		return this.tiles;
 	}

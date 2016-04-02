@@ -12,6 +12,21 @@ public class Game {
 	private Player[] players;
 	
 	/**
+	 * Create a new game with 2 players
+	 * 
+	 * @param players Number of players
+	 */
+	public Game() {
+		
+		this.players = new Player[2];
+		
+		for(int i = 0; i < this.players.length; i++) {
+			this.players[i] = new Player();
+		}
+		
+	}
+	
+	/**
 	 * Get a specific player from its id
 	 * @param id
 	 * @return Player
@@ -28,4 +43,5 @@ public class Game {
 	public Player[] getPlayers() {
 		return this.players;
 	}
+	
 }

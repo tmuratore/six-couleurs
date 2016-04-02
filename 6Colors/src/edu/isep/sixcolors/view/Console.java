@@ -1,8 +1,11 @@
 package edu.isep.sixcolors.view;
 
 import edu.isep.sixcolors.model.*;
+import java.util.Scanner;
 
 public class Console {
+	
+	static Scanner scan = new Scanner(System.in);
 	
 	public static void showBoard(Board board) {
 		
@@ -19,6 +22,16 @@ public class Console {
 			}
 			System.out.println();
 		}
+	}
+	
+	/**
+	 * Prompts the player to type in his/her name
+	 * @param number The number of the player to be displayed in the message
+	 * @return The name typed in by the player
+	 */
+	public static String promptPlayerName(int number)	{
+		System.out.print("Player "+number+", choose your name : ");
+		return scan.next();
 	}
 	
 }
