@@ -33,7 +33,11 @@ public class Board {
 	 * @param row
 	 */
 	public Tile getTile(int line, int row) {
-		return tiles[line][row];
+		return this.tiles[line][row];
+	}
+	
+	public Tile[][] getTiles() {
+		return this.tiles;
 	}
 
 }
