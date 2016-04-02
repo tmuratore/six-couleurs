@@ -1,5 +1,7 @@
 package edu.isep.sixcolors.model;
 
+import java.util.Random;
+
 /**
  * Board model : represents the board of the game.
  */
@@ -12,12 +14,13 @@ public class Board {
 	 */
 	public Board(int width) {
 		this.tiles = new Tile[width][width];
+		Random random = new Random();
 		
-		//TODO conceive and develop map generation
+		//Random Map Generation from Colors enum values
 		
 		for(int i = 0; i<width; i++) {
 			for(int j = 0; j<width; j++) {
-				tiles[i][j] = new Tile(Colors.Blue);
+				tiles[i][j] = new Tile(Colors.values()[random.nextInt(Colors.values().length)]);
 			}
 		}
 	}
