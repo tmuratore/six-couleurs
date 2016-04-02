@@ -38,10 +38,25 @@ public class SixColors {
 		
 		board.getTile(3, 3).setOwner(game.getPlayer(1));
 		
+		while(true) {
+			System.out.println("It's "+game.getCurrentPlayer().getName()+"'s turn !");
+			
+			Console.showBoard(board);
+			
+			Colors chosenColor = Console.promptColorChoice();
+			
+			System.out.println("Chosen color : "+chosenColor.name());
+			
+			// set the current player to the next player :
+			game.nextPlayer();
+		}
+		
 		// TODO let players choose their colors
 		// TODO allow for more than 2 players
 		
-		Console.showBoard(board);
+		
+		
+		
 		
 		
 	}

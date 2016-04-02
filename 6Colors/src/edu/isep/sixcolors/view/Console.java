@@ -7,6 +7,7 @@ public class Console {
 	
 	static Scanner scan = new Scanner(System.in);
 	
+	
 	public static void showBoard(Board board) {
 		
 		for(int i = 0; i< board.getTiles().length ; i++) {
@@ -16,7 +17,6 @@ public class Console {
 				
 				if(tile.getOwner() == null) {
 					initial = initial.toLowerCase();
-					initial.toLowerCase();
 				}
 				System.out.print(initial + " ");
 			}
@@ -32,6 +32,24 @@ public class Console {
 	public static String promptPlayerName(int number)	{
 		System.out.print("Player "+number+", choose your name : ");
 		return scan.next();
+	}
+	
+	public static Colors promptColorChoice() {
+		
+		System.out.print("Choose your color : ");
+		
+		// Get the first char of the input :
+		char color = scan.next().toUpperCase().toCharArray()[0];
+		
+		while(true) {
+			for(Colors testColor: Colors.values()) {
+				if(testColor.getInitial() == color) {
+					return testColor;
+				}
+			}
+			System.out.print("Unrecognised color, try again : ");
+			color = scan.next().toUpperCase().toCharArray()[0];
+		}
 	}
 	
 }
