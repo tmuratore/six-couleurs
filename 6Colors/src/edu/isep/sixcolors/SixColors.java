@@ -38,14 +38,35 @@ public class SixColors {
 		
 		board.getTile(3, 3).setOwner(game.getPlayer(1));
 		
+		game.getPlayer(0).setControlledColor(board.getTile(0, 0).getColor());
+		game.getPlayer(1).setControlledColor(board.getTile(3, 3).getColor());
+		
+		
 		while(true) {
-			System.out.println("It's "+game.getCurrentPlayer().getName()+"'s turn !");
+			Player currentPlayer = game.getCurrentPlayer();
+			System.out.println("It's " + currentPlayer.getName() + "'s turn !");
+			System.out.println("Your current color : "+currentPlayer.getControlledColor().name());
 			
 			Console.showBoard(board);
 			
 			Colors chosenColor = Console.promptColorChoice();
 			
+			// TODO refactor those checks smartly :
+			while (chosenColor == currentPlayer.getControlledColor()) {
+				System.out.println("You already control this color");
+				chosenColor = Console.promptColorChoice();
+			}
+			
+			for(Player player: game.getPlayers()) {
+				if(player.getControlledColor() == chosenColor) {
+					System.out.println(player.getName() + " already controls this color. Choose another one.");
+					chosenColor = Console.promptColorChoice();
+				}
+			}
+			
 			System.out.println("Chosen color : "+chosenColor.name());
+			
+			currentPlayer.setControlledColor(chosenColor);
 			
 			// set the current player to the next player :
 			game.nextPlayer();
