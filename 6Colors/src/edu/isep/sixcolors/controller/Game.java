@@ -12,6 +12,7 @@ public class Game {
 	 * Array representing the players playing the current game
 	 */
 	private Player[] players;
+	private int currentPlayerId;
 	
 	/**
 	 * Create a new game with 2 players
@@ -25,6 +26,8 @@ public class Game {
 		for(int i = 0; i < this.players.length; i++) {
 			this.players[i] = new Player();
 		}
+		
+		this.currentPlayerId = 0;
 		
 	}
 	
@@ -47,7 +50,25 @@ public class Game {
 	}
 	
 	/**
+	 * Get the current player
+	 * @return Player Current player
+	 */
+	public Player getCurrentPlayer() {
+		return this.players[this.currentPlayerId];
+	}
+	
+	public void nextPlayer() {
+		if(this.currentPlayerId == this.players.length - 1) {
+			this.currentPlayerId = 0;
+		}
+		else {
+			this.currentPlayerId += 1;
+		}
+	}
+	
+	/**
 	 * Updates the board for a players turn
+	 * DANGEROUS DO NOT USE POSSIBLE GAME CORRUPTION
 	 * @param currentPlayer
 	 * @param board
 	 */
