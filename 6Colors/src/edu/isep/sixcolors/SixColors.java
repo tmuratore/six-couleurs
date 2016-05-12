@@ -40,13 +40,14 @@ public class SixColors {
 		board.getTile(3, 3).setOwner(game.getPlayer(1));
 		
 		game.getPlayer(0).setColor(board.getTile(0, 0).getColor());
+		game.getPlayer(0).setPreviousColor(board.getTile(0, 0).getColor());	
 		game.getPlayer(1).setColor(board.getTile(3, 3).getColor());
+		game.getPlayer(1).setPreviousColor(board.getTile(3, 3).getColor());
 		
 		
 		while(true) {
 			Player currentPlayer = game.getCurrentPlayer();
 			System.out.println("It's " + currentPlayer.getName() + "'s turn !");
-			System.out.println("Your ID : " + game.getCurrentPlayerId());
 			System.out.println("Your current color : "+currentPlayer.getColor().name());
 			
 			Console.showBoard(board);

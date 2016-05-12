@@ -2,6 +2,9 @@ package edu.isep.sixcolors.model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
+
+import edu.isep.sixcolors.view.Console;
 
 /**
  * Board model : represents the board of the game.
@@ -25,6 +28,7 @@ public class Board {
 		}
 	}
 	
+	
 	/**
 	 * Updates the board for a players turn
 	 * @param player Player who just picked a new color
@@ -34,26 +38,38 @@ public class Board {
 	 */
 	public void update(int tileX, int tileY, Player player){
 		Tile tile = getTile(tileX, tileY);
-		int[][] neighboursCoords = getNeighboursCoords(tileX, tileY);
+		boolean updateNeighbours = false;
 		
 		// The tile being updated is *always* neighbouring the current player's territory.
 		// 
 		if(tile.getColor() == player.getColor() && tile.getOwner() != player) {
 			tile.setOwner(player);
+			updateNeighbours = true;
 		}
 		// updating color of conquered tiles
-		else if(tile.getColor() == player.getPreviousColor()) {
+		else if(tile.getColor() == player.getPreviousColor() && tile.getOwner() == player) {
 			tile.setColor(player.getColor());
 			tile.setOwner(player);
+			updateNeighbours = true;
 		}
 		
-		for(int[] coords: neighboursCoords) {
-			// 
-			if(
-				getTile(coords[0], coords[1]).getOwner() != player ||	// not in my territory
-				getTile(coords[0], coords[1]).getColor() == player.getColor()	// my previous color
-			) {
-				update(coords[0], coords[1], player);
+		if(updateNeighbours) {
+			int[][] neighboursCoords = getNeighboursCoords(tileX, tileY);
+			for(int[] coords: neighboursCoords) {
+				// Scanner scan = new Scanner(System.in);
+				// Console.showBoard(this);
+				// System.out.println();
+				// System.out.println();
+				// System.out.println("Checking neighbor : " + coords[0]+"; "+coords[1]+". Continue ?");
+				// scan.nextLine();
+				
+				if(
+					getTile(coords[0], coords[1]).getOwner() != player ||	// not in my territory
+					getTile(coords[0], coords[1]).getColor() != player.getColor()	// 
+				) {
+					// System.out.println("Updating...");
+					update(coords[0], coords[1], player);
+				}
 			}
 		}
 	}
