@@ -33,7 +33,7 @@ public class SixColors {
 		
 		board.getTile(0, 0).setOwner(game.getPlayer(0));
 		while(board.getTile(3, 3).getColor() == board.getTile(0, 0).getColor()) {
-			board.getTile(3, 3).setColor(Colors.values()[random.nextInt(Colors.values().length)]);
+			board.getTile(3, 3).setColor(Color.values()[random.nextInt(Color.values().length)]);
 		}
 		
 		board.getTile(3, 3).setOwner(game.getPlayer(1));
@@ -49,7 +49,7 @@ public class SixColors {
 			
 			Console.showBoard(board);
 			
-			Colors chosenColor = Console.promptColorChoice();
+			Color chosenColor = Console.promptColorChoice();
 			
 			// TODO refactor those checks smartly :
 			while (chosenColor == currentPlayer.getControlledColor()) {

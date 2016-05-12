@@ -11,7 +11,7 @@ package edu.isep.sixcolors.model;
  * 	<li>Violet</li>
  * </ul>
  */
-public enum Colors {
+public enum Color {
 	Blue('B'),
 	Green('G'),
 	Red('R'),
@@ -24,7 +24,7 @@ public enum Colors {
 	 */
 	private char initial;
 	
-	private Colors(char initial) {
+	private Color(char initial) {
 		this.setInitial(initial);
 	}
 	

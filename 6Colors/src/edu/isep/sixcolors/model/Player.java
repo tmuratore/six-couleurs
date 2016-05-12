@@ -2,11 +2,12 @@ package edu.isep.sixcolors.model;
 
 /**
  * Player model : Represents a player of the current game
+ * TODO abstract to be extended (local player OR AI OR distant player)  
  */
 public class Player {
 	private String name;
 	
-	private Colors controlledColor;
+	private Color controlledColor;
 	
 	/**
 	 * Get the player's name
@@ -29,14 +30,14 @@ public class Player {
 	/**
 	 * @return the controlled color
 	 */
-	public Colors getControlledColor() {
+	public Color getControlledColor() {
 		return controlledColor;
 	}
 
 	/**
 	 * @param controlledColor the controlled color to set
 	 */
-	public void setControlledColor(Colors controlledColor) {
+	public void setControlledColor(Color controlledColor) {
 		this.controlledColor = controlledColor;
 	}
 }

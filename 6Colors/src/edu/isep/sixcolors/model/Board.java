@@ -20,7 +20,7 @@ public class Board {
 		
 		for(int i = 0; i<width; i++) {
 			for(int j = 0; j<width; j++) {
-				tiles[i][j] = new Tile(Colors.values()[random.nextInt(Colors.values().length)]);
+				tiles[i][j] = new Tile(Color.values()[random.nextInt(Color.values().length)]);
 			}
 		}
 	}

@@ -13,7 +13,7 @@ public class Tile {
 	 * Constructor taking the initial color of the tile
 	 * @param color element of Colors enum
 	 */
-	public Tile(Colors color) {
+	public Tile(Color color) {
 		this.color = color;
 	}
 	
@@ -23,19 +23,19 @@ public class Tile {
 	 * Colors of the square
 	 * TODO import java colors and document the colors in CLI display
 	 */
-	private Colors color;
+	private Color color;
 
 	/**
 	 * @return the color
 	 */
-	public Colors getColor() {
+	public Color getColor() {
 		return color;
 	}
 
 	/**
 	 * @param color the color to set
 	 */
-	public void setColor(Colors color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
 

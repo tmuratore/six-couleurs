@@ -34,7 +34,7 @@ public class Console {
 		return scan.next();
 	}
 	
-	public static Colors promptColorChoice() {
+	public static Color promptColorChoice() {
 		
 		System.out.print("Choose your color : ");
 		
@@ -42,7 +42,7 @@ public class Console {
 		char color = scan.next().toUpperCase().toCharArray()[0];
 		
 		while(true) {
-			for(Colors testColor: Colors.values()) {
+			for(Color testColor: Color.values()) {
 				if(testColor.getInitial() == color) {
 					return testColor;
 				}
