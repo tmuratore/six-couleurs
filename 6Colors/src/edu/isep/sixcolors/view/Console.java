@@ -6,8 +6,11 @@ import java.util.Scanner;
 public class Console {
 	
 	static Scanner scan = new Scanner(System.in);
-	
-	
+
+	/**
+	 * Display board
+	 * @param board
+	 */
 	public static void showBoard(Board board) {
 		
 		for(int i = 0; i< board.getTiles().length ; i++) {

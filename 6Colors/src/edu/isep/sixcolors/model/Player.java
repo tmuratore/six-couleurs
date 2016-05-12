@@ -5,39 +5,33 @@ package edu.isep.sixcolors.model;
  * TODO abstract to be extended (local player OR AI OR distant player)  
  */
 public class Player {
+	
 	private String name;
+	private Color color;
+	private Color previousColor;
 	
-	private Color controlledColor;
 	
-	/**
-	 * Get the player's name
-	 * @return name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Set player's name
-	 * 
-	 * @param name
-	 * @throws 
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the controlled color
-	 */
-	public Color getControlledColor() {
-		return controlledColor;
+	public Color getColor() {
+		return color;
 	}
 
-	/**
-	 * @param controlledColor the controlled color to set
-	 */
-	public void setControlledColor(Color controlledColor) {
-		this.controlledColor = controlledColor;
+	public void setColor(Color controlledColor) {
+		this.color = controlledColor;
+	}
+
+	public Color getPreviousColor() {
+		return previousColor;
+	}
+
+	public void setPreviousColor(Color previousColor) {
+		this.previousColor = previousColor;
 	}
 }

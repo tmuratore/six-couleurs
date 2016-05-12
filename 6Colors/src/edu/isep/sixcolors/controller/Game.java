@@ -1,8 +1,6 @@
 package edu.isep.sixcolors.controller;
 import edu.isep.sixcolors.model.*;
 
-import java.util.ArrayList;
-
 /**
  * Game controller : Main controller of the game
  * Manages inputs and outputs to and from the view
@@ -57,6 +55,10 @@ public class Game {
 		return this.players[this.currentPlayerId];
 	}
 	
+	public int getCurrentPlayerId() {
+		return this.currentPlayerId;
+	}
+	
 	public void nextPlayer() {
 		if(this.currentPlayerId == this.players.length - 1) {
 			this.currentPlayerId = 0;
@@ -64,49 +66,5 @@ public class Game {
 		else {
 			this.currentPlayerId += 1;
 		}
-	}
-	
-	/**
-	 * Updates the board for a players turn
-	 * DANGEROUS DO NOT USE POSSIBLE GAME CORRUPTION
-	 * @param currentPlayer
-	 * @param board
-	 */
-	private void updateBoard(Player currentPlayer, Board board){
-		for(int i = 0; i< board.getTiles().length ; i++) {
-			for(int j = 0; j<board.getTiles().length; j++) {
-				//Tile by tile
-				Tile tile = board.getTile(i, j);
-				
-				//Modifications are only made from tiles owned by currentPlayer
-				if (tile.getOwner() == currentPlayer){
-					
-					//Updates the color of an owned tile if necessary
-					if (tile.getColor() != currentPlayer.getControlledColor()) tile.setColor(currentPlayer.getControlledColor());
-					
-					//Updates the neighboring tiles of the previously owned tile
-					
-					// TODO Neighboring cells can i think be re-analyzed as tiles previously owned.
-					if (i != 0) UpdateTile(currentPlayer, board.getTile(i, j-1)); //Left
-					if (i != board.getTiles().length) UpdateTile(currentPlayer, board.getTile(i, j+1)); //Right
-					if (j != 0) UpdateTile(currentPlayer, board.getTile(i-1, j)); //Up
-					if (j != board.getTiles().length) UpdateTile(currentPlayer, board.getTile(i+1, j)); //Down
-				}
-			}
-			
-		}
-	}
-	
-	/**
-	 * Used in updateBoard to update the owner and color of a tile if it's not already owned and is the correct color
-	 * @param currentPlayer
-	 * @param tile
-	 */
-	
-	private void UpdateTile(Player currentPlayer, Tile tile){
-		if(tile.getOwner() == null && tile.getColor() == currentPlayer.getControlledColor()){ 
-			tile.setOwner(currentPlayer);
-			tile.setColor(currentPlayer.getControlledColor());
-			}
 	}
 }
