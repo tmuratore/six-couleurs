@@ -1,5 +1,4 @@
 package edu.isep.sixcolors.controller;
-import java.util.Random;
 
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.view.Console;
@@ -14,7 +13,6 @@ public class Game {
 	 */
 	private Player[] players;
 	private int currentPlayerId;
-	private Random random = new Random();
 	private Board board;
 
 	
@@ -26,7 +24,7 @@ public class Game {
 	public Game() {
 		
 		// Creating board and players :
-		this.board = new Board(4);
+		this.board = new Board(10);
 		this.players = new Player[2];
 		
 		for(int i = 0; i < this.players.length; i++) {
@@ -104,10 +102,7 @@ public class Game {
 			
 			// Updating board to give the players ownership of the tiles of their colors next to their starting point.
 			board.update(startingTile[0], startingTile[1], player);
-		}
-				
-		
-		board.update(3, 3, getPlayer(1));
+		}				
 	}
 	
 	public void start() {
@@ -120,19 +115,18 @@ public class Game {
 			
 			Color chosenColor = Console.promptColorChoice();
 			
-			// TODO refactor those checks smartly :
-			while (chosenColor == currentPlayer.getColor()) {
-				System.out.println("You already control this color");
-				chosenColor = Console.promptColorChoice();
-			}
-			
 			boolean err = true;
-			while (err) {  
+			while (err) {
 				err = false;
 				for(Player player: getPlayers()) {
 					if(player.getColor() == chosenColor) {
 						err = true;
-						System.out.println(player.getName() + " already controls this color. Choose another one.");
+						if(player == currentPlayer) {
+							System.out.println("You already control this color");
+						}
+						else {
+							System.out.println(player.getName() + " already controls this color. Choose another one.");
+						}
 						chosenColor = Console.promptColorChoice();
 					}
 				}
@@ -145,21 +139,11 @@ public class Game {
 			currentPlayer.setPreviousColor(currentPlayer.getColor());
 			currentPlayer.setColor(chosenColor);
 			
-			// TODO Player.originTileCoordinates
-			int tileX, tileY;
+			// updating the board
+			int[] startingTile = currentPlayer.getStartingTileCoords();
+			board.update(startingTile[0], startingTile[1], currentPlayer);
 			
-			if(getCurrentPlayerId() == 0) {
-				tileX = 0;
-				tileY = 0;
-			}
-			else {
-				tileX = 3;
-				tileY = 3;
-			}
-			
-			board.update(tileY, tileX, currentPlayer);
-			
-			// set the current player to the next player :
+			// Next player up !
 			nextPlayer();
 		}
 	}
