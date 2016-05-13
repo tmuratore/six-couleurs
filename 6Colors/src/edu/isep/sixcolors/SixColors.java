@@ -66,10 +66,15 @@ public class SixColors {
 				chosenColor = Console.promptColorChoice();
 			}
 			
-			for(Player player: game.getPlayers()) {
-				if(player.getColor() == chosenColor) {
-					System.out.println(player.getName() + " already controls this color. Choose another one.");
-					chosenColor = Console.promptColorChoice();
+			boolean err = true;
+			while (err) {  
+				err = false;
+				for(Player player: game.getPlayers()) {
+					if(player.getColor() == chosenColor) {
+						err = true;
+						System.out.println(player.getName() + " already controls this color. Choose another one.");
+						chosenColor = Console.promptColorChoice();
+					}
 				}
 			}
 			
