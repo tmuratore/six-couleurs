@@ -39,10 +39,16 @@ public class SixColors {
 		
 		board.getTile(3, 3).setOwner(game.getPlayer(1));
 		
+		// Setting current and previous colors of the players :
 		game.getPlayer(0).setColor(board.getTile(0, 0).getColor());
 		game.getPlayer(0).setPreviousColor(board.getTile(0, 0).getColor());	
 		game.getPlayer(1).setColor(board.getTile(3, 3).getColor());
 		game.getPlayer(1).setPreviousColor(board.getTile(3, 3).getColor());
+		
+		// Updating board to give the players ownership of the tiles of their colors next to their starting point.
+		board.update(0, 0, game.getPlayer(0));
+		board.update(3, 3, game.getPlayer(1));
+		
 		
 		
 		while(true) {
