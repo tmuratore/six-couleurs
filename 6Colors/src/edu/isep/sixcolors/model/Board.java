@@ -2,14 +2,14 @@ package edu.isep.sixcolors.model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
-
-import edu.isep.sixcolors.view.Console;
 
 /**
  * Board model : represents the board of the game.
  */
 public class Board {
+	
+	private int width;
+	
 	
 	/**
 	 * Initialises a square board filled with random colors
@@ -18,6 +18,9 @@ public class Board {
 	 */
 	public Board(int width) {
 		this.tiles = new Tile[width][width];
+		
+		this.width = width;
+		
 		Random random = new Random();
 		
 		//Random Map Generation picking tiles colors from the Color enum
@@ -88,12 +91,20 @@ public class Board {
 		return this.tiles[line][row];
 	}
 	
+	public Tile getTile(int[] coords) {
+		return this.tiles[coords[0]][coords[1]];
+	}
+	
 	/**
 	 * Get the whole tiles arrays
 	 * @return Tile[][] tiles
 	 */
 	public Tile[][] getTiles() {
 		return this.tiles;
+	}
+	
+	public int getWidth() {
+		return width;
 	}
 	
 	/**

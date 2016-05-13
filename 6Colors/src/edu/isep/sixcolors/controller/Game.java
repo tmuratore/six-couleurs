@@ -25,18 +25,68 @@ public class Game {
 	 */
 	public Game() {
 		
+		// Creating board and players :
+		this.board = new Board(4);
 		this.players = new Player[2];
 		
 		for(int i = 0; i < this.players.length; i++) {
 			this.players[i] = new Player();
 		}
 		
+		// Setting the players' starting tiles coordinates according to the number of players :
+		if(players.length == 2) {
+			players[0].setStartingTileCoords(0,0);
+			players[1].setStartingTileCoords(board.getWidth()-1,board.getWidth()-1);
+		}
+		else {
+			for(int i = 0; i < this.players.length; i++) {
+				// Computing starting tile abscissa and ordinate using the player's id :
+				int x = i%2 == 0 ? 0 : board.getWidth() - 1;
+				int y = i>0 && i<3 ? board.getWidth() - 1 : 0;
+				players[i].setStartingTileCoords(x, y);
+			}
+		}
+		
+		Color[] ownedColors = new Color[players.length];
+		
+		// avoiding two players to have the same initial color
+		// TODO set the colors of their starting tiles instead of changing until all different ?
+		for(int i = 0; i<players.length; i++) {
+		
+			boolean colorAlreadyOwned = false;
+			
+			Color color = board.getTile(getPlayer(i).getStartingTileCoords()).getColor();
+			
+			for(int j=0; j<i; j++) {
+				if(color == ownedColors[j]) {
+					colorAlreadyOwned = true;
+				}
+			}
+			
+			if(colorAlreadyOwned) {
+				board.getTile(players[i].getStartingTileCoords())
+					 .setColor(Color.random());
+			}
+			
+			if(i == players.length - 1 && !colorAlreadyOwned) {
+			}
+		}
+		
+		//Setting ownership of the starting tiles and their neighbors of the same color :
+		for(Player player: players) {
+			int[] startingTile = player.getStartingTileCoords();
+			board.getTile(startingTile).setOwner(player);
+			board.update(startingTile[0], startingTile[1], player);
+		}
+		
+		// First to play is player #0 :
 		this.currentPlayerId = 0;
 		
 	}
 	
 	/**
-	 * TODO annotate
+	 * Initialises the game
+	 * 
 	 */
 	public void init() {
 		String name;
@@ -45,24 +95,18 @@ public class Game {
 			getPlayer(i).setName(name);
 		}
 		
-		this.board = new Board(4);
-		
-		board.getTile(0, 0).setOwner(getPlayer(0));
-		
-		while(board.getTile(3, 3).getColor() == board.getTile(0, 0).getColor()) {
-			board.getTile(3, 3).setColor(Color.values()[random.nextInt(Color.values().length)]);
-		}
-		
-		board.getTile(3, 3).setOwner(getPlayer(1));
-		
 		// Setting current and previous colors of the players :
-		getPlayer(0).setColor(board.getTile(0, 0).getColor());
-		getPlayer(0).setPreviousColor(board.getTile(0, 0).getColor());	
-		getPlayer(1).setColor(board.getTile(3, 3).getColor());
-		getPlayer(1).setPreviousColor(board.getTile(3, 3).getColor());
+		for(Player player: getPlayers()) {
+			int[] startingTile = player.getStartingTileCoords();
+			Color color = board.getTile(startingTile[0], startingTile[1]).getColor();
+			player.setColor(color);
+			player.setPreviousColor(color);	
+			
+			// Updating board to give the players ownership of the tiles of their colors next to their starting point.
+			board.update(startingTile[0], startingTile[1], player);
+		}
+				
 		
-		// Updating board to give the players ownership of the tiles of their colors next to their starting point.
-		board.update(0, 0, getPlayer(0));
 		board.update(3, 3, getPlayer(1));
 	}
 	

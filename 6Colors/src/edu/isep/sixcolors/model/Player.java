@@ -9,6 +9,7 @@ public class Player {
 	private String name;
 	private Color color;
 	private Color previousColor;
+	private int[] startingTileCoords = new int[2];
 	
 	
 	public String getName() {
@@ -34,4 +35,18 @@ public class Player {
 	public void setPreviousColor(Color previousColor) {
 		this.previousColor = previousColor;
 	}
+
+	public int[] getStartingTileCoords() {
+		return startingTileCoords;
+	}
+
+	public void setStartingTileCoords(int[] startingTileCoords) {
+		this.startingTileCoords = startingTileCoords;
+	}
+
+	public void setStartingTileCoords(int i, int j) {
+		this.startingTileCoords = new int[]{i, j};		
+	}
+	
+	
 }

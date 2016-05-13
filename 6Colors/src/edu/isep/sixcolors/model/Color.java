@@ -1,5 +1,7 @@
 package edu.isep.sixcolors.model;
 
+import java.util.Random;
+
 /**
  * Colors
  * Available colors :
@@ -19,6 +21,8 @@ public enum Color {
 	Orange('O'),
 	Violet('V');
 	
+	private static Random random = new Random();
+	
 	/**
 	 * First letter of the color :
 	 */
@@ -27,6 +31,11 @@ public enum Color {
 	private Color(char initial) {
 		this.setInitial(initial);
 	}
+	
+	public static Color random() {
+		return Color.values()[Color.random.nextInt(Color.values().length)];
+	}
+
 	
 	/**
 	 * Get the first letter of the color
@@ -39,5 +48,5 @@ public enum Color {
 	private void setInitial(char initial) {
 		this.initial = initial;
 	}
-	
+		
 }
