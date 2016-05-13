@@ -55,4 +55,14 @@ public class Console {
 		}
 	}
 	
+	public static int promptBoardWidth() {
+		System.out.println("Size of the board : ");
+		return scan.nextInt();
+	}
+	
+	public static int promptNumberPlayers() {
+		System.out.println("Number of players : ");
+		return scan.nextInt();
+	}
+	
 }

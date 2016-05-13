@@ -23,9 +23,12 @@ public class Game {
 	 */
 	public Game() {
 		
+		int width = Console.promptBoardWidth();
+		int nbPlayers = Console.promptNumberPlayers();
+		
 		// Creating board and players :
-		this.board = new Board(10);
-		this.players = new Player[2];
+		this.board = new Board(width);
+		this.players = new Player[nbPlayers];
 		
 		for(int i = 0; i < this.players.length; i++) {
 			this.players[i] = new Player();
@@ -40,15 +43,16 @@ public class Game {
 			for(int i = 0; i < this.players.length; i++) {
 				// Computing starting tile abscissa and ordinate using the player's id :
 				int x = i%2 == 0 ? 0 : board.getWidth() - 1;
-				int y = i>0 && i<3 ? board.getWidth() - 1 : 0;
+				int y = (i>0 && i<3) ? board.getWidth() - 1 : 0;
 				players[i].setStartingTileCoords(x, y);
 			}
 		}
 		
 		Color[] ownedColors = new Color[players.length];
 		
-		// avoiding two players to have the same initial color
-		// TODO set the colors of their starting tiles instead of changing until all different ?
+		// Preventing two players from getting the same initial color
+		// TODO : correct bug (GitHub issue)
+		// other method : set the colors of their starting tiles instead of changing until all different ?
 		for(int i = 0; i<players.length; i++) {
 		
 			boolean colorAlreadyOwned = false;
