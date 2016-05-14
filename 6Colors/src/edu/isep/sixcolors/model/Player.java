@@ -10,7 +10,7 @@ public class Player {
 	private Color color;
 	private Color previousColor;
 	private int[] startingTileCoords = new int[2];
-	
+	private int points;
 	
 	public String getName() {
 		return name;
@@ -47,6 +47,17 @@ public class Player {
 	public void setStartingTileCoords(int i, int j) {
 		this.startingTileCoords = new int[]{i, j};		
 	}
-	
-	
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	public void addPoints() {
+		this.points++;
+	}
+
 }

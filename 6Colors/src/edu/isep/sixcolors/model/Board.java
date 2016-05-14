@@ -44,16 +44,17 @@ public class Board {
 		boolean updateNeighbours = false;
 		
 		// The tile being updated is *always* neighbouring the current player's territory.
-		// 
 		if(tile.getColor() == player.getColor() && tile.getOwner() != player) {
 			tile.setOwner(player);
 			updateNeighbours = true;
+			player.addPoints();
 		}
 		// updating color of conquered tiles
 		else if(tile.getColor() == player.getPreviousColor() && tile.getOwner() == player) {
 			tile.setColor(player.getColor());
 			tile.setOwner(player);
 			updateNeighbours = true;
+			//player.addPoints();
 		}
 		
 		if(updateNeighbours) {

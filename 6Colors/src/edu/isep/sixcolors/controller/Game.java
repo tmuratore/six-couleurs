@@ -17,9 +17,7 @@ public class Game {
 
 	
 	/**
-	 * Create a new game with 2 players
-	 * 
-	 * @param players Number of players
+	 * Creates a new game
 	 */
 	public Game() {
 		
@@ -102,7 +100,8 @@ public class Game {
 			int[] startingTile = player.getStartingTileCoords();
 			Color color = board.getTile(startingTile[0], startingTile[1]).getColor();
 			player.setColor(color);
-			player.setPreviousColor(color);	
+			player.setPreviousColor(color);
+			player.setPoints(1);
 			
 			// Updating board to give the players ownership of the tiles of their colors next to their starting point.
 			board.update(startingTile[0], startingTile[1], player);
@@ -113,6 +112,7 @@ public class Game {
 		while(true) {
 			Player currentPlayer = getCurrentPlayer();
 			System.out.println("It's " + currentPlayer.getName() + "'s turn !");
+			System.out.println("You have " + currentPlayer.getPoints() + " points.");
 			System.out.println("Your current color : "+currentPlayer.getColor().name());
 			
 			Console.showBoard(board);
