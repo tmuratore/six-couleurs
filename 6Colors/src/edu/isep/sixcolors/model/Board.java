@@ -14,7 +14,7 @@ public class Board {
 	/**
 	 * Initialises a square board filled with random colors
 	 * TODO decide if the board is square or if it can be rectangular
-	 * @param line
+	 * @param width of the board
 	 */
 	public Board(int width) {
 		this.tiles = new Tile[width][width];
@@ -37,7 +37,6 @@ public class Board {
 	 * @param player Player who just picked a new color
 	 * @param tileX Abscissa of the first tile to update
  	 * @param tileY Ordinate of the first tile to update
-	 * @param board
 	 */
 	public void update(int tileX, int tileY, Player player){
 		Tile tile = getTile(tileX, tileY);

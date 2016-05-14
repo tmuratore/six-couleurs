@@ -96,7 +96,7 @@ public class Console {
 	public static int promptIntFramed(String whatToAsk, String invalidEntryMessage, int min, int max) {
 		int output = promptInt(whatToAsk, invalidEntryMessage);
 		while (output < min || output > max){
-			System.out.format("The entered value is not in between %d and %d. \n", min, max);
+			System.out.format("The entered value is not in between %d and %d. %n", min, max);
 			output = promptInt(whatToAsk, invalidEntryMessage);
 		}
 		return output;

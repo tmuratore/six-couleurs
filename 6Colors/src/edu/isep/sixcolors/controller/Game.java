@@ -109,7 +109,7 @@ public class Game {
 			board.update(startingTile[0], startingTile[1], player);
 		}				
 	}
-	
+	// TODO Make start() generic of any interface, it does not (really) respect the MVC pattern
 	public void start() {
 		while(true) {
 			Player currentPlayer = getCurrentPlayer();
@@ -148,7 +148,26 @@ public class Game {
 			// updating the board
 			int[] startingTile = currentPlayer.getStartingTileCoords();
 			board.update(startingTile[0], startingTile[1], currentPlayer);
-			
+
+			//Test for end game conditions
+			double winPoints = Math.pow(board.getWidth(),2)/2;
+			int totalPoints = 0;
+			int maxPoints = 0;
+			int playerPoints;
+			Player winner = currentPlayer;
+			for (Player player : getPlayers()){
+				playerPoints = player.getPoints();
+				if (playerPoints > maxPoints){
+					maxPoints = playerPoints;
+					winner = player;
+				}
+				totalPoints += player.getPoints();
+			}
+			if (currentPlayer.getPoints() > winPoints || totalPoints == Math.pow(board.getWidth(),2)){
+				System.out.println("The game is over, the winner is " + winner.getName() + " !");
+				break;
+			}
+
 			// Next player up !
 			nextPlayer();
 		}
