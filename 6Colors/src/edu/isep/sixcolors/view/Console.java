@@ -1,6 +1,8 @@
 package edu.isep.sixcolors.view;
 
 import edu.isep.sixcolors.model.*;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Console {
@@ -57,11 +59,21 @@ public class Console {
 	
 	public static int promptBoardWidth() {
 		System.out.println("Size of the board : ");
+		while(!scan.hasNextInt()) {
+			System.out.println("Invalid entry, please try again.");
+			System.out.println("Size of the board : ");
+			scan.next();
+		}
 		return scan.nextInt();
 	}
 	
 	public static int promptNumberPlayers() {
 		System.out.println("Number of players : ");
+		while(!scan.hasNextInt()) {
+			System.out.println("Invalid entry, please try again.");
+			System.out.println("Number of players : ");
+			scan.next();
+		}
 		return scan.nextInt();
 	}
 	
