@@ -34,7 +34,7 @@ public class Console {
 	 * @return The name typed in by the player
 	 */
 	public static String promptPlayerName(int number)	{
-		System.out.print("Player "+number+", choose your name : ");
+		System.out.format("Player %d, choose your name : ", number+1);
 		return scan.next();
 	}
 	
@@ -55,25 +55,62 @@ public class Console {
 			color = scan.next().toUpperCase().toCharArray()[0];
 		}
 	}
-	
-	public static int promptBoardWidth() {
-		System.out.println("Size of the board : ");
+
+	/**
+	 * Prompt for an int, will re prompt until an int is inputted
+	 * @param whatToAsk The message explaining what must be entered
+	 * @param invalidEntryMessage The message returned signaling an incorrect input
+	 * @return the typed int
+	 */
+
+	public static int promptInt(String whatToAsk, String invalidEntryMessage) {
+		System.out.println(whatToAsk);
 		while(!scan.hasNextInt()) {
-			System.out.println("Invalid entry, please try again.");
-			System.out.println("Size of the board : ");
+			System.out.println(invalidEntryMessage);
+			System.out.println(whatToAsk);
 			scan.next();
 		}
 		return scan.nextInt();
 	}
-	
-	public static int promptNumberPlayers() {
-		System.out.println("Number of players : ");
-		while(!scan.hasNextInt()) {
-			System.out.println("Invalid entry, please try again.");
-			System.out.println("Number of players : ");
-			scan.next();
-		}
-		return scan.nextInt();
+
+	/**
+	 * Prompt for an int, will re prompt until an int is inputted
+	 * @param whatToAsk The message explaining what must be entered
+	 * @return the typed int
+     */
+
+	public static int promptInt(String whatToAsk) {
+		return promptInt(whatToAsk, "Invalid entry, please try again.");
 	}
-	
+
+
+	/**
+	 * Prompt for an int, will re prompt until an int is inputted and in between max and min
+	 * @param whatToAsk The message explaining what must be entered
+	 * @param invalidEntryMessage The message returned signaling an incorrect input
+	 * @param max max int value wanted
+	 * @param min min int value wanted
+	 * @return the typed int
+	 */
+
+	public static int promptIntFramed(String whatToAsk, String invalidEntryMessage, int min, int max) {
+		int output = promptInt(whatToAsk, invalidEntryMessage);
+		while (output < min || output > max){
+			System.out.format("The entered value is not in between %d and %d. \n", min, max);
+			output = promptInt(whatToAsk, invalidEntryMessage);
+		}
+		return output;
+	}
+
+	/**
+	 * Prompt for an int, will re prompt until an int is inputted and in between max and min
+	 * @param whatToAsk The message explaining what must be entered
+	 * @param max max int value wanted
+	 * @param min min int value wanted
+	 * @return the typed int
+	 */
+
+	public static int promptIntFramed(String whatToAsk, int min, int max) {
+		return promptIntFramed(whatToAsk, "Invalid entry, please try again.", min, max);
+	}
 }

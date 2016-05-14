@@ -20,9 +20,11 @@ public class Game {
 	 * Creates a new game
 	 */
 	public Game() {
-		
-		int width = Console.promptBoardWidth();
-		int nbPlayers = Console.promptNumberPlayers();
+
+		// TODO : Find a real max size for the Board
+		int width = Console.promptIntFramed("Size of the board : ", 5, 50);
+		// TODO : Modify the max value of players depending on the shape of the Tiles/Board ?
+		int nbPlayers = Console.promptIntFramed("Number of players : ", 2, 4);
 		
 		// Creating board and players :
 		this.board = new Board(width);
@@ -91,11 +93,11 @@ public class Game {
 	public void init() {
 		String name;
 		for(int i = 0; i < getPlayers().length; i++) {
-			name = Console.promptPlayerName(i + 1);
+			name = Console.promptPlayerName(i);
 			getPlayer(i).setName(name);
 		}
 		
-		// Setting current and previous colors of the players :
+		// Setting current, previous colors and initial points of the players :
 		for(Player player: getPlayers()) {
 			int[] startingTile = player.getStartingTileCoords();
 			Color color = board.getTile(startingTile[0], startingTile[1]).getColor();

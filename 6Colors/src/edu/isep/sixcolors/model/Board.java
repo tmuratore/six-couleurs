@@ -54,7 +54,6 @@ public class Board {
 			tile.setColor(player.getColor());
 			tile.setOwner(player);
 			updateNeighbours = true;
-			//player.addPoints();
 		}
 		
 		if(updateNeighbours) {
