@@ -28,7 +28,7 @@ public enum Color {
 	 */
 	private char initial;
 	
-	private Color(char initial) {
+	Color(char initial) {
 		this.setInitial(initial);
 	}
 	
@@ -48,5 +48,6 @@ public enum Color {
 	private void setInitial(char initial) {
 		this.initial = initial;
 	}
-		
+
+
 }

@@ -25,6 +25,7 @@ public class Player {
 	}
 
 	public void setColor(Color controlledColor) {
+		setPreviousColor(this.color);
 		this.color = controlledColor;
 	}
 
@@ -32,7 +33,7 @@ public class Player {
 		return previousColor;
 	}
 
-	public void setPreviousColor(Color previousColor) {
+	private void setPreviousColor(Color previousColor) {
 		this.previousColor = previousColor;
 	}
 

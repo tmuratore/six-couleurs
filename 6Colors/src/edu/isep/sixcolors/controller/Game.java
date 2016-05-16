@@ -60,7 +60,7 @@ public class Game {
 		ArrayList<Color> availableColors = new ArrayList<Color>(Arrays.asList(Color.values()));
 		Random randomGen = new Random();
 
-
+		// TODO Fix this plz (cf. Github issue #2 )
 		// Preventing two players from getting the same initial color
 		for (int i = 0; i < players.length; i++) {
 
@@ -106,7 +106,6 @@ public class Game {
 			int[] startingTile = player.getStartingTileCoords();
 			Color color = board.getTile(startingTile[0], startingTile[1]).getColor();
 			player.setColor(color);
-			player.setPreviousColor(color);
 			player.setPoints(1);
 
 			// Updating board to give the players ownership of the tiles of their colors next to their starting point.
@@ -117,7 +116,6 @@ public class Game {
 	/**
 	 * Starts the game
 	 */
-	// TODO Make start() generic of any interface, it does not (really) respect the MVC pattern
 	public void play() {
 		while (true) {
 			Player currentPlayer = getCurrentPlayer();
@@ -148,8 +146,6 @@ public class Game {
 			output.printInfoMessage("Chosen color : " + chosenColor.name());
 
 			// updating previous and current colors :
-			// TODO setPrevious private and called in setColor ?
-			currentPlayer.setPreviousColor(currentPlayer.getColor());
 			currentPlayer.setColor(chosenColor);
 
 			// updating the board
@@ -175,8 +171,12 @@ public class Game {
 	 * @return Player
 	 */
 	public Player getPlayer(int id) {
-		// TODO check if the given id belongs to the players array keys range
-		return players[id];
+		int number = getPlayers().length;
+		if (id > 0 && id < number){
+			return players[id];
+		}else {
+			return null;
+		}
 	}
 
 	/**

@@ -27,7 +27,7 @@ public class Board {
 		//Random Map Generation picking tiles colors from the Color enum
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < width; j++) {
-				tiles[i][j] = new Tile(Color.values()[random.nextInt(Color.values().length)]);
+				tiles[i][j] = new Tile(Color.random());
 			}
 		}
 	}

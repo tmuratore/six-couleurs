@@ -22,7 +22,6 @@ public class Tile {
 
 	/**
 	 * Colors of the square
-	 * TODO import java colors and document the colors in CLI display
 	 */
 	private Color color;
 
