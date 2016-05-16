@@ -58,18 +58,11 @@ public class Board {
 		if(updateNeighbours) {
 			int[][] neighboursCoords = getNeighboursCoords(tileX, tileY);
 			for(int[] coords: neighboursCoords) {
-				// Scanner scan = new Scanner(System.in);
-				// Console.showBoard(this);
-				// System.out.println();
-				// System.out.println();
-				// System.out.println("Checking neighbor : " + coords[0]+"; "+coords[1]+". Continue ?");
-				// scan.nextLine();
 				
 				if(
 					getTile(coords[0], coords[1]).getOwner() != player ||	// not in my territory
 					getTile(coords[0], coords[1]).getColor() != player.getColor()	// 
 				) {
-					// System.out.println("Updating...");
 					update(coords[0], coords[1], player);
 				}
 			}

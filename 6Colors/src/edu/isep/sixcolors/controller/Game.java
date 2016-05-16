@@ -2,6 +2,8 @@ package edu.isep.sixcolors.controller;
 
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.view.Console;
+import edu.isep.sixcolors.view.Output;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,14 +24,15 @@ public class Game {
 	
 	/**
 	 * Creates a new game
+	 * @param output the chosen output
 	 */
-	public Game() {
+	public Game(Output output) {
 
 		// TODO : Find a real max size for the Board
-		int width = Console.promptIntFramed("Size of the board : ", 5, 50);
+		int width = output.promptFramedInt("Size of the board : ", 5, 50);
 		// TODO : Modify the max value of players depending on the shape of the Tiles/Board ?
-		int nbPlayers = Console.promptIntFramed("Number of players : ", 2, 4);
-		
+		int nbPlayers = output.promptFramedInt("Number of players : ", 2, 4);
+
 		// Creating board and players :
 		this.board = new Board(width);
 		this.players = new Player[nbPlayers];
@@ -88,12 +91,12 @@ public class Game {
 	
 	/**
 	 * Initialises the game
-	 * 
+	 * @param output the chosen output
 	 */
-	public void init() {
+	public void init(Output output) {
 		String name;
 		for(int i = 0; i < getPlayers().length; i++) {
-			name = Console.promptPlayerName(i);
+			name = output.promptString("Player " + (i+1) + ", choose your name : ");
 			getPlayer(i).setName(name);
 		}
 		
@@ -112,18 +115,19 @@ public class Game {
 
 	/**
 	 * Starts the game
+	 * @param output the chosen output
 	 */
 	// TODO Make start() generic of any interface, it does not (really) respect the MVC pattern
-	public void start() {
+	public void play(Output output) {
 		while(true) {
 			Player currentPlayer = getCurrentPlayer();
-			System.out.println("It's " + currentPlayer.getName() + "'s turn !");
-			System.out.println("You have " + currentPlayer.getPoints() + " points.");
-			System.out.println("Your current color : "+currentPlayer.getColor().name());
-			
-			Console.showBoard(board);
-			
-			Color chosenColor = Console.promptColorChoice();
+
+			// Print game status
+			output.printGameStatus(board, currentPlayer);
+
+
+			// Prompt Color Choice
+			Color chosenColor = output.promptColorChoice();
 			
 			boolean err = true;
 			while (err) {
@@ -132,17 +136,17 @@ public class Game {
 					if(player.getColor() == chosenColor) {
 						err = true;
 						if(player == currentPlayer) {
-							System.out.println("You already control this color");
+							output.printGameErrorMessage("You already control this color");
 						}
 						else {
-							System.out.println(player.getName() + " already controls this color. Choose another one.");
+							output.printGameErrorMessage(player.getName() + " already controls this color. Choose another one.");
 						}
-						chosenColor = Console.promptColorChoice();
+						chosenColor = output.promptColorChoice();
 					}
 				}
 			}
-			
-			System.out.println("Chosen color : "+chosenColor.name());
+
+			output.printInfoMessage("Chosen color : "+ chosenColor.name());
 			
 			// updating previous and current colors :
 			// TODO setPrevious private and called in setColor ?
@@ -153,22 +157,10 @@ public class Game {
 			int[] startingTile = currentPlayer.getStartingTileCoords();
 			board.update(startingTile[0], startingTile[1], currentPlayer);
 
-			//Test for end game conditions
-			double winPoints = Math.pow(board.getWidth(),2)/2;
-			int totalPoints = 0;
-			int maxPoints = 0;
-			int playerPoints;
-			Player winner = currentPlayer;
-			for (Player player : getPlayers()){
-				playerPoints = player.getPoints();
-				if (playerPoints > maxPoints){
-					maxPoints = playerPoints;
-					winner = player;
-				}
-				totalPoints += player.getPoints();
-			}
-			if (currentPlayer.getPoints() > winPoints || totalPoints == Math.pow(board.getWidth(),2)){
-				System.out.println("The game is over, the winner is " + winner.getName() + " !");
+			//Test for end game (a winner)
+			Player winner = checkForWinner();
+			if (winner != null){
+				output.printInfoMessage("The game is over, the winner is " + winner.getName() + " !");
 				break;
 			}
 
@@ -214,5 +206,32 @@ public class Game {
 		else {
 			this.currentPlayerId += 1;
 		}
+	}
+
+	/**
+	 * Returns the winner or null if there is none yet
+	 * @return Player winner or null;
+     */
+
+	@Nullable
+	private Player checkForWinner(){
+		int winPoints = (int) Math.ceil(Math.pow(board.getWidth(),2)/2);
+		int totalPoints = 0;
+		int maxPoints = 0;
+		int playerPoints;
+		Player winner = this.getCurrentPlayer();
+		for (Player player : getPlayers()){
+			playerPoints = player.getPoints();
+			if (playerPoints > maxPoints){
+				maxPoints = playerPoints;
+				winner = player;
+			}
+			totalPoints += player.getPoints();
+		}
+		if (this.getCurrentPlayer().getPoints() > winPoints || totalPoints == Math.pow(board.getWidth(),2)){
+			return winner;
+		}
+		return null;
+
 	}
 }
