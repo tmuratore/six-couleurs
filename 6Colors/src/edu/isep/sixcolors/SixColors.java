@@ -22,9 +22,9 @@ public class SixColors {
 		// Creating the game controller :
 		Game game = new Game(output);
 
-		game.init(output);
+		game.init();
 		
-		game.play(output);
+		game.play();
 
 	}
 

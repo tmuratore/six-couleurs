@@ -20,13 +20,15 @@ public class Game {
 	private Player[] players;
 	private int currentPlayerId;
 	private Board board;
-
+	private Output output;
 	
 	/**
 	 * Creates a new game
 	 * @param output the chosen output
 	 */
 	public Game(Output output) {
+
+		this.output = output;
 
 		// TODO : Find a real max size for the Board
 		int width = output.promptFramedInt("Size of the board : ", 5, 50);
@@ -91,9 +93,8 @@ public class Game {
 	
 	/**
 	 * Initialises the game
-	 * @param output the chosen output
 	 */
-	public void init(Output output) {
+	public void init() {
 		String name;
 		for(int i = 0; i < getPlayers().length; i++) {
 			name = output.promptString("Player " + (i+1) + ", choose your name : ");
@@ -115,10 +116,9 @@ public class Game {
 
 	/**
 	 * Starts the game
-	 * @param output the chosen output
 	 */
 	// TODO Make start() generic of any interface, it does not (really) respect the MVC pattern
-	public void play(Output output) {
+	public void play() {
 		while(true) {
 			Player currentPlayer = getCurrentPlayer();
 
