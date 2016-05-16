@@ -3,6 +3,10 @@ package edu.isep.sixcolors.controller;
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.view.Console;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
 /**
  * Game controller : Controller implementing the game engine
  * Manages inputs and outputs to and from the view
@@ -48,30 +52,26 @@ public class Game {
 			}
 		}
 		
-		Color[] ownedColors = new Color[players.length];
-		
+		ArrayList<Color> availableColors = new ArrayList<Color>(Arrays.asList(Color.values()));
+		Random randomGen = new Random();
+
+
 		// Preventing two players from getting the same initial color
-		// TODO : correct bug (GitHub issue)
-		// other method : set the colors of their starting tiles instead of changing until all different ?
-		for(int i = 0; i<players.length; i++) {
-		
-			boolean colorAlreadyOwned = false;
-			
+		for(int i = 0; i < players.length; i++) {
+
 			Color color = board.getTile(getPlayer(i).getStartingTileCoords()).getColor();
-			
-			for(int j=0; j<i; j++) {
-				if(color == ownedColors[j]) {
-					colorAlreadyOwned = true;
-				}
+		
+			if (availableColors.contains(color)) {
+				// If the color is available, keep it and remove it from the available colors.
+				availableColors.remove(color);
+			}else{
+				// If current color is not available, pick a random one from the available, set it then remove this color from the available.
+				int randomIndex = randomGen.nextInt(availableColors.size());
+				Color randomColor = availableColors.get(randomIndex);
+				board.getTile(players[i].getStartingTileCoords()).setColor(randomColor);
+				availableColors.remove(randomColor);
 			}
-			
-			if(colorAlreadyOwned) {
-				board.getTile(players[i].getStartingTileCoords())
-					 .setColor(Color.random());
-			}
-			
-			if(i == players.length - 1 && !colorAlreadyOwned) {
-			}
+
 		}
 		
 		//Setting ownership of the starting tiles and their neighbors of the same color :
@@ -109,6 +109,10 @@ public class Game {
 			board.update(startingTile[0], startingTile[1], player);
 		}				
 	}
+
+	/**
+	 * Starts the game
+	 */
 	// TODO Make start() generic of any interface, it does not (really) respect the MVC pattern
 	public void start() {
 		while(true) {
