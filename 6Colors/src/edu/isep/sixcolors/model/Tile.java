@@ -5,20 +5,21 @@ package edu.isep.sixcolors.model;
  * Tile model : Represents a square of the board
  */
 public class Tile {
-	
-	public Tile(){
+
+	public Tile() {
 	}
-	
+
 	/**
 	 * Constructor taking the initial color of the tile
+	 *
 	 * @param color element of Colors enum
 	 */
 	public Tile(Color color) {
 		this.color = color;
 	}
-	
+
 	private Player owner;
-	
+
 	/**
 	 * Colors of the square
 	 * TODO import java colors and document the colors in CLI display
@@ -52,5 +53,5 @@ public class Tile {
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
-	
+
 }
