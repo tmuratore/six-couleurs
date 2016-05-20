@@ -15,13 +15,13 @@ import java.util.Random;
  * 	<li>Violet</li>
  * </ul>
  */
-public enum GameColor {
+public enum TileColor {
 	Blue('B', Color.BLUE),
 	Green('G', Color.GREEN),
 	Red('R', Color.RED),
 	Yellow('Y', Color.YELLOW),
 	Orange('O', Color.ORANGE),
-	Magenta('M', Color.MAGENTA);
+	Magenta('M', Color.PINK);
 	
 	private static Random random = new Random();
 	
@@ -31,12 +31,13 @@ public enum GameColor {
 	private char initial;
 	private Color color;
 	
-	GameColor(char initial, Color blue) {
+	TileColor(char initial, Color color) {
 		this.setInitial(initial);
+		this.setColor(color);
 	}
 	
-	public static GameColor random() {
-		return GameColor.values()[GameColor.random.nextInt(GameColor.values().length)];
+	public static TileColor random() {
+		return TileColor.values()[TileColor.random.nextInt(TileColor.values().length)];
 	}
 
 	

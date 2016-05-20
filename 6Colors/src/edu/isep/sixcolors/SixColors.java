@@ -16,7 +16,6 @@ public class SixColors {
 
 		JFrame fen = new GameWindow();
 
-
 		// TODO make the output type be decided on the content of main's args
 		// Creates the output
 		//Output output = new Console();
