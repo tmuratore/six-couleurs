@@ -24,10 +24,10 @@ public class Board {
 
 		Random random = new Random();
 
-		//Random Map Generation picking tiles colors from the Color enum
+		//Random Map Generation picking tiles colors from the GameColor enum
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < width; j++) {
-				tiles[i][j] = new Tile(Color.random());
+				tiles[i][j] = new Tile(GameColor.random());
 			}
 		}
 	}
@@ -45,14 +45,14 @@ public class Board {
 		boolean updateNeighbours = false;
 
 		// The tile being updated is *always* neighbouring the current player's territory.
-		if (tile.getColor() == player.getColor() && tile.getOwner() != player) {
+		if (tile.getGameColor() == player.getGameColor() && tile.getOwner() != player) {
 			tile.setOwner(player);
 			updateNeighbours = true;
 			player.addPoints();
 		}
 		// updating color of conquered tiles
-		else if (tile.getColor() == player.getPreviousColor() && tile.getOwner() == player) {
-			tile.setColor(player.getColor());
+		else if (tile.getGameColor() == player.getPreviousGameColor() && tile.getOwner() == player) {
+			tile.setGameColor(player.getGameColor());
 			tile.setOwner(player);
 			updateNeighbours = true;
 		}
@@ -63,7 +63,7 @@ public class Board {
 
 				if (
 						getTile(coords[0], coords[1]).getOwner() != player ||    // not in my territory
-								getTile(coords[0], coords[1]).getColor() != player.getColor()    //
+								getTile(coords[0], coords[1]).getGameColor() != player.getGameColor()    //
 						) {
 					update(coords[0], coords[1], player);
 				}

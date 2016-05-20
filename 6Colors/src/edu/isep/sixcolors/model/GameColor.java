@@ -1,5 +1,6 @@
 package edu.isep.sixcolors.model;
 
+import java.awt.Color;
 import java.util.Random;
 
 /**
@@ -8,18 +9,19 @@ import java.util.Random;
  * <ul>
  * 	<li>Blue</li>
  * 	<li>Green</li>
+ * 	<li>Red</li>
  * 	<li>Yellow</li>
  * 	<li>Orange</li>
  * 	<li>Violet</li>
  * </ul>
  */
-public enum Color {
-	Blue('B'),
-	Green('G'),
-	Red('R'),
-	Yellow('Y'),
-	Orange('O'),
-	Violet('V');
+public enum GameColor {
+	Blue('B', Color.BLUE),
+	Green('G', Color.GREEN),
+	Red('R', Color.RED),
+	Yellow('Y', Color.YELLOW),
+	Orange('O', Color.ORANGE),
+	Magenta('M', Color.MAGENTA);
 	
 	private static Random random = new Random();
 	
@@ -27,13 +29,14 @@ public enum Color {
 	 * First letter of the color :
 	 */
 	private char initial;
+	private Color color;
 	
-	Color(char initial) {
+	GameColor(char initial, Color blue) {
 		this.setInitial(initial);
 	}
 	
-	public static Color random() {
-		return Color.values()[Color.random.nextInt(Color.values().length)];
+	public static GameColor random() {
+		return GameColor.values()[GameColor.random.nextInt(GameColor.values().length)];
 	}
 
 	
@@ -50,4 +53,11 @@ public enum Color {
 	}
 
 
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }
