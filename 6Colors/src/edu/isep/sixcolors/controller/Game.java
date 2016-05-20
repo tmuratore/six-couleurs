@@ -51,7 +51,7 @@ public class Game {
 		} else {
 			for (int i = 0; i < this.players.length; i++) {
 				// Computing starting tile abscissa and ordinate using the player's id :
-				int x = i % 2 == 0 ? 0 : board.getWidth() - 1;
+				int x = (i % 2 == 0) ? 0 : board.getWidth() - 1;
 				int y = (i > 0 && i < 3) ? board.getWidth() - 1 : 0;
 				players[i].setStartingTileCoords(x, y);
 			}
@@ -59,6 +59,13 @@ public class Game {
 
 		ArrayList<Color> availableColors = new ArrayList<Color>(Arrays.asList(Color.values()));
 		Random randomGen = new Random();
+
+        for(int i = 0; i < players.length; i++) {
+            Player player = getPlayer(i);
+            player.setColor(
+                board.getTile(player.getStartingTileCoords()).getColor()
+            );
+        }
 
 		// TODO Fix this plz (cf. Github issue #2 )
 		// Preventing two players from getting the same initial color
@@ -76,7 +83,6 @@ public class Game {
 				board.getTile(players[i].getStartingTileCoords()).setColor(randomColor);
 				availableColors.remove(randomColor);
 			}
-
 		}
 
 		//Setting ownership of the starting tiles and their neighbors of the same color :
@@ -172,7 +178,7 @@ public class Game {
 	 */
 	public Player getPlayer(int id) {
 		int number = getPlayers().length;
-		if (id > 0 && id < number){
+		if (id >= 0 && id < number) {
 			return players[id];
 		}else {
 			return null;
