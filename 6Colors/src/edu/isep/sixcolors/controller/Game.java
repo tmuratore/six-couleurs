@@ -3,10 +3,13 @@ package edu.isep.sixcolors.controller;
 import com.sun.istack.internal.Nullable;
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.view.Output;
+import edu.isep.sixcolors.view.graphic.GameWindow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+
+import javax.swing.*;
 
 /**
  * Game controller : Controller implementing the game engine
@@ -127,6 +130,8 @@ public class Game {
 
 			// Print game status
 			output.printGameStatus(board, currentPlayer);
+			JFrame fen = new GameWindow(board, this);
+
 
 
 			// Prompt TileColor Choice

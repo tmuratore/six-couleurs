@@ -1,5 +1,9 @@
 package edu.isep.sixcolors;
 import javax.swing.JFrame;
+
+import edu.isep.sixcolors.controller.Game;
+import edu.isep.sixcolors.view.Console;
+import edu.isep.sixcolors.view.Output;
 import edu.isep.sixcolors.view.graphic.*;
 
 /**
@@ -14,18 +18,17 @@ public class SixColors {
 	 */
 	public static void main(String[] args) {
 
-		JFrame fen = new GameWindow();
 
 		// TODO make the output type be decided on the content of main's args
 		// Creates the output
-		//Output output = new Console();
+		Output output = new Console();
 
 		// Creating the game controller :
-		//Game game = new Game(output);
+		Game game = new Game(output);
 
-		//game.init();
+		game.init();
 
-		//game.play();
+		game.play();
 
 	}
 

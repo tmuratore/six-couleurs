@@ -1,7 +1,7 @@
 package edu.isep.sixcolors.view.graphic;
 
 
-import edu.isep.sixcolors.SixColors;
+import edu.isep.sixcolors.controller.Game;
 import edu.isep.sixcolors.model.Board;
 import edu.isep.sixcolors.model.Tile;
 import edu.isep.sixcolors.model.TileColor;
@@ -19,14 +19,24 @@ import javax.swing.JPanel;
 
 public class GameWindow extends JFrame{
     private JPanel container = new JPanel();
-    private JPanel game = new JPanel();
+    private JPanel gamePanel = new JPanel();
     private JPanel playerList = new JPanel();
     private JPanel colorButtons = new JPanel();
     private JLabel title = new JLabel();
+    private Game game;
 
     private MouseListener listener = new MouseListener() {
         @Override
         public void mouseClicked(MouseEvent e) {
+            JButton fire = (JButton) e.getComponent();
+            Color color = fire.getBackground();
+
+            for(TileColor tc: TileColor.values()) {
+                if(color == tc.getColor()) {
+                    game.getCurrentPlayer().setTileColor(tc);
+                }
+            }
+
         }
 
         @Override
@@ -51,7 +61,8 @@ public class GameWindow extends JFrame{
     };
 
 
-    public GameWindow(){
+    public GameWindow(Board board, Game game){
+        this.game = game;
         this.setTitle("Six Colors Game");
         this.setSize(800, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,11 +71,16 @@ public class GameWindow extends JFrame{
         this.setContentPane(container);
         container.setLayout(new BorderLayout());
 
-        game.setBackground(Color.BLUE);
+        gamePanel.setBackground(Color.BLACK);
+        gamePanel.setLayout(new GridBagLayout());
+
+        updateBoard(board);
         playerList.setBackground(Color.RED);
+
         colorButtons.setLayout(new FlowLayout());
         updateColorButtons();
-        this.getContentPane().add(game, BorderLayout.CENTER);
+
+        this.getContentPane().add(gamePanel, BorderLayout.CENTER);
         this.getContentPane().add(playerList, BorderLayout.EAST);
         this.getContentPane().add(colorButtons, BorderLayout.SOUTH);
 
@@ -94,17 +110,20 @@ public class GameWindow extends JFrame{
     }
 
     private void updateBoard(Board board){
-        for (int i = 0; i < board.getTiles().length; i++) {
-            for (int j = 0; j < board.getTiles().length; j++) {
-                Tile tile = board.getTile(i, j);
-                String initial = Character.toString(tile.getTileColor().getInitial());
+        // TODO Force square show
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx=1;
+        gbc.weighty=1;
 
-                if (tile.getOwner() == null) {
-                    initial = initial.toLowerCase();
-                }
-                System.out.print(initial + " ");
+        for (gbc.gridy = 0; gbc.gridy < board.getTiles().length; gbc.gridy++) {
+            for (gbc.gridx = 0; gbc.gridx < board.getTiles().length; gbc.gridx++) {
+                JPanel cell = new JPanel();
+                cell.setBackground(board.getTile(gbc.gridy, gbc.gridx).getTileColor().getColor());
+                gamePanel.add(cell, gbc);
             }
-            System.out.println();
         }
     }
 }
