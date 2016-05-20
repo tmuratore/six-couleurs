@@ -26,7 +26,7 @@ public class Console implements Output {
 		for (int i = 0; i < board.getTiles().length; i++) {
 			for (int j = 0; j < board.getTiles().length; j++) {
 				Tile tile = board.getTile(i, j);
-				String initial = Character.toString(tile.getColor().getInitial());
+				String initial = Character.toString(tile.getGameColor().getInitial());
 
 				if (tile.getOwner() == null) {
 					initial = initial.toLowerCase();
@@ -41,7 +41,7 @@ public class Console implements Output {
 	public void printGameStatus(Board board, Player currentPlayer) {
 		System.out.println("It's " + currentPlayer.getName() + "'s turn !");
 		System.out.println("You have " + currentPlayer.getPoints() + " points.");
-		System.out.println("Your current color : " + currentPlayer.getColor().name());
+		System.out.println("Your current color : " + currentPlayer.getGameColor().name());
 
 		Console.showBoard(board);
 	}
@@ -58,7 +58,7 @@ public class Console implements Output {
 		return scan.next();
 	}
 
-	public Color promptColorChoice() {
+	public GameColor promptColorChoice() {
 
 		System.out.print("Choose your color : ");
 
@@ -66,9 +66,9 @@ public class Console implements Output {
 		char color = scan.next().toUpperCase().toCharArray()[0];
 
 		while (true) {
-			for (Color testColor : Color.values()) {
-				if (testColor.getInitial() == color) {
-					return testColor;
+			for (GameColor testGameColor : GameColor.values()) {
+				if (testGameColor.getInitial() == color) {
+					return testGameColor;
 				}
 			}
 			System.err.print("Unrecognised color, try again : ");

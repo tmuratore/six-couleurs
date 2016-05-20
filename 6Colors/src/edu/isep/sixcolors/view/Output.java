@@ -11,7 +11,7 @@ public interface Output {
 
     void printGameStatus(Board board, Player currentPlayer);
 
-    Color promptColorChoice();
+    GameColor promptColorChoice();
 
     void printGameErrorMessage(String message);
 

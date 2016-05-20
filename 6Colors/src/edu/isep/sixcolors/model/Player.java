@@ -7,8 +7,8 @@ package edu.isep.sixcolors.model;
 public class Player {
 
 	private String name;
-	private Color color;
-	private Color previousColor;
+	private GameColor gameColor;
+	private GameColor previousGameColor;
 	private int[] startingTileCoords = new int[2];
 	private int points;
 
@@ -20,21 +20,21 @@ public class Player {
 		this.name = name;
 	}
 
-	public Color getColor() {
-		return color;
+	public GameColor getGameColor() {
+		return gameColor;
 	}
 
-	public void setColor(Color controlledColor) {
-		setPreviousColor(this.color);
-		this.color = controlledColor;
+	public void setGameColor(GameColor controlledGameColor) {
+		setPreviousGameColor(this.gameColor);
+		this.gameColor = controlledGameColor;
 	}
 
-	public Color getPreviousColor() {
-		return previousColor;
+	public GameColor getPreviousGameColor() {
+		return previousGameColor;
 	}
 
-	private void setPreviousColor(Color previousColor) {
-		this.previousColor = previousColor;
+	private void setPreviousGameColor(GameColor previousGameColor) {
+		this.previousGameColor = previousGameColor;
 	}
 
 	public int[] getStartingTileCoords() {

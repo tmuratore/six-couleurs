@@ -10,12 +10,12 @@ public class Tile {
 	}
 
 	/**
-	 * Constructor taking the initial color of the tile
+	 * Constructor taking the initial gameColor of the tile
 	 *
-	 * @param color element of Colors enum
+	 * @param gameColor element of Colors enum
 	 */
-	public Tile(Color color) {
-		this.color = color;
+	public Tile(GameColor gameColor) {
+		this.gameColor = gameColor;
 	}
 
 	private Player owner;
@@ -23,20 +23,20 @@ public class Tile {
 	/**
 	 * Colors of the square
 	 */
-	private Color color;
+	private GameColor gameColor;
 
 	/**
-	 * @return the color
+	 * @return the gameColor
 	 */
-	public Color getColor() {
-		return color;
+	public GameColor getGameColor() {
+		return gameColor;
 	}
 
 	/**
-	 * @param color the color to set
+	 * @param gameColor the gameColor to set
 	 */
-	public void setColor(Color color) {
-		this.color = color;
+	public void setGameColor(GameColor gameColor) {
+		this.gameColor = gameColor;
 	}
 
 	/**
