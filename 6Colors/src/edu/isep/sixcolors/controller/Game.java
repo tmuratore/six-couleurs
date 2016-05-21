@@ -1,12 +1,15 @@
 package edu.isep.sixcolors.controller;
 
+import com.sun.istack.internal.Nullable;
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.view.Output;
-import org.jetbrains.annotations.Nullable;
+import edu.isep.sixcolors.view.graphic.GameWindow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+
+import javax.swing.*;
 
 /**
  * Game controller : Controller implementing the game engine
@@ -50,32 +53,38 @@ public class Game {
 		} else {
 			for (int i = 0; i < this.players.length; i++) {
 				// Computing starting tile abscissa and ordinate using the player's id :
-				int x = i % 2 == 0 ? 0 : board.getWidth() - 1;
+				int x = (i % 2 == 0) ? 0 : board.getWidth() - 1;
 				int y = (i > 0 && i < 3) ? board.getWidth() - 1 : 0;
 				players[i].setStartingTileCoords(x, y);
 			}
 		}
 
-		ArrayList<GameColor> availableGameColors = new ArrayList<GameColor>(Arrays.asList(GameColor.values()));
+		ArrayList<TileColor> availableTileColors = new ArrayList<TileColor>(Arrays.asList(TileColor.values()));
 		Random randomGen = new Random();
+
+        for(int i = 0; i < players.length; i++) {
+            Player player = getPlayer(i);
+            player.setTileColor(
+                board.getTile(player.getStartingTileCoords()).getTileColor()
+            );
+        }
 
 		// TODO Fix this plz (cf. Github issue #2 )
 		// Preventing two players from getting the same initial color
 		for (int i = 0; i < players.length; i++) {
 
-			GameColor gameColor = board.getTile(getPlayer(i).getStartingTileCoords()).getGameColor();
+			TileColor tileColor = board.getTile(getPlayer(i).getStartingTileCoords()).getTileColor();
 
-			if (availableGameColors.contains(gameColor)) {
-				// If the gameColor is available, keep it and remove it from the available colors.
-				availableGameColors.remove(gameColor);
+			if (availableTileColors.contains(tileColor)) {
+				// If the tileColor is available, keep it and remove it from the available colors.
+				availableTileColors.remove(tileColor);
 			} else {
-				// If current gameColor is not available, pick a random one from the available, set it then remove this gameColor from the available.
-				int randomIndex = randomGen.nextInt(availableGameColors.size());
-				GameColor randomGameColor = availableGameColors.get(randomIndex);
-				board.getTile(players[i].getStartingTileCoords()).setGameColor(randomGameColor);
-				availableGameColors.remove(randomGameColor);
+				// If current tileColor is not available, pick a random one from the available, set it then remove this tileColor from the available.
+				int randomIndex = randomGen.nextInt(availableTileColors.size());
+				TileColor randomTileColor = availableTileColors.get(randomIndex);
+				board.getTile(players[i].getStartingTileCoords()).setTileColor(randomTileColor);
+				availableTileColors.remove(randomTileColor);
 			}
-
 		}
 
 		//Setting ownership of the starting tiles and their neighbors of the same color :
@@ -103,8 +112,8 @@ public class Game {
 		// Setting current, previous colors and initial points of the players :
 		for (Player player : getPlayers()) {
 			int[] startingTile = player.getStartingTileCoords();
-			GameColor gameColor = board.getTile(startingTile[0], startingTile[1]).getGameColor();
-			player.setGameColor(gameColor);
+			TileColor tileColor = board.getTile(startingTile[0], startingTile[1]).getTileColor();
+			player.setTileColor(tileColor);
 			player.setPoints(1);
 
 			// Updating board to give the players ownership of the tiles of their colors next to their starting point.
@@ -121,31 +130,33 @@ public class Game {
 
 			// Print game status
 			output.printGameStatus(board, currentPlayer);
+			JFrame fen = new GameWindow(board, this);
 
 
-			// Prompt GameColor Choice
-			GameColor chosenGameColor = output.promptColorChoice();
+
+			// Prompt TileColor Choice
+			TileColor chosenTileColor = output.promptColorChoice();
 
 			boolean err = true;
 			while (err) {
 				err = false;
 				for (Player player : getPlayers()) {
-					if (player.getGameColor() == chosenGameColor) {
+					if (player.getTileColor() == chosenTileColor) {
 						err = true;
 						if (player == currentPlayer) {
 							output.printGameErrorMessage("You already control this color");
 						} else {
 							output.printGameErrorMessage(player.getName() + " already controls this color. Choose another one.");
 						}
-						chosenGameColor = output.promptColorChoice();
+						chosenTileColor = output.promptColorChoice();
 					}
 				}
 			}
 
-			output.printInfoMessage("Chosen color : " + chosenGameColor.name());
+			output.printInfoMessage("Chosen color : " + chosenTileColor.name());
 
 			// updating previous and current colors :
-			currentPlayer.setGameColor(chosenGameColor);
+			currentPlayer.setTileColor(chosenTileColor);
 
 			// updating the board
 			int[] startingTile = currentPlayer.getStartingTileCoords();
@@ -171,7 +182,7 @@ public class Game {
 	 */
 	public Player getPlayer(int id) {
 		int number = getPlayers().length;
-		if (id > 0 && id < number){
+		if (id >= 0 && id < number) {
 			return players[id];
 		}else {
 			return null;
