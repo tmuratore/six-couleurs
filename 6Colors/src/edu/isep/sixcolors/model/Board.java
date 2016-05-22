@@ -13,7 +13,6 @@ public class Board {
 
 	/**
 	 * Initialises a square board filled with random colors
-	 * TODO decide if the board is square or if it can be rectangular
 	 *
 	 * @param width of the board
 	 */

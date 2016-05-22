@@ -51,8 +51,8 @@ public class Game {
 		} else {
 			for (int i = 0; i < this.players.length; i++) {
 				// Computing starting tile abscissa and ordinate using the player's id :
-				int x = (i % 2 == 0) ? 0 : board.getWidth() - 1;
-				int y = (i > 0 && i < 3) ? board.getWidth() - 1 : 0;
+				int x = (i ==0 || i == 1) ? 0 : board.getWidth() - 1;
+				int y = (i ==1 || i == 2) ? board.getWidth() - 1 : 0;
 				players[i].setStartingTileCoords(x, y);
 			}
 		}
