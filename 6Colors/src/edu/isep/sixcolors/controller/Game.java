@@ -119,6 +119,7 @@ public class Game {
 			// Updating board to give the players ownership of the tiles of their colors next to their starting point.
 			board.update(startingTile[0], startingTile[1], player);
 		}
+
 	}
 
 	/**
@@ -130,8 +131,6 @@ public class Game {
 
 			// Print game status
 			output.printGameStatus(board, currentPlayer);
-			JFrame fen = new GameWindow(board, this);
-
 
 
 			// Prompt TileColor Choice

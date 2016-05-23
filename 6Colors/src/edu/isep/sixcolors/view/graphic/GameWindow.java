@@ -23,7 +23,7 @@ public class GameWindow extends JFrame{
     private JPanel playerList = new JPanel();
     private JPanel colorButtons = new JPanel();
     private JLabel title = new JLabel();
-    private Game game;
+ //   private Game game;
 
     private MouseListener listener = new MouseListener() {
         @Override
@@ -33,7 +33,7 @@ public class GameWindow extends JFrame{
 
             for(TileColor tc: TileColor.values()) {
                 if(color == tc.getColor()) {
-                    game.getCurrentPlayer().setTileColor(tc);
+                    // game.getCurrentPlayer().setTileColor(tc);
                 }
             }
 
@@ -60,9 +60,7 @@ public class GameWindow extends JFrame{
         }
     };
 
-
-    public GameWindow(Board board, Game game){
-        this.game = game;
+    public GameWindow() {
         this.setTitle("Six Colors Game");
         this.setSize(800, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,7 +72,6 @@ public class GameWindow extends JFrame{
         gamePanel.setBackground(Color.BLACK);
         gamePanel.setLayout(new GridBagLayout());
 
-        updateBoard(board);
         playerList.setBackground(Color.RED);
 
         colorButtons.setLayout(new FlowLayout());
@@ -109,7 +106,7 @@ public class GameWindow extends JFrame{
         }
     }
 
-    private void updateBoard(Board board){
+    public void updateBoard(Board board){
         // TODO Force square show
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridheight = 1;

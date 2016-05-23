@@ -9,11 +9,21 @@ public class Console implements Output {
 	static Scanner scan = new Scanner(System.in);
 
 	public void printGameErrorMessage(String message) {
+		System.out.println();
 		System.err.println(message);
 	}
 
 	public void printInfoMessage(String message) {
 		System.out.println(message);
+	}
+
+
+	public void printGameStatus(Board board, Player currentPlayer) {
+		System.out.println("It's " + currentPlayer.getName() + "'s turn !");
+		System.out.println("You have " + currentPlayer.getPoints() + " points.");
+		System.out.println("Your current color : " + currentPlayer.getTileColor().name());
+
+		Console.showBoard(board);
 	}
 
 	/**
@@ -35,15 +45,6 @@ public class Console implements Output {
 			}
 			System.out.println();
 		}
-	}
-
-
-	public void printGameStatus(Board board, Player currentPlayer) {
-		System.out.println("It's " + currentPlayer.getName() + "'s turn !");
-		System.out.println("You have " + currentPlayer.getPoints() + " points.");
-		System.out.println("Your current color : " + currentPlayer.getTileColor().name());
-
-		Console.showBoard(board);
 	}
 
 	/**
