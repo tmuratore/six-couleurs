@@ -3,13 +3,11 @@ package edu.isep.sixcolors.controller;
 import com.sun.istack.internal.Nullable;
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.view.Output;
-import edu.isep.sixcolors.view.graphic.GameWindow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import javax.swing.*;
 
 /**
  * Game controller : Controller implementing the game engine
@@ -23,20 +21,22 @@ public class Game {
 	private int currentPlayerId;
 	private Board board;
 	private Output output;
+    private Output consoleOutput;
 
 	/**
 	 * Creates a new game
 	 *
 	 * @param output the chosen output
 	 */
-	public Game(Output output) {
+	public Game(Output output, Output consoleOutput) {
 
 		this.output = output;
+        this.consoleOutput = consoleOutput;
 
-		// TODO : Find a real max size for the Board
-		int width = output.promptFramedInt("Size of the board : ", 5, 50);
+		// todo this should output on main output :
+		int width = consoleOutput.promptFramedInt("Size of the board : ", 5, 50);
 		// TODO : Modify the max value of players depending on the shape of the Tiles/Board ?
-		int nbPlayers = output.promptFramedInt("Number of players : ", 2, 4);
+		int nbPlayers = consoleOutput.promptFramedInt("Number of players : ", 2, 4);
 
 		// Creating board and players :
 		this.board = new Board(width);
@@ -63,17 +63,26 @@ public class Game {
 		Random randomGen = new Random();
 
         for(int i = 0; i < players.length; i++) {
-            Player player = getPlayer(i);
-            player.setTileColor(
+			Player player = null;
+			try {
+				player = getPlayer(i);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			player.setTileColor(
                 board.getTile(player.getStartingTileCoords()).getTileColor()
             );
         }
 
-		// TODO Fix this plz (cf. Github issue #2 )
 		// Preventing two players from getting the same initial color
 		for (int i = 0; i < players.length; i++) {
 
-			TileColor tileColor = board.getTile(getPlayer(i).getStartingTileCoords()).getTileColor();
+			TileColor tileColor = null;
+			try {
+				tileColor = board.getTile(getPlayer(i).getStartingTileCoords()).getTileColor();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 			if (availableTileColors.contains(tileColor)) {
 				// If the tileColor is available, keep it and remove it from the available colors.
@@ -105,9 +114,13 @@ public class Game {
 	public void init() {
 		String name;
 		for (int i = 0; i < getPlayers().length; i++) {
-			name = output.promptString("Player " + (i + 1) + ", choose your name : ");
-			getPlayer(i).setName(name);
-		}
+			name = consoleOutput.promptString("Player " + (i + 1) + ", choose your name : ");
+            try {
+                getPlayer(i).setName(name);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
 		// Setting current, previous colors and initial points of the players :
 		for (Player player : getPlayers()) {
@@ -131,10 +144,10 @@ public class Game {
 
 			// Print game status
 			output.printGameStatus(board, currentPlayer);
-
+            consoleOutput.printGameStatus(board, currentPlayer);
 
 			// Prompt TileColor Choice
-			TileColor chosenTileColor = output.promptColorChoice();
+			TileColor chosenTileColor = consoleOutput.promptColorChoice();
 
 			boolean err = true;
 			while (err) {
@@ -143,11 +156,11 @@ public class Game {
 					if (player.getTileColor() == chosenTileColor) {
 						err = true;
 						if (player == currentPlayer) {
-							output.printGameErrorMessage("You already control this color");
+							consoleOutput.printGameErrorMessage("You already control this color");
 						} else {
-							output.printGameErrorMessage(player.getName() + " already controls this color. Choose another one.");
+							consoleOutput.printGameErrorMessage(player.getName() + " already controls this color. Choose another one.");
 						}
-						chosenTileColor = output.promptColorChoice();
+						chosenTileColor = consoleOutput.promptColorChoice();
 					}
 				}
 			}
@@ -179,12 +192,12 @@ public class Game {
 	 * @param id
 	 * @return Player
 	 */
-	public Player getPlayer(int id) {
+	public Player getPlayer(int id) throws Exception {
 		int number = getPlayers().length;
 		if (id >= 0 && id < number) {
 			return players[id];
 		}else {
-			return null;
+			throw new Exception("Player not found");
 		}
 	}
 
@@ -194,15 +207,19 @@ public class Game {
 	 * @return Player[]
 	 */
 	public Player[] getPlayers() {
-		return this.players;
+        return this.players;
 	}
 
+    /**
+     * Get the current player
+     * @return
+     */
 	public Player getCurrentPlayer() {
 		return this.players[this.currentPlayerId];
 	}
 
 	public int getCurrentPlayerId() {
-		return this.currentPlayerId;
+        return this.currentPlayerId;
 	}
 
 

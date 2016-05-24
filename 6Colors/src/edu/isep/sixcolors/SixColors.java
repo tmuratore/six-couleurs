@@ -22,10 +22,13 @@ public class SixColors {
 		// TODO make the output type be decided on the content of main's args
 		// Creates the output
 		// Output output = new Console();
-		Output output = new Graphic();
+		Output output = new MainWindow();
+		// todo develop what wil replace console outputs in graphics :
+		// temp :
+		Output consoleOutput = new Console();
 
 		// Creating the game controller :
-		Game game = new Game(output);
+		Game game = new Game(output, consoleOutput);
 
 		game.init();
 

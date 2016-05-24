@@ -16,6 +16,4 @@ public interface Output {
     void printGameErrorMessage(String message);
 
     void printInfoMessage(String message);
-
-
 }

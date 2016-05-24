@@ -3,10 +3,7 @@ package edu.isep.sixcolors.view.graphic;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by ohhopi on 23/05/2016.
- */
-public class SetupWindow extends JFrame {
+/*public class SetupWindow extends JFrame {
     private JPanel container = new JPanel();
     private JPanel form = new JPanel();
 
@@ -41,3 +38,4 @@ public class SetupWindow extends JFrame {
         this.setVisible(true);
     }
 }
+*/

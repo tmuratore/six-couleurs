@@ -1,20 +1,16 @@
 package edu.isep.sixcolors.view;
 
-import edu.isep.sixcolors.controller.Game;
 import edu.isep.sixcolors.model.Board;
 import edu.isep.sixcolors.model.Player;
 import edu.isep.sixcolors.model.TileColor;
-import edu.isep.sixcolors.view.graphic.GameWindow;
-
-import javax.swing.*;
-import java.awt.*;
+import edu.isep.sixcolors.view.graphic.MainWindow;
 
 public class Graphic implements Output {
 
-    private JFrame frame;
+    private MainWindow window;
 
     public Graphic() {
-        this.frame = new Window();
+        this.window = new MainWindow();
     }
 
     /*
@@ -53,7 +49,7 @@ public class Graphic implements Output {
     } */
 
     public void printGameStatus(Board board, Player currentPlayer) {
-        window.updateBoard(board);
+        this.window.printGameStatus(board, currentPlayer);
     }
 
 
@@ -67,30 +63,27 @@ public class Graphic implements Output {
         return 0;
     }
 
-    @Override
     public int promptFramedInt(String whatToAsk, int min, int max) {
         // idem avec custom error message
         return 0;
     }
 
-    @Override
     public String promptString(String whatToAsk) {
         return null;
     }
 
-    @Override
     public TileColor promptColorChoice() {
         // merge with update
         return null;
     }
 
-    @Override
     public void printGameErrorMessage(String message) {
         // wtf ?
     }
 
-    @Override
     public void printInfoMessage(String message) {
         // wtf ?
     }
+
+    public void open() { }
 }
