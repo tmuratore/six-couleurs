@@ -46,7 +46,8 @@ public class Game extends Observable{
      */
     public void initGame(){
 
-        if (this.getState() == GameState.Game){
+        // TODO Cleaner condition ?
+        if (players.getPlayerNumber() > 0 && board.getWidth() > 0 && players.getPlayer(0).getName() != null){
 
             setStartCoords();
 

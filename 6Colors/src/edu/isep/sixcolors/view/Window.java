@@ -5,6 +5,7 @@ import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.GameState;
 import edu.isep.sixcolors.view.game.Grid;
+import edu.isep.sixcolors.view.game.ColorButtons;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,7 +96,7 @@ public class Window extends JFrame implements Observer {
         JPanel grid = new Grid(game);
         JPanel playerList = new JPanel();
         playerList.setBackground(Color.BLACK);
-        JPanel colorButtons = new JPanel();
+        JPanel colorButtons = new ColorButtons(game);
         colorButtons.setBackground(Color.cyan);
         pan.setLayout(new BorderLayout());
         pan.setBorder(BorderFactory.createTitledBorder("Gameplay"));

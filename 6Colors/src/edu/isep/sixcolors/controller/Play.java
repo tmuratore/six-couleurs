@@ -57,13 +57,14 @@ public class Play implements ActionListener {
         int playerNb = game.getPlayers().getPlayerNumber();
         Players players = game.getPlayers();
         for (int i = 0; i < playerNb; i++){
+            // TODO Check if String is not null (no name entered)
             String playerName = ((JTextField) contentPane.getComponent(2*i+1)).getText();
             System.out.println(playerName);
             // TODO Properly Construct PlayerS
             players.setPlayer(i, new Player(playerName));
 
         }
-        game.setState(GameState.Game);
         game.initGame();
+        game.setState(GameState.Game);
     }
 }

@@ -2,19 +2,41 @@ package edu.isep.sixcolors.view.game;
 
 
 import edu.isep.sixcolors.model.Game;
+import edu.isep.sixcolors.model.Players;
+import edu.isep.sixcolors.model.TileColor;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class colorButtons extends JPanel {
+public class ColorButtons extends JPanel {
     private Game game;
 
-    //GetColors
-    //RemoveTakenOnes
 
-    //CreateAButtonForEachFreeOne
+    public ColorButtons(Game game){
+        this.game = game;
+        Players players = game.getPlayers();
 
-    public colorButtons(Game game){
+        this.setLayout(new FlowLayout());
+
+        ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
+        for (int i = 0; i < players.getPlayerNumber(); i++ ){
+            TileColor tileColor = players.getPlayer(i).getTileColor();
+            System.out.println(tileColor.toString());
+            if (availableTileColors.contains(tileColor)){
+                availableTileColors.remove(tileColor);
+            }
+        }
+
+        for (int i = 0; i < availableTileColors.size(); i++){
+            this.add(new JButton(availableTileColors.get(i).name().toString()));
+        }
 
     }
+
+
+
+
 
 }
