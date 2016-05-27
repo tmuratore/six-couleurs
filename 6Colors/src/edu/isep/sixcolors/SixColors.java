@@ -1,39 +1,25 @@
 package edu.isep.sixcolors;
-import javax.swing.JFrame;
 
-import edu.isep.sixcolors.controller.Game;
-import edu.isep.sixcolors.view.*;
-import edu.isep.sixcolors.view.Output;
-import edu.isep.sixcolors.view.graphic.*;
+import edu.isep.sixcolors.controller.Play;
+import edu.isep.sixcolors.model.Game;
+import edu.isep.sixcolors.view.Window;
 
-/**
- * Main class of the game : manages inputs and chooses the right controller to launch
- */
 public class SixColors {
 
-	/**
-	 * Main method of the game (currently)
-	 *
-	 * @param args
-	 */
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
+        //Model
+        Game game = new Game();
 
-		// TODO make the output type be decided on the content of main's args
-		// Creates the output
-		// Output output = new Console();
-		Output output = new MainWindow();
-		// todo develop what wil replace console outputs in graphics :
-		// temp :
-		Output consoleOutput = new Console();
+        //Controller
+        Play play = new Play(game);
 
-		// Creating the game controller :
-		Game game = new Game(output, consoleOutput);
+        //View
+        Window view = new Window(play, game);
 
-		game.init();
+        game.addObserver(view);
+        //game.getPlayers().addObserver(view);
+        //game.getBoard().addObserver(view);
 
-		game.play();
-
-	}
-
+    }
 }

@@ -27,6 +27,8 @@ public class Play implements ActionListener {
         }else if(game.getState() == GameState.NameConfig){ // We are setting the player names
 
             initPlayers(contentPane);
+        }else if(game.getState() == GameState.Game){
+
         }
 
     }
@@ -62,5 +64,6 @@ public class Play implements ActionListener {
 
         }
         game.setState(GameState.Game);
+        game.initGame();
     }
 }

@@ -1,64 +1,91 @@
 package edu.isep.sixcolors.model;
 
+import edu.isep.sixcolors.controller.Play;
+
+import java.util.Observable;
+
 /**
  * Player model : Represents a player of the current game
- * TODO abstract to be extended (local player OR AI OR distant player)  
+ * TODO abstract to be extended (local player OR AI OR distant player)
  */
-public class Player {
+public class Player extends Observable{
 
-	private String name;
-	private TileColor tileColor;
-	private TileColor previousTileColor;
-	private int[] startingTileCoords = new int[2];
-	private int points;
+    private String name;
+    private TileColor tileColor;
+    private TileColor previousTileColor;
+    private int[] startingTileCoords = new int[2];
+    private int points;
 
-	public String getName() {
-		return name;
-	}
+    public Player(String name){
+        this.name = name;
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public TileColor getTileColor() {
-		return tileColor;
-	}
+    public void setName(String name) {
+        this.name = name;
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
 
-	public void setTileColor(TileColor controlledTileColor) {
-		setPreviousTileColor(this.tileColor);
-		this.tileColor = controlledTileColor;
-	}
+    public TileColor getTileColor() {
+        return tileColor;
+    }
 
-	public TileColor getPreviousTileColor() {
-		return previousTileColor;
-	}
+    public void setTileColor(TileColor controlledTileColor) {
+        setPreviousTileColor(this.tileColor);
+        this.tileColor = controlledTileColor;
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
 
-	private void setPreviousTileColor(TileColor previousTileColor) {
-		this.previousTileColor = previousTileColor;
-	}
+    public TileColor getPreviousTileColor() {
+        return previousTileColor;
+    }
 
-	public int[] getStartingTileCoords() {
-		return startingTileCoords;
-	}
+    private void setPreviousTileColor(TileColor previousTileColor) {
+        this.previousTileColor = previousTileColor;
+    }
 
-	public void setStartingTileCoords(int[] startingTileCoords) {
-		this.startingTileCoords = startingTileCoords;
-	}
+    public int[] getStartingTileCoords() {
+        return startingTileCoords;
+    }
 
-	public void setStartingTileCoords(int i, int j) {
-		this.startingTileCoords = new int[]{i, j};
-	}
+    public void setStartingTileCoords(int[] startingTileCoords) {
+        this.startingTileCoords = startingTileCoords;
+    }
 
-	public int getPoints() {
-		return points;
-	}
+    public void setStartingTileCoords(int i, int j) {
+        this.startingTileCoords = new int[]{i, j};
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
 
-	public void setPoints(int points) {
-		this.points = points;
-	}
+    public int getPoints() {
+        return points;
+    }
 
-	public void addPoints() {
-		this.points++;
-	}
+    public void setPoints(int points) {
+        setChanged();
+        notifyObservers();
+        clearChanged();
+        this.points = points;
+    }
+
+    public void addPoints() {
+
+        this.points++;
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
 
 }
