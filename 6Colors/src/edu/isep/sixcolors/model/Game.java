@@ -80,42 +80,27 @@ public class Game extends Observable{
     }
 
     private void setStartColors(){
+
+        // 1. Create a list of available colors and a random generator
         ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
-        Random randomGen = new Random();
+        Random random = new Random();
 
-        //Initial pass to set StartingTileColor for each player
         for(int i = 0; i < players.getPlayerNumber(); i++) {
-            Player player = null;
-            try {
-                player = players.getPlayer(i);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            player.setTileColor(
-                    board.getTile(player.getStartingTileCoords()).getTileColor()
-            );
-        }
 
-        // Re-pass to prevent two players from getting the same initial color
-        for (int i = 0; i < this.players.getPlayerNumber(); i++) {
+            // Get the player being iterated over :
+            Player player = players.getPlayer(i);
 
-            TileColor tileColor = null;
-            try {
-                tileColor = board.getTile(players.getPlayer(i).getStartingTileCoords()).getTileColor();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // Get a random, available color :
+            TileColor tileColor = availableTileColors.get(random.nextInt(availableTileColors.size()));
 
-            if (availableTileColors.contains(tileColor)) {
-                // If the tileColor is available, keep it and remove it from the available colors.
-                availableTileColors.remove(tileColor);
-            } else {
-                // If current tileColor is not available, pick a random one from the available, set it then remove this tileColor from the available.
-                int randomIndex = randomGen.nextInt(availableTileColors.size());
-                TileColor randomTileColor = availableTileColors.get(randomIndex);
-                board.getTile(players.getPlayer(i).getStartingTileCoords()).setTileColor(randomTileColor);
-                availableTileColors.remove(randomTileColor);
-            }
+            // 1. Set the player's color to the randomly chosen TileColor :
+            player.setTileColor(tileColor);
+
+            // 2. Update the board accordingly :
+            board.getTile(player.getStartingTileCoords()).setTileColor(tileColor);
+
+            // 3. Pop this color from the list of available colors :
+            availableTileColors.remove(tileColor);
         }
     }
 
