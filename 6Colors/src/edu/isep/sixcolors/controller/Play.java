@@ -3,6 +3,7 @@ package edu.isep.sixcolors.controller;
 import edu.isep.sixcolors.controller.AI.AIInterface;
 import edu.isep.sixcolors.controller.AI.RandomAI;
 import edu.isep.sixcolors.model.*;
+import edu.isep.sixcolors.view.listeners.WarningPopup;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -61,7 +62,7 @@ public class Play implements ActionListener {
                 game.setState(GameState.NameConfig);
             }
         } catch (NumberFormatException x) {
-            //TODO send an error popup via the view
+            WarningPopup pop = new WarningPopup(Config.OUT_OF_BOUNDS_GRID_CONFIG_MESSAGE + Config.newLine + Config.OUT_OF_BOUNDS_PLAYER_NB_CONFIG_MESSAGE, Config.OUT_OF_BOUNDS_CONFIG_TITLE);
         }
     }
 

@@ -7,10 +7,11 @@ import edu.isep.sixcolors.model.GameState;
 import edu.isep.sixcolors.view.game.Grid;
 import edu.isep.sixcolors.view.game.ColorButtons;
 import edu.isep.sixcolors.view.game.PlayerList;
+import edu.isep.sixcolors.view.listeners.Load;
+import edu.isep.sixcolors.view.listeners.Save;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.*;
 
 public class Window extends JFrame implements Observer {
@@ -29,10 +30,10 @@ public class Window extends JFrame implements Observer {
 
 
         this.setTitle("Six Colors Game");
-        this.setSize(800, 500);
+        //this.setSize(800, 500);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+
 
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -57,6 +58,7 @@ public class Window extends JFrame implements Observer {
 
 
         this.pack();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -64,7 +66,6 @@ public class Window extends JFrame implements Observer {
     // this method is triggered when the model changes :
     @Override
     public void update(Observable o, Object arg) {
-       System.out.println(game.getState().toString());
        JButton validate = ((JButton)(buttons.getComponent(0)));
         if(game.getState() == GameState.NameConfig){ // We are configuring player names
             validate.setText("Play");
@@ -93,6 +94,7 @@ public class Window extends JFrame implements Observer {
         this.add(container,0);
         this.revalidate();
         this.pack();
+        this.setLocationRelativeTo(null);
         this.repaint();
     }
 

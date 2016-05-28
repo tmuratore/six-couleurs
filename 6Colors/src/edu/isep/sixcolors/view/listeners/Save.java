@@ -1,6 +1,7 @@
-package edu.isep.sixcolors.view;
+package edu.isep.sixcolors.view.listeners;
 
 
+import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class Save implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fc.showDialog(SwingUtilities.getRoot((Component) e.getSource()), "Select");
+        int returnVal = fc.showDialog(SwingUtilities.getRoot((Component) e.getSource()), Config.LOAD_SAVE_ACTION_NAME);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
@@ -30,6 +31,19 @@ public class Save implements ActionListener {
                 out.close();
             } catch (IOException e1) {
                 e1.printStackTrace();
+            }
+        //TODO Popup that ends the process if yes is pressed.
+            JOptionPane jop = new JOptionPane();
+            int option = jop.showConfirmDialog(
+                    null,
+                    Config.EXIT_AFTER_SAVE_MESSAGE,
+                    Config.EXIT_AFTER_SAVE_TITLE,
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (option == JOptionPane.YES_OPTION){
+                System.exit(0);
             }
 
         }

@@ -1,6 +1,7 @@
-package edu.isep.sixcolors.view;
+package edu.isep.sixcolors.view.listeners;
 
 
+import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class Load implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-            int returnVal = fc.showDialog(SwingUtilities.getRoot((Component) e.getSource()), "Select");
+            int returnVal = fc.showDialog(SwingUtilities.getRoot((Component) e.getSource()), Config.LOAD_SAVE_ACTION_NAME);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
