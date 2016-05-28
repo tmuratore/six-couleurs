@@ -7,6 +7,7 @@ import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.GameState;
 import edu.isep.sixcolors.view.game.Grid;
 import edu.isep.sixcolors.view.game.ColorButtons;
+import edu.isep.sixcolors.view.game.PlayerList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +47,6 @@ public class Window extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-        System.out.println("Model changed !");
-
         if(game.getState() == GameState.NameConfig){ // We are configuring player names
             changeContainer(playerNameContainer());
         } else if (game.getState() == GameState.Game) { // game is in progress :
@@ -55,14 +54,6 @@ public class Window extends JFrame implements Observer {
             this.remove(validate);
 
             changeContainer(gameContainer());
-
-            if(o instanceof Game) {
-                System.out.println("You think this is a motherfucking game ?");
-            }
-
-            if(o instanceof Board) {
-                System.out.println("You think this is a motherfucking board ?");
-            }
         }
     }
 
@@ -109,10 +100,10 @@ public class Window extends JFrame implements Observer {
         JPanel pan = new JPanel();
         JPanel grid = new Grid(game);
 
-        JPanel playerList = new JPanel();
-        playerList.setBackground(Color.BLACK);
+        JPanel playerList = new PlayerList(game);
+        //playerList.setBackground(Color.BLACK);
         JPanel colorButtons = new ColorButtons(game, play);
-        colorButtons.setBackground(Color.cyan);
+        //colorButtons.setBackground(Color.cyan);
         pan.setLayout(new BorderLayout());
         pan.setBorder(BorderFactory.createTitledBorder("Gameplay"));
 

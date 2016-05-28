@@ -34,8 +34,6 @@ public class Play implements ActionListener {
 
             if (TileColor.contains(buttonText)) {
 
-                // TODO this is debug :
-                System.out.println(TileColor.valueOf(buttonText));
 
 
                 // 1. Fetch the current player :
@@ -46,14 +44,13 @@ public class Play implements ActionListener {
                 try {
                     chosenColor = TileColor.parseTileColor(buttonText);
 
-                    // TODO debug :
-                    System.out.println(chosenColor.name());
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
 
                 // 3. Set the current player's color :
                 currentPlayer.setTileColor(chosenColor);
+
 
                 // 4. Update the board to apply the color choice :
                 game.updateBoard(
@@ -98,7 +95,6 @@ public class Play implements ActionListener {
             // TODO Check if String is not null (no name entered)
             String playerName = ((JTextField) contentPane.getComponent(2*i+1)).getText();
 
-            System.out.println(playerName);
 
             players.setPlayer(i, new Player(playerName));
 

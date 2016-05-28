@@ -139,6 +139,9 @@ public class Game extends Observable{
         else {
             currentPlayerId ++;
         }
+        setChanged();
+        notifyObservers();
+        clearChanged();
     }
 
     public void updateBoard(int tileX, int tileY, Player player) {
@@ -147,5 +150,11 @@ public class Game extends Observable{
         setChanged();
         notifyObservers();
         clearChanged();
+    }
+
+
+
+    public int getCurrentPlayerId() {
+        return currentPlayerId;
     }
 }

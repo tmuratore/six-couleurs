@@ -4,7 +4,8 @@ package edu.isep.sixcolors.model;
 public enum GameState {
     GridConfig(0),
     NameConfig(10),
-    Game(20);
+    Game(20),
+    End(30);
 
 
     private int gameStateCode;
