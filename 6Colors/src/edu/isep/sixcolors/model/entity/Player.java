@@ -1,6 +1,6 @@
-package edu.isep.sixcolors.model;
+package edu.isep.sixcolors.model.entity;
 
-import edu.isep.sixcolors.controller.AI.AIInterface;
+import edu.isep.sixcolors.model.AI.AIInterface;
 
 import java.io.Serializable;
 import java.util.Observable;

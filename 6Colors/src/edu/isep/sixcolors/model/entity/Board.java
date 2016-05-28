@@ -1,9 +1,7 @@
-package edu.isep.sixcolors.model;
+package edu.isep.sixcolors.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 /**

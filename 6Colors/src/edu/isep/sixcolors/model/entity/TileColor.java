@@ -1,4 +1,4 @@
-package edu.isep.sixcolors.model;
+package edu.isep.sixcolors.model.entity;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ public enum TileColor implements Serializable {
     Red('R', Color.RED),
     Yellow('Y', Color.YELLOW),
     Orange('O', Color.ORANGE),
-    Magenta('M', Color.PINK);
+    Magenta('M', new Color(128,0,128));
 
     private static Random random = new Random();
 

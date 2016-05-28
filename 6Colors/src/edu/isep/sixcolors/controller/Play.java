@@ -1,9 +1,13 @@
 package edu.isep.sixcolors.controller;
 
-import edu.isep.sixcolors.controller.AI.AIInterface;
-import edu.isep.sixcolors.controller.AI.RandomAI;
+import edu.isep.sixcolors.model.AI.AIInterface;
+import edu.isep.sixcolors.model.AI.RandomAI;
 import edu.isep.sixcolors.model.*;
-import edu.isep.sixcolors.view.listeners.WarningPopup;
+import edu.isep.sixcolors.model.entity.Board;
+import edu.isep.sixcolors.model.entity.Player;
+import edu.isep.sixcolors.model.entity.Players;
+import edu.isep.sixcolors.model.entity.TileColor;
+import edu.isep.sixcolors.view.listener.WarningPopup;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,18 +21,21 @@ public class Play implements ActionListener {
         this.game = game;
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         JPanel contentPane;
         if (game.getState() == GameState.GridConfig) { // We are initialising the game
+            // 1. Fetch the text of the button :
             String sourceText = ((JButton) e.getSource()).getText();
+
+            // 2. Fetch the content pane :
             contentPane = ((JPanel) ((JPanel) ((JButton) e.getSource()).getParent()).getParent().getComponent(0));
-            if (sourceText == Config.RANDOM_BOARD_BUTTON_TEXT){
-                initGrid(contentPane);
-            }else if (sourceText == Config.CUSTOM_BOARD_BUTTON_TEXT){
+
+            // 3. Guess which button was clicked :
+            if (sourceText == Config.RANDOM_BOARD_BUTTON_TEXT){ // Random board
+                initGrid(contentPane, (JButton) e.getSource());
+            }else if (sourceText == Config.CUSTOM_BOARD_BUTTON_TEXT) { // custom board
                 // TODO initiateCustomGrid
             }
-
         }
         else if(game.getState() == GameState.NameConfig){ // We are setting the player names
             contentPane = ((JPanel) ((JPanel) ((JButton) e.getSource()).getParent()).getParent().getComponent(0));
@@ -46,13 +53,16 @@ public class Play implements ActionListener {
 
     }
 
-    public void initGrid(JPanel contentPane){
+    public void initGrid(JPanel contentPane, JButton button){
+        // Try parsing the number input
         try {
             int boardSize = Integer.parseInt(((JTextField) contentPane.getComponent(1)).getText());
             int playerNb = Integer.parseInt(((JTextField) contentPane.getComponent(3)).getText());
 
+            // Check if the inputs are within boundaries :
             if (boardSize >= Config.GRID_MIN && boardSize <= Config.GRID_MAX && playerNb >= Config.PLAYER_NB_MIN && playerNb <= Config.PLAYER_NB_MAX){
 
+                //if (button.getText() == )
                 game.setBoard(new Board(boardSize));
 
                 Players players = new Players(playerNb);
@@ -61,8 +71,17 @@ public class Play implements ActionListener {
 
                 game.setState(GameState.NameConfig);
             }
+            else { // input out of bounds
+                WarningPopup pop = new WarningPopup(
+                        Config.OUT_OF_BOUNDS_GRID_CONFIG_MESSAGE + Config.newLine + Config.OUT_OF_BOUNDS_PLAYER_NB_CONFIG_MESSAGE,
+                        Config.OUT_OF_BOUNDS_CONFIG_TITLE
+                );
+            }
         } catch (NumberFormatException x) {
-            WarningPopup pop = new WarningPopup(Config.OUT_OF_BOUNDS_GRID_CONFIG_MESSAGE + Config.newLine + Config.OUT_OF_BOUNDS_PLAYER_NB_CONFIG_MESSAGE, Config.OUT_OF_BOUNDS_CONFIG_TITLE);
+            WarningPopup pop = new WarningPopup (
+                    Config.NUMBER_FORMAT_CONFIG_MESSAGE,
+                    Config.OUT_OF_BOUNDS_CONFIG_TITLE
+            );
         }
     }
 

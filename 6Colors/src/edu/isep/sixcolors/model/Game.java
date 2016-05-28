@@ -1,5 +1,10 @@
 package edu.isep.sixcolors.model;
 
+import edu.isep.sixcolors.model.entity.Board;
+import edu.isep.sixcolors.model.entity.Player;
+import edu.isep.sixcolors.model.entity.Players;
+import edu.isep.sixcolors.model.entity.TileColor;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

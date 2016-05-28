@@ -1,4 +1,4 @@
-package edu.isep.sixcolors.view.listeners;
+package edu.isep.sixcolors.view.listener;
 
 
 import edu.isep.sixcolors.model.Config;
@@ -32,7 +32,7 @@ public class Save implements ActionListener {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-        //TODO Popup that ends the process if yes is pressed.
+
             JOptionPane jop = new JOptionPane();
             int option = jop.showConfirmDialog(
                     null,

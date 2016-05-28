@@ -7,8 +7,8 @@ import edu.isep.sixcolors.model.GameState;
 import edu.isep.sixcolors.view.game.Grid;
 import edu.isep.sixcolors.view.game.ColorButtons;
 import edu.isep.sixcolors.view.game.PlayerList;
-import edu.isep.sixcolors.view.listeners.Load;
-import edu.isep.sixcolors.view.listeners.Save;
+import edu.isep.sixcolors.view.listener.Load;
+import edu.isep.sixcolors.view.listener.Save;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,18 +19,12 @@ public class Window extends JFrame implements Observer {
     private JPanel buttons;
     private Play play;
     private Game game;
-    private Save save;
-    private Load load;
 
     public Window(Play play, Game game) {
         this.play = play;
         this.game = game;
-        this.load = new Load(game);
 
-
-
-        this.setTitle("Six Colors Game");
-        //this.setSize(800, 500);
+        this.setTitle(Config.GAME_TITLE);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -48,6 +42,7 @@ public class Window extends JFrame implements Observer {
         custom.addActionListener(play);
         buttons.add(custom);
         JButton fromSave = new JButton(Config.IMPORT_BOARD_BUTTON_TEXT);
+        Load load = new Load(game);
         fromSave.addActionListener(load);
         buttons.add(fromSave);
 
@@ -68,7 +63,7 @@ public class Window extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
        JButton validate = ((JButton)(buttons.getComponent(0)));
         if(game.getState() == GameState.NameConfig){ // We are configuring player names
-            validate.setText("Play");
+            validate.setText(Config.PLAY_BUTTON_TEXT);
             buttons.remove(1);
             buttons.remove(1);
             changeContainer(playerNameContainer());
@@ -100,17 +95,19 @@ public class Window extends JFrame implements Observer {
 
     private JPanel initContainer(){
         JPanel pan = new JPanel();
-        JTextField gridInput = new JTextField(Config.GRID_MIN);
-        JTextField playerInput = new JTextField(Config.PLAYER_NB_MIN);
+
         JLabel gridLabel = new JLabel(Config.GRID_PROMPT_MESSAGE);
+        JTextField gridSizeInput = new JTextField(Config.GRID_MIN);
+
         JLabel playerLabel = new JLabel(Config.PLAYER_NB_PROMPT_MESSAGE);
+        JTextField playerNamesInput = new JTextField(Config.PLAYER_NB_MIN);
 
         pan.setLayout( new GridLayout(2,2));
         pan.setBorder(BorderFactory.createTitledBorder("Game parameters"));
         pan.add(gridLabel);
-        pan.add(gridInput);
+        pan.add(gridSizeInput);
         pan.add(playerLabel);
-        pan.add(playerInput);
+        pan.add(playerNamesInput);
 
         return pan;
     }
@@ -163,6 +160,7 @@ public class Window extends JFrame implements Observer {
     }
 
     private JPanel endContainer(){
+        this.setJMenuBar(null);
         JPanel pan = new JPanel();
 
 

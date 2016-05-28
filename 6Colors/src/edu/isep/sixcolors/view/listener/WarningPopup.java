@@ -1,4 +1,4 @@
-package edu.isep.sixcolors.view.listeners;
+package edu.isep.sixcolors.view.listener;
 
 
 import javax.swing.*;

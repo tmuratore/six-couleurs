@@ -1,4 +1,4 @@
-package edu.isep.sixcolors.model;
+package edu.isep.sixcolors.model.entity;
 
 import java.io.Serializable;
 import java.util.Observable;

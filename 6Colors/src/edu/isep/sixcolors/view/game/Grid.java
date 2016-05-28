@@ -1,8 +1,8 @@
 package edu.isep.sixcolors.view.game;
 
-import edu.isep.sixcolors.model.Board;
+import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.Game;
-import edu.isep.sixcolors.model.TileColor;
+import edu.isep.sixcolors.model.entity.TileColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +25,10 @@ public class Grid extends JPanel {
             gbc.gridy = i;
             for (int j = 0; j < boardWidth; j++){
                 gbc.gridx = j;
-                this.add(makeColorPane(board.getTile(i,j).getTileColor()),gbc);
+                this.add(
+                        makeColorPane(board.getTile(i,j).getTileColor(), (board.getTile(i,j).getOwner()!=null)),
+                        gbc
+                );
             }
 
         }
@@ -33,10 +36,14 @@ public class Grid extends JPanel {
 
     }
 
-    public JPanel makeColorPane(TileColor color){
+    public JPanel makeColorPane(TileColor color, boolean owned){
         JPanel tilePane = new JPanel();
         tilePane.setBackground(color.getColor());
         tilePane.setPreferredSize(new Dimension(40,40));
+
+        if(owned) {
+            tilePane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        }
 
         return tilePane;
     }

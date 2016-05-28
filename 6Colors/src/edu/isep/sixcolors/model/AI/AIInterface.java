@@ -1,8 +1,8 @@
-package edu.isep.sixcolors.controller.AI;
+package edu.isep.sixcolors.model.AI;
 
 
 import edu.isep.sixcolors.model.Game;
-import edu.isep.sixcolors.model.TileColor;
+import edu.isep.sixcolors.model.entity.TileColor;
 
 public interface AIInterface {
     //TODO Apparently this Interface creates a cycle (see Dependency Matrix)

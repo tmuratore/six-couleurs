@@ -3,9 +3,8 @@ package edu.isep.sixcolors.view.game;
 
 import edu.isep.sixcolors.controller.Play;
 import edu.isep.sixcolors.model.Game;
-import edu.isep.sixcolors.model.Player;
-import edu.isep.sixcolors.model.Players;
-import edu.isep.sixcolors.model.TileColor;
+import edu.isep.sixcolors.model.entity.Players;
+import edu.isep.sixcolors.model.entity.TileColor;
 
 import javax.swing.*;
 import java.awt.*;
