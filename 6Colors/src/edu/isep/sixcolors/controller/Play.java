@@ -2,6 +2,7 @@ package edu.isep.sixcolors.controller;
 
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.view.Window;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -59,6 +60,15 @@ public class Play implements ActionListener {
                         currentPlayer
                 );
 
+                //5. Checks if a player has won :
+                Player winner = checkForWinner();
+                if (winner != null) {
+
+                    System.out.println("The game is over, the winner is " + winner.getName() + " !");
+                    game.setWinner(winner);
+                    game.setState(GameState.End);
+                }
+
                 game.nextPlayer();
 
 
@@ -101,5 +111,33 @@ public class Play implements ActionListener {
         }
         game.initGame();
         game.setState(GameState.Game);
+    }
+
+    /**
+     * Returns the winner or null if there is none yet
+     *
+     * @return Player winner or null;
+     */
+
+    @Nullable
+    private Player checkForWinner() {
+        int winPoints = (int) Math.floor(Math.pow(game.getBoard().getWidth(), 2) / game.getPlayers().getPlayerNumber());
+        int totalPoints = 0;
+        int maxPoints = 0;
+        int playerPoints;
+        Player winner = game.getCurrentPlayer();
+        for (int i = 0; i < game.getPlayers().getPlayerNumber(); i++) {
+            playerPoints = game.getPlayers().getPlayer(i).getPoints();
+            if (playerPoints > maxPoints) {
+                maxPoints = playerPoints;
+                winner = game.getPlayers().getPlayer(i);
+            }
+            totalPoints += game.getPlayers().getPlayer(i).getPoints();
+        }
+        if (game.getCurrentPlayer().getPoints() > winPoints || totalPoints == Math.pow(game.getBoard().getWidth(), 2)) {
+            return winner;
+        }
+        return null;
+
     }
 }

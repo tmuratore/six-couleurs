@@ -54,6 +54,8 @@ public class Window extends JFrame implements Observer {
             this.remove(validate);
 
             changeContainer(gameContainer());
+        } else if (game.getState() ==  GameState.End){
+            changeContainer(endContainer());
         }
     }
 
@@ -101,9 +103,8 @@ public class Window extends JFrame implements Observer {
         JPanel grid = new Grid(game);
 
         JPanel playerList = new PlayerList(game);
-        //playerList.setBackground(Color.BLACK);
         JPanel colorButtons = new ColorButtons(game, play);
-        //colorButtons.setBackground(Color.cyan);
+
         pan.setLayout(new BorderLayout());
         pan.setBorder(BorderFactory.createTitledBorder("Gameplay"));
 
@@ -112,5 +113,20 @@ public class Window extends JFrame implements Observer {
         pan.add(colorButtons, BorderLayout.SOUTH);
 
         return pan;
+    }
+
+    private JPanel endContainer(){
+        JPanel pan = new JPanel();
+
+
+
+        JLabel label = new JLabel("Game is over, winner is " + game.getWinner().getName());
+
+
+        pan.add(label);
+
+        return pan;
+
+
     }
 }

@@ -11,6 +11,8 @@ public class Game extends Observable{
     private GameState State = GameState.GridConfig;
     private int currentPlayerId;
 
+    private Player winner;
+
     public Players getPlayers() {
         return this.players;
     }
@@ -33,6 +35,17 @@ public class Game extends Observable{
 
     public void setState(GameState state) {
         State = state;
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
         setChanged();
         notifyObservers();
         clearChanged();
