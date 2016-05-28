@@ -161,6 +161,7 @@ public class Window extends JFrame implements Observer {
         this.pack();
         this.repaint();
     }
+
     // TODO MASS DEBUG NEEDED, COLOR SWITCHED
     public void showGame(){
         Save save = new Save(game);
