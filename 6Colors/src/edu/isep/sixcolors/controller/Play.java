@@ -20,60 +20,26 @@ public class Play implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JPanel contentPane;
         if (game.getState() == GameState.GridConfig) { // We are initialising the game
-            contentPane = ((JPanel) ((JButton) e.getSource()).getParent().getComponent(0));
-            initGrid(contentPane);
+            String sourceText = ((JButton) e.getSource()).getText();
+            contentPane = ((JPanel) ((JPanel) ((JButton) e.getSource()).getParent()).getParent().getComponent(0));
+            if (sourceText == Config.RANDOM_BOARD_BUTTON_TEXT){
+                initGrid(contentPane);
+            }else if (sourceText == Config.CUSTOM_BOARD_BUTTON_TEXT){
+                // TODO initiateCustomGrid
+            }
 
         }
         else if(game.getState() == GameState.NameConfig){ // We are setting the player names
-            contentPane = ((JPanel) ((JButton) e.getSource()).getParent().getComponent(0));
+            contentPane = ((JPanel) ((JPanel) ((JButton) e.getSource()).getParent()).getParent().getComponent(0));
             initPlayers(contentPane);
         }
         else if(game.getState() == GameState.Game) { // The game is in progress
-            // 1. Fetch the current player & declare choice to catch :
-            Player currentPlayer = game.getCurrentPlayer();
-            TileColor chosenColor = null;
 
-            if(game.getCurrentPlayer().isAi()){
-                // If it's an AI, then we wait for the ai to send back a choice
-                chosenColor = currentPlayer.getAIInstance().colorChoice(game);
 
-            }else{
-                // If it's not an AI, then we wait for the physical player to make a choice in the view
-                String buttonText = ((JButton) e.getSource()).getText();
-
-                // 2. Parse the color choice of the player :
-
-                try {
-                    chosenColor = TileColor.parseTileColor(buttonText);
-
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+            // TODO Not 100% necessary if
+            if(e.getSource() instanceof JButton){
+                colorButtonPressed(e);
             }
-
-                // 3. Set the current player's color :
-                currentPlayer.setTileColor(chosenColor);
-
-
-                // 4. Update the board to apply the color choice :
-                game.updateBoard(
-                        currentPlayer.getStartingTileCoords()[0],
-                        currentPlayer.getStartingTileCoords()[1],
-                        currentPlayer
-                );
-
-                //5. Checks if a player has won :
-                Player winner = checkForWinner();
-                if (winner != null) {
-
-                    game.setWinner(winner);
-                    game.setState(GameState.End);
-                }
-
-                game.nextPlayer();
-
-
-
 
         }
 
@@ -145,5 +111,56 @@ public class Play implements ActionListener {
         }
         return null;
 
+    }
+
+    public void colorButtonPressed(ActionEvent e){
+        // 1. Fetch the current player & declare choice to catch :
+        Player currentPlayer = game.getCurrentPlayer();
+        TileColor chosenColor = null;
+
+        if(game.getCurrentPlayer().isAi()){
+            // If it's an AI, then we wait for the ai to send back a choice
+            chosenColor = currentPlayer.getAIInstance().colorChoice(game);
+
+        }else{
+            // If it's not an AI, then we wait for the physical player to make a choice in the view
+            String buttonText = ((JButton) e.getSource()).getText();
+
+            // 2. Parse the color choice of the player :
+
+            try {
+                chosenColor = TileColor.parseTileColor(buttonText);
+
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        // 3. Set the current player's color :
+        currentPlayer.setTileColor(chosenColor);
+
+
+        // 4. Update the board to apply the color choice :
+        game.updateBoard(
+                currentPlayer.getStartingTileCoords()[0],
+                currentPlayer.getStartingTileCoords()[1],
+                currentPlayer
+        );
+
+        //5. Checks if a player has won :
+        Player winner = checkForWinner();
+        if (winner != null) {
+
+            game.setWinner(winner);
+            game.setState(GameState.End);
+        }
+
+        game.nextPlayer();
+    }
+
+    public void saveButtonPressed(){
+        final JFileChooser fc = new JFileChooser();
+
+        //int returnVal = fc.showOpenDialog(aComponent);
     }
 }

@@ -1,10 +1,12 @@
 package edu.isep.sixcolors.model;
 
 
+import java.io.Serializable;
+
 /**
  * Tile model : Represents a square of the board
  */
-public class Tile{
+public class Tile implements Serializable {
 
     /**
      * Constructor taking the initial tileColor of the tile

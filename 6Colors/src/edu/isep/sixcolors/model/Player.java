@@ -2,13 +2,14 @@ package edu.isep.sixcolors.model;
 
 import edu.isep.sixcolors.controller.AI.AIInterface;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
  * Player model : Represents a player of the current game
  * TODO abstract to be extended (local player OR RandomAI OR distant player)
  */
-public class Player extends Observable{
+public class Player extends Observable implements Serializable {
 
     private String name;
     private TileColor tileColor;

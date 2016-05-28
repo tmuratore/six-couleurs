@@ -1,7 +1,6 @@
 package edu.isep.sixcolors.view;
 
 import edu.isep.sixcolors.controller.Play;
-import edu.isep.sixcolors.model.Board;
 import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.GameState;
@@ -11,18 +10,22 @@ import edu.isep.sixcolors.view.game.PlayerList;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.event.KeyEvent;
+import java.util.*;
 
 public class Window extends JFrame implements Observer {
     private JPanel container;
-    private JButton validate;
+    private JPanel buttons;
     private Play play;
     private Game game;
+    private Save save;
+    private Load load;
 
     public Window(Play play, Game game) {
         this.play = play;
         this.game = game;
+        this.load = new Load(game);
+
 
 
         this.setTitle("Six Colors Game");
@@ -32,11 +35,26 @@ public class Window extends JFrame implements Observer {
         this.setLocationRelativeTo(null);
 
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
-        validate = new JButton("Validate");
-        validate.addActionListener(play);
+
+        buttons = new JPanel();
+
+        buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JButton random = new JButton(Config.RANDOM_BOARD_BUTTON_TEXT);
+        random.addActionListener(play);
+        buttons.add(random);
+        JButton custom = new JButton(Config.CUSTOM_BOARD_BUTTON_TEXT);
+        custom.addActionListener(play);
+        buttons.add(custom);
+        JButton fromSave = new JButton(Config.IMPORT_BOARD_BUTTON_TEXT);
+        fromSave.addActionListener(load);
+        buttons.add(fromSave);
+
         container = initContainer();
-        this.add(container, BorderLayout.NORTH);
-        this.add(validate, BorderLayout.SOUTH);
+        this.add(container);
+        this.add(buttons);
+
+
 
         this.pack();
         this.setVisible(true);
@@ -46,16 +64,20 @@ public class Window extends JFrame implements Observer {
     // this method is triggered when the model changes :
     @Override
     public void update(Observable o, Object arg) {
-
+       System.out.println(game.getState().toString());
+       JButton validate = ((JButton)(buttons.getComponent(0)));
         if(game.getState() == GameState.NameConfig){ // We are configuring player names
+            validate.setText("Play");
+            buttons.remove(1);
+            buttons.remove(1);
             changeContainer(playerNameContainer());
         } else if (game.getState() == GameState.Game) { // game is in progress :
             if (game.getCurrentPlayer().isAi()){
                 validate.doClick();
             }else{
 
-            // removing the "validate" button b/c not removed by panel replacement :
-            this.remove(validate);
+            // removing the "validate" button b/c not removed by panel replacement  :
+            this.remove(buttons);
             changeContainer(gameContainer());
 
             }
@@ -64,7 +86,7 @@ public class Window extends JFrame implements Observer {
         }
     }
 
-    private void changeContainer(JPanel newContainer){
+    public void changeContainer(JPanel newContainer){
         this.remove(container);
         this.container = newContainer;
         this.container.invalidate();
@@ -98,7 +120,7 @@ public class Window extends JFrame implements Observer {
         for (int i = 0; i < game.getPlayers().getPlayerNumber(); i++){
             pan.add(new JLabel(Config.PLAYER_NAME_PROMPT_MESSAGE(i)));
             pan.add(new JTextField());
-            pan.add(new JLabel("RandomAI : "));
+            pan.add(new JLabel("AI ? "));
             pan.add(new JCheckBox());
         }
 
@@ -106,8 +128,25 @@ public class Window extends JFrame implements Observer {
     }
 
     private JPanel gameContainer() {
+        Save save = new Save(game);
+        Load load = new Load(game);
         JPanel pan = new JPanel();
         JPanel grid = new Grid(game);
+        JMenuBar menuBar = new JMenuBar();
+        JMenuItem saveItem = new JMenuItem("Save");
+        saveItem.setAccelerator(KeyStroke.getKeyStroke('s'));
+
+        JMenuItem loadItem = new JMenuItem("Load");
+        loadItem.setAccelerator(KeyStroke.getKeyStroke('l'));
+
+        saveItem.addActionListener(save);
+        loadItem.addActionListener(load);
+
+        menuBar.add(saveItem);
+        menuBar.add(loadItem);
+
+        this.setJMenuBar(menuBar);
+
 
         JPanel playerList = new PlayerList(game);
         JPanel colorButtons = new ColorButtons(game, play);

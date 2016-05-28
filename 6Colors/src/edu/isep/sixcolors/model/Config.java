@@ -1,6 +1,8 @@
 package edu.isep.sixcolors.model;
 
-public class Config {
+import java.io.Serializable;
+
+public class Config  implements Serializable {
     public static final String GRID_PROMPT_MESSAGE = "Size of the board : ";
     public static final int GRID_MIN = 5;
     public static final int GRID_MAX = 50;
@@ -24,5 +26,9 @@ public class Config {
     public static final int [] min = {GRID_MIN, PLAYER_NB_MIN};
 
     public static String WINNER_SPLASH(String winner){return "Game is over, winner is " + winner + " !"; }
+
+    public static final String RANDOM_BOARD_BUTTON_TEXT = "Random Board";
+    public static final String CUSTOM_BOARD_BUTTON_TEXT = "Custom Board";
+    public static final String IMPORT_BOARD_BUTTON_TEXT = "Import Board";
 
 }

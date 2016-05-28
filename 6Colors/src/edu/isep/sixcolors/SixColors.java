@@ -4,6 +4,10 @@ import edu.isep.sixcolors.controller.Play;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.view.Window;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
 public class SixColors {
 
     public static void main(String[] args) {

@@ -1,6 +1,7 @@
 package edu.isep.sixcolors.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Random;
  * 	<li>Violet</li>
  * </ul>
  */
-public enum TileColor {
+public enum TileColor implements Serializable {
     Blue('B', Color.BLUE),
     Green('G', Color.GREEN),
     Red('R', Color.RED),

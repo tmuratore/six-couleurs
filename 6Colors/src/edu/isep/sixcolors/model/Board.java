@@ -1,5 +1,6 @@
 package edu.isep.sixcolors.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -8,7 +9,7 @@ import java.util.Random;
 /**
  * Board model : represents the board of the game.
  */
-public class Board {
+public class Board implements Serializable {
 
     private int width;
 
@@ -79,6 +80,7 @@ public class Board {
         if(neighbourCounter == neighboursCoords.length){
             tile.setTileColor(player.getTileColor());
             tile.setOwner(player);
+            player.addPoints();
         }
     }
 

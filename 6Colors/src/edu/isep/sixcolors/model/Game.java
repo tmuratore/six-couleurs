@@ -1,17 +1,30 @@
 package edu.isep.sixcolors.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Random;
 
-public class Game extends Observable{
+public class Game extends Observable implements Serializable{
+    private static final long serialVersionUID = 6529685098267757690L;
     private Players players;
     private Board board;
     private GameState State = GameState.GridConfig;
     private int currentPlayerId;
 
     private Player winner;
+
+    public void setGame(Game game){
+        this.players = game.getPlayers();
+        this.board = game.getBoard();
+        this.State = game.getState();
+        this.currentPlayerId = game.getCurrentPlayerId();
+        this.winner = game.getWinner();
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
 
     public Players getPlayers() {
         return this.players;

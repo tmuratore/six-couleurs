@@ -3,11 +3,12 @@ package edu.isep.sixcolors.controller.AI;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.TileColor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class RandomAI implements AIInterface {
+public class RandomAI implements AIInterface, Serializable {
 
     @Override
     public TileColor colorChoice(Game game) {

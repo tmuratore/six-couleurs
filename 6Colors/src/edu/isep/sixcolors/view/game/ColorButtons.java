@@ -22,7 +22,7 @@ public class ColorButtons extends JPanel {
 
         this.setLayout(new FlowLayout());
         this.setBorder(BorderFactory.createTitledBorder("Color Buttons"));
-
+        // TODO I've seen this a couple times, factorisation needed !
         ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
         for (int i = 0; i < players.getPlayerNumber(); i++ ){
             TileColor tileColor = players.getPlayer(i).getTileColor();
