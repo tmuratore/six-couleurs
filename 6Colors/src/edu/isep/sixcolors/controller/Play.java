@@ -19,15 +19,22 @@ public class Play implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JPanel contentPane = ((JPanel) ((JButton) e.getSource()).getParent().getComponent(0));
+        JPanel contentPane;
         if (game.getState() == GameState.GridConfig) { // We are initialising the game
-
+            contentPane = ((JPanel) ((JButton) e.getSource()).getParent().getComponent(0));
             initGrid(contentPane);
 
         }else if(game.getState() == GameState.NameConfig){ // We are setting the player names
-
+            contentPane = ((JPanel) ((JButton) e.getSource()).getParent().getComponent(0));
             initPlayers(contentPane);
         }else if(game.getState() == GameState.Game){
+
+            String buttonText = ((JButton) e.getSource()).getText();
+
+            if (TileColor.contains(buttonText)){
+                System.out.print(TileColor.valueOf(buttonText));
+                game.getBoard().update();
+            }
 
         }
 
@@ -59,8 +66,9 @@ public class Play implements ActionListener {
         for (int i = 0; i < playerNb; i++){
             // TODO Check if String is not null (no name entered)
             String playerName = ((JTextField) contentPane.getComponent(2*i+1)).getText();
+
             System.out.println(playerName);
-            // TODO Properly Construct PlayerS
+
             players.setPlayer(i, new Player(playerName));
 
         }

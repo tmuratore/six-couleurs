@@ -1,7 +1,9 @@
 package edu.isep.sixcolors.view.game;
 
 
+import edu.isep.sixcolors.controller.Play;
 import edu.isep.sixcolors.model.Game;
+import edu.isep.sixcolors.model.Player;
 import edu.isep.sixcolors.model.Players;
 import edu.isep.sixcolors.model.TileColor;
 
@@ -14,7 +16,7 @@ public class ColorButtons extends JPanel {
     private Game game;
 
 
-    public ColorButtons(Game game){
+    public ColorButtons(Game game, Play play){
         this.game = game;
         Players players = game.getPlayers();
 
@@ -30,7 +32,10 @@ public class ColorButtons extends JPanel {
         }
 
         for (int i = 0; i < availableTileColors.size(); i++){
-            this.add(new JButton(availableTileColors.get(i).name().toString()));
+            JButton button = new JButton(availableTileColors.get(i).name());
+            button.addActionListener(play);
+            this.add(button);
+
         }
 
     }

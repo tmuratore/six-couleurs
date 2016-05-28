@@ -96,7 +96,7 @@ public class Window extends JFrame implements Observer {
         JPanel grid = new Grid(game);
         JPanel playerList = new JPanel();
         playerList.setBackground(Color.BLACK);
-        JPanel colorButtons = new ColorButtons(game);
+        JPanel colorButtons = new ColorButtons(game, play);
         colorButtons.setBackground(Color.cyan);
         pan.setLayout(new BorderLayout());
         pan.setBorder(BorderFactory.createTitledBorder("Gameplay"));

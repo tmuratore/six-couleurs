@@ -61,4 +61,15 @@ public enum TileColor {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public static boolean contains(String test) {
+
+        for (TileColor c : TileColor.values()) {
+            if (c.name().equals(test)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
