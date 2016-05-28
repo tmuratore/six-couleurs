@@ -1,15 +1,16 @@
 package edu.isep.sixcolors.controller;
 
+import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.model.AI.AIInterface;
 import edu.isep.sixcolors.model.AI.RandomAI;
-import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.entity.Player;
 import edu.isep.sixcolors.model.entity.Players;
 import edu.isep.sixcolors.model.entity.TileColor;
-import edu.isep.sixcolors.view.listener.WarningPopup;
+import edu.isep.sixcolors.view.WarningPopup;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,65 +23,69 @@ public class Play implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        JPanel contentPane;
-        if (game.getState() == GameState.GridConfig) { // We are initialising the game
-            // 1. Fetch the text of the button :
-            String sourceText = ((JButton) e.getSource()).getText();
+        // Fetch the text of the button :
+        String sourceText = ((JButton) e.getSource()).getText();
 
-            // 2. Fetch the content pane :
-            contentPane = ((JPanel) ((JPanel) ((JButton) e.getSource()).getParent()).getParent().getComponent(0));
+        // Fetch the content pane of the window that triggered the
+        JPanel contentPane = (JPanel) ((JFrame) SwingUtilities.getRoot((Component) e.getSource())).getContentPane();
 
-            // 3. Guess which button was clicked :
-            if (sourceText == Config.RANDOM_BOARD_BUTTON_TEXT){ // Random board
-                initGrid(contentPane, (JButton) e.getSource());
-            }else if (sourceText == Config.CUSTOM_BOARD_BUTTON_TEXT) { // custom board
-                // TODO initiateCustomGrid
-            }
-        }
-        else if(game.getState() == GameState.NameConfig){ // We are setting the player names
-            contentPane = ((JPanel) ((JPanel) ((JButton) e.getSource()).getParent()).getParent().getComponent(0));
-            initPlayers(contentPane);
-        }
-        else if(game.getState() == GameState.Game) { // The game is in progress
+        switch(game.getState()) {
 
-
-            // TODO Not 100% necessary if
-            if(e.getSource() instanceof JButton){
+            case Menu:
+                // TODO
+                break;
+            case GridConfig:
+                switch(sourceText) {
+                    case Config.RANDOM_BOARD_BUTTON_TEXT:
+                        // check inputs, init the grid and set game state to NameConfig
+                        initGrid(contentPane);
+                        break;
+                    case Config.CUSTOM_BOARD_BUTTON_TEXT:
+                        break;
+                }
+                break;
+            case NameConfig:
+                initPlayers(contentPane);
+                break;
+            case CustomGrid:
+                break;
+            case Game:
                 colorButtonPressed(e);
-            }
-
+                break;
+            case End:
+                break;
         }
-
     }
 
-    public void initGrid(JPanel contentPane, JButton button){
+    public void initGrid(JPanel contentPane){
         // Try parsing the number input
         try {
-            int boardSize = Integer.parseInt(((JTextField) contentPane.getComponent(1)).getText());
-            int playerNb = Integer.parseInt(((JTextField) contentPane.getComponent(3)).getText());
+            // If the order of the texts fields is changed, this could break :
+            int boardSize = Integer.parseInt(((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(1)).getText());
+            int playerNb = Integer.parseInt(((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(3)).getText());
 
             // Check if the inputs are within boundaries :
             if (boardSize >= Config.GRID_MIN && boardSize <= Config.GRID_MAX && playerNb >= Config.PLAYER_NB_MIN && playerNb <= Config.PLAYER_NB_MAX){
 
-                //if (button.getText() == )
                 game.setBoard(new Board(boardSize));
 
                 Players players = new Players(playerNb);
                 players.setPlayerNumber(playerNb);
                 game.setPlayers(players);
 
+                // Set game state :
                 game.setState(GameState.NameConfig);
             }
             else { // input out of bounds
-                WarningPopup pop = new WarningPopup(
+                new WarningPopup(
                         Config.OUT_OF_BOUNDS_GRID_CONFIG_MESSAGE + Config.newLine + Config.OUT_OF_BOUNDS_PLAYER_NB_CONFIG_MESSAGE,
-                        Config.OUT_OF_BOUNDS_CONFIG_TITLE
+                        Config.INVALID_ENTRY_TITLE
                 );
             }
         } catch (NumberFormatException x) {
-            WarningPopup pop = new WarningPopup (
+            new WarningPopup (
                     Config.NUMBER_FORMAT_CONFIG_MESSAGE,
-                    Config.OUT_OF_BOUNDS_CONFIG_TITLE
+                    Config.INVALID_ENTRY_TITLE
             );
         }
     }
@@ -88,22 +93,29 @@ public class Play implements ActionListener {
     public void initPlayers(JPanel contentPane){
         int playerNb = game.getPlayers().getPlayerNumber();
         Players players = game.getPlayers();
-        for (int i = 0; i < playerNb; i++){
-            // TODO Check if String is not null (no name entered)
-            String playerName = ((JTextField) contentPane.getComponent(4*i+1)).getText();
-            boolean playersAi = ((JCheckBox) contentPane.getComponent(4*i+3)).isSelected();
+        boolean emptyName = false;
+        for (int i = 0; i < playerNb; i++) {
 
+            String playerName = ((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(4 * i + 1)).getText();
+            boolean playersAi = ((JCheckBox) ((JPanel) contentPane.getComponent(0)).getComponent(4 * i + 2)).isSelected();
+            if (playerName == null || playerName.equals("")) {
+                emptyName = true;
+                new WarningPopup(Config.EMPTY_PLAYER_NAME_MESSAGE, Config.INVALID_ENTRY_TITLE);
+                break;
+            } else {
 
-            players.setPlayer(i, new Player(playerName));
-            players.getPlayer(i).setAi(playersAi);
-            if (playersAi){
-                AIInterface AI = new RandomAI();
-                players.getPlayer(i).setAIInstance(AI);
+                players.setPlayer(i, new Player(playerName));
+                players.getPlayer(i).setAi(playersAi);
+                if (playersAi) {
+                    AIInterface AI = new RandomAI();
+                    players.getPlayer(i).setAIInstance(AI);
+                }
             }
-
         }
-        game.initGame();
-        game.setState(GameState.Game);
+        if (!emptyName){
+                game.initGame();
+                game.setState(GameState.Game);
+        }
     }
 
     /**
@@ -138,16 +150,15 @@ public class Play implements ActionListener {
         Player currentPlayer = game.getCurrentPlayer();
         TileColor chosenColor = null;
 
-        if(game.getCurrentPlayer().isAi()){
+        // 2. Get what color the player has chosen :
+        if(game.getCurrentPlayer().isAi()) {
             // If it's an AI, then we wait for the ai to send back a choice
             chosenColor = currentPlayer.getAIInstance().colorChoice(game);
-
-        }else{
+        } else {
             // If it's not an AI, then we wait for the physical player to make a choice in the view
             String buttonText = ((JButton) e.getSource()).getText();
 
-            // 2. Parse the color choice of the player :
-
+            //Parse the color choice of the player :
             try {
                 chosenColor = TileColor.parseTileColor(buttonText);
 
@@ -176,11 +187,5 @@ public class Play implements ActionListener {
         }
 
         game.nextPlayer();
-    }
-
-    public void saveButtonPressed(){
-        final JFileChooser fc = new JFileChooser();
-
-        //int returnVal = fc.showOpenDialog(aComponent);
     }
 }

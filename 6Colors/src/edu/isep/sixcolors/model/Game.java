@@ -12,7 +12,9 @@ import java.util.Observable;
 import java.util.Random;
 
 public class Game extends Observable implements Serializable{
-    private static final long serialVersionUID = 6529685098267757690L;
+
+    private static final long serialVersionUID = Config.GAME_VERSION_UNIQUE_ID;
+
     private Players players;
     private Board board;
     private GameState State = GameState.GridConfig;
@@ -20,6 +22,7 @@ public class Game extends Observable implements Serializable{
 
     private Player winner;
 
+    // Brute force game loading : used to load saved games :
     public void setGame(Game game){
         this.players = game.getPlayers();
         this.board = game.getBoard();
@@ -53,6 +56,8 @@ public class Game extends Observable implements Serializable{
 
     public void setState(GameState state) {
         State = state;
+
+        // Used to update the view :
         setChanged();
         notifyObservers();
         clearChanged();

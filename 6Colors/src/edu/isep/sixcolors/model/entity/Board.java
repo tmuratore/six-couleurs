@@ -41,7 +41,7 @@ public class Board implements Serializable {
      * @param tileX  Abscissa of the first tile to update
      * @param tileY  Ordinate of the first tile to update
      */
-    private void updateBoard(int tileX, int tileY, Player player) {
+    public void update(int tileX, int tileY, Player player) {
         Tile tile = getTile(tileX, tileY);
         boolean updateNeighbours = false;
         int[][] neighboursCoords = getNeighboursCoords(tileX, tileY);
@@ -68,7 +68,7 @@ public class Board implements Serializable {
                 getTile(coords[0], coords[1]).getTileColor() != player.getTileColor()    //
             ) {
                 if (updateNeighbours) {
-                    updateBoard(coords[0], coords[1], player);
+                    update(coords[0], coords[1], player);
                 }
             }else {
                 neighbourCounter++;
@@ -81,11 +81,6 @@ public class Board implements Serializable {
             player.addPoints();
         }
     }
-
-    public void update(int tileX, int tileY, Player player){
-        updateBoard(tileX, tileY, player);
-    }
-
     /**
      * Squares of the board
      */

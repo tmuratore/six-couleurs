@@ -12,18 +12,17 @@ public class SixColors {
 
     public static void main(String[] args) {
 
-        //Model
+        // Model
         Game game = new Game();
 
-        //Controller
+        // Controller
         Play play = new Play(game);
 
-        //View
+        // View
         Window window = new Window(play, game);
 
-        game.addObserver(window);
-        // game.getPlayers().addObserver(window);
-        // game.getBoard().addObserver(window);
-
+        /***************************************/
+        /***/   game.addObserver(window);   /***/
+        /***************************************/
     }
 }
