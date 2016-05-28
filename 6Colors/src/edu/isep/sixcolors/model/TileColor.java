@@ -72,4 +72,13 @@ public enum TileColor {
 
         return false;
     }
+
+    public static TileColor parseTileColor(String name) throws Exception {
+        for (TileColor c: TileColor.values()) {
+            if (c.name().equals(name)) {
+                return c;
+            }
+        }
+        throw new Exception("Color not found");
+    }
 }

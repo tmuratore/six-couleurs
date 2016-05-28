@@ -16,7 +16,6 @@ public class Game extends Observable{
     }
 
     public void setPlayers(Players players) {
-
         this.players = players;
     }
 
@@ -25,7 +24,6 @@ public class Game extends Observable{
     }
 
     public void setBoard(Board board) {
-
         this.board = board;
     }
 
@@ -60,10 +58,9 @@ public class Game extends Observable{
             // First to play is player #0 :
             this.currentPlayerId = 0;
         }
-
     }
 
-    private void setStartCoords(){
+    private void setStartCoords() {
 
         if (players.getPlayerNumber() == 2) {
             players.getPlayer(0).setStartingTileCoords(0, 0);
@@ -104,7 +101,7 @@ public class Game extends Observable{
         }
     }
 
-    public void setStartOwnership(){
+    public void setStartOwnership() {
         for (int i = 0; i < this.players.getPlayerNumber(); i++) {
             int[] startingTile = players.getPlayer(i).getStartingTileCoords();
             board.getTile(startingTile).setOwner(players.getPlayer(i));
@@ -128,5 +125,27 @@ public class Game extends Observable{
             board.update(startingTile[0], startingTile[1], players.getPlayer(i));
         }
 
+    }
+
+
+    public Player getCurrentPlayer() {
+        return this.getPlayers().getPlayer(currentPlayerId);
+    }
+
+    public void nextPlayer() {
+        if(currentPlayerId == players.getPlayerNumber() - 1) {
+            currentPlayerId = 0;
+        }
+        else {
+            currentPlayerId ++;
+        }
+    }
+
+    public void updateBoard(int tileX, int tileY, Player player) {
+        board.update(tileX, tileY, player);
+
+        setChanged();
+        notifyObservers();
+        clearChanged();
     }
 }

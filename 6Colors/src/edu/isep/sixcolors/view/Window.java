@@ -1,6 +1,7 @@
 package edu.isep.sixcolors.view;
 
 import edu.isep.sixcolors.controller.Play;
+import edu.isep.sixcolors.model.Board;
 import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.GameState;
@@ -40,15 +41,28 @@ public class Window extends JFrame implements Observer {
         this.setVisible(true);
     }
 
+
+    // this method is triggered when the model changes :
     @Override
     public void update(Observable o, Object arg) {
 
-        // TODO Stopped here, must make the Window view detect changes in board or players for a more fine detection
+        System.out.println("Model changed !");
+
         if(game.getState() == GameState.NameConfig){ // We are configuring player names
             changeContainer(playerNameContainer());
-        }else if (game.getState() == GameState.Game){
+        } else if (game.getState() == GameState.Game) { // game is in progress :
+            // removing the "validate" button b/c not removed by panel replacement :
             this.remove(validate);
+
             changeContainer(gameContainer());
+
+            if(o instanceof Game) {
+                System.out.println("You think this is a motherfucking game ?");
+            }
+
+            if(o instanceof Board) {
+                System.out.println("You think this is a motherfucking board ?");
+            }
         }
     }
 
@@ -94,6 +108,7 @@ public class Window extends JFrame implements Observer {
     private JPanel gameContainer() {
         JPanel pan = new JPanel();
         JPanel grid = new Grid(game);
+
         JPanel playerList = new JPanel();
         playerList.setBackground(Color.BLACK);
         JPanel colorButtons = new ColorButtons(game, play);

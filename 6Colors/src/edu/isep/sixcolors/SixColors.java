@@ -15,11 +15,11 @@ public class SixColors {
         Play play = new Play(game);
 
         //View
-        Window view = new Window(play, game);
+        Window window = new Window(play, game);
 
-        game.addObserver(view);
-        //game.getPlayers().addObserver(view);
-        //game.getBoard().addObserver(view);
+        game.addObserver(window);
+        // game.getPlayers().addObserver(window);
+        // game.getBoard().addObserver(window);
 
     }
 }

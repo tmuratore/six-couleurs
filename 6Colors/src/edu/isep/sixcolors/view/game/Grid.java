@@ -10,7 +10,8 @@ import java.awt.*;
 public class Grid extends JPanel {
     private Game game;
 
-    public Grid(Game game){
+    public Grid(Game game) {
+
         this.game = game;
 
         this.setLayout(new GridBagLayout());

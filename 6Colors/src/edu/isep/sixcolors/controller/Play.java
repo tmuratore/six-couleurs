@@ -1,20 +1,19 @@
 package edu.isep.sixcolors.controller;
 
 import edu.isep.sixcolors.model.*;
+import edu.isep.sixcolors.view.Window;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observer;
 
 public class Play implements ActionListener {
+
     Game game;
 
     public Play(Game game){
         this.game = game;
-    }
-
-    public Game getGame() {
-        return game;
     }
 
     @Override
@@ -24,16 +23,48 @@ public class Play implements ActionListener {
             contentPane = ((JPanel) ((JButton) e.getSource()).getParent().getComponent(0));
             initGrid(contentPane);
 
-        }else if(game.getState() == GameState.NameConfig){ // We are setting the player names
+        }
+        else if(game.getState() == GameState.NameConfig){ // We are setting the player names
             contentPane = ((JPanel) ((JButton) e.getSource()).getParent().getComponent(0));
             initPlayers(contentPane);
-        }else if(game.getState() == GameState.Game){
+        }
+        else if(game.getState() == GameState.Game) { // The game is in progress
 
             String buttonText = ((JButton) e.getSource()).getText();
 
-            if (TileColor.contains(buttonText)){
-                System.out.print(TileColor.valueOf(buttonText));
-                game.getBoard().update();
+            if (TileColor.contains(buttonText)) {
+
+                // TODO this is debug :
+                System.out.println(TileColor.valueOf(buttonText));
+
+
+                // 1. Fetch the current player :
+                Player currentPlayer = game.getCurrentPlayer();
+
+                // 2. Parse the color choice of the player :
+                TileColor chosenColor = null;
+                try {
+                    chosenColor = TileColor.parseTileColor(buttonText);
+
+                    // TODO debug :
+                    System.out.println(chosenColor.name());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+
+                // 3. Set the current player's color :
+                currentPlayer.setTileColor(chosenColor);
+
+                // 4. Update the board to apply the color choice :
+                game.updateBoard(
+                        currentPlayer.getStartingTileCoords()[0],
+                        currentPlayer.getStartingTileCoords()[1],
+                        currentPlayer
+                );
+
+                game.nextPlayer();
+
+
             }
 
         }
@@ -55,7 +86,7 @@ public class Play implements ActionListener {
 
                 game.setState(GameState.NameConfig);
             }
-        }catch (NumberFormatException x) {
+        } catch (NumberFormatException x) {
             //TODO send an error popup via the view
         }
     }
