@@ -15,7 +15,7 @@ public class Grid extends JPanel {
         this.game = game;
 
         this.setLayout(new GridBagLayout());
-
+        this.setBorder(BorderFactory.createTitledBorder("Grid"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(1,1,1,1);
         Board board = game.getBoard();

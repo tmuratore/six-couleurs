@@ -50,10 +50,15 @@ public class Window extends JFrame implements Observer {
         if(game.getState() == GameState.NameConfig){ // We are configuring player names
             changeContainer(playerNameContainer());
         } else if (game.getState() == GameState.Game) { // game is in progress :
+            if (game.getCurrentPlayer().isAi()){
+                validate.doClick();
+            }else{
+
             // removing the "validate" button b/c not removed by panel replacement :
             this.remove(validate);
-
             changeContainer(gameContainer());
+
+            }
         } else if (game.getState() ==  GameState.End){
             changeContainer(endContainer());
         }
@@ -88,11 +93,13 @@ public class Window extends JFrame implements Observer {
 
     private JPanel playerNameContainer(){
         JPanel pan = new JPanel();
-        pan.setLayout( new GridLayout(game.getPlayers().getPlayerNumber(),2));
+        pan.setLayout( new GridLayout(game.getPlayers().getPlayerNumber(),4));
         pan.setBorder(BorderFactory.createTitledBorder("Player Names"));
         for (int i = 0; i < game.getPlayers().getPlayerNumber(); i++){
             pan.add(new JLabel(Config.PLAYER_NAME_PROMPT_MESSAGE(i)));
             pan.add(new JTextField());
+            pan.add(new JLabel("RandomAI : "));
+            pan.add(new JCheckBox());
         }
 
         return pan;
@@ -106,7 +113,6 @@ public class Window extends JFrame implements Observer {
         JPanel colorButtons = new ColorButtons(game, play);
 
         pan.setLayout(new BorderLayout());
-        pan.setBorder(BorderFactory.createTitledBorder("Gameplay"));
 
         pan.add(grid, BorderLayout.CENTER);
         pan.add(playerList, BorderLayout.EAST);
@@ -119,9 +125,9 @@ public class Window extends JFrame implements Observer {
         JPanel pan = new JPanel();
 
 
-
-        JLabel label = new JLabel("Game is over, winner is " + game.getWinner().getName());
-
+        Font bold = new Font("Roboto", Font.BOLD,30);
+        JLabel label = new JLabel(Config.WINNER_SPLASH(game.getWinner().getName()));
+        label.setFont(bold);
 
         pan.add(label);
 

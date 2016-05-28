@@ -1,12 +1,12 @@
 package edu.isep.sixcolors.model;
 
-import edu.isep.sixcolors.controller.Play;
+import edu.isep.sixcolors.controller.AI.AIInterface;
 
 import java.util.Observable;
 
 /**
  * Player model : Represents a player of the current game
- * TODO abstract to be extended (local player OR AI OR distant player)
+ * TODO abstract to be extended (local player OR RandomAI OR distant player)
  */
 public class Player extends Observable{
 
@@ -15,6 +15,9 @@ public class Player extends Observable{
     private TileColor previousTileColor;
     private int[] startingTileCoords = new int[2];
     private int points;
+
+    private boolean ai = false;
+    private AIInterface AIInstance;
 
     public Player(String name){
         this.name = name;
@@ -86,6 +89,23 @@ public class Player extends Observable{
         setChanged();
         notifyObservers();
         clearChanged();
+    }
+
+    public boolean isAi() {
+        return ai;
+    }
+
+    public void setAi(boolean ai) {
+        this.ai = ai;
+    }
+
+
+    public AIInterface getAIInstance() {
+        return AIInstance;
+    }
+
+    public void setAIInstance(AIInterface AIInstance) {
+        this.AIInstance = AIInstance;
     }
 
 }

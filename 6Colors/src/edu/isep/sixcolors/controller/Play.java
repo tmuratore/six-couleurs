@@ -1,13 +1,12 @@
 package edu.isep.sixcolors.controller;
 
+import edu.isep.sixcolors.controller.AI.AIInterface;
+import edu.isep.sixcolors.controller.AI.RandomAI;
 import edu.isep.sixcolors.model.*;
-import edu.isep.sixcolors.view.Window;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observer;
 
 public class Play implements ActionListener {
 
@@ -30,24 +29,27 @@ public class Play implements ActionListener {
             initPlayers(contentPane);
         }
         else if(game.getState() == GameState.Game) { // The game is in progress
+            // 1. Fetch the current player & declare choice to catch :
+            Player currentPlayer = game.getCurrentPlayer();
+            TileColor chosenColor = null;
 
-            String buttonText = ((JButton) e.getSource()).getText();
+            if(game.getCurrentPlayer().isAi()){
+                // If it's an AI, then we wait for the ai to send back a choice
+                chosenColor = currentPlayer.getAIInstance().colorChoice(game);
 
-            if (TileColor.contains(buttonText)) {
-
-
-
-                // 1. Fetch the current player :
-                Player currentPlayer = game.getCurrentPlayer();
+            }else{
+                // If it's not an AI, then we wait for the physical player to make a choice in the view
+                String buttonText = ((JButton) e.getSource()).getText();
 
                 // 2. Parse the color choice of the player :
-                TileColor chosenColor = null;
+
                 try {
                     chosenColor = TileColor.parseTileColor(buttonText);
 
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
+            }
 
                 // 3. Set the current player's color :
                 currentPlayer.setTileColor(chosenColor);
@@ -64,7 +66,6 @@ public class Play implements ActionListener {
                 Player winner = checkForWinner();
                 if (winner != null) {
 
-                    System.out.println("The game is over, the winner is " + winner.getName() + " !");
                     game.setWinner(winner);
                     game.setState(GameState.End);
                 }
@@ -72,7 +73,7 @@ public class Play implements ActionListener {
                 game.nextPlayer();
 
 
-            }
+
 
         }
 
@@ -103,10 +104,16 @@ public class Play implements ActionListener {
         Players players = game.getPlayers();
         for (int i = 0; i < playerNb; i++){
             // TODO Check if String is not null (no name entered)
-            String playerName = ((JTextField) contentPane.getComponent(2*i+1)).getText();
+            String playerName = ((JTextField) contentPane.getComponent(4*i+1)).getText();
+            boolean playersAi = ((JCheckBox) contentPane.getComponent(4*i+3)).isSelected();
 
 
             players.setPlayer(i, new Player(playerName));
+            players.getPlayer(i).setAi(playersAi);
+            if (playersAi){
+                AIInterface AI = new RandomAI();
+                players.getPlayer(i).setAIInstance(AI);
+            }
 
         }
         game.initGame();
@@ -119,7 +126,6 @@ public class Play implements ActionListener {
      * @return Player winner or null;
      */
 
-    @Nullable
     private Player checkForWinner() {
         int winPoints = (int) Math.floor(Math.pow(game.getBoard().getWidth(), 2) / game.getPlayers().getPlayerNumber());
         int totalPoints = 0;

@@ -21,6 +21,7 @@ public class ColorButtons extends JPanel {
         Players players = game.getPlayers();
 
         this.setLayout(new FlowLayout());
+        this.setBorder(BorderFactory.createTitledBorder("Color Buttons"));
 
         ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
         for (int i = 0; i < players.getPlayerNumber(); i++ ){
@@ -33,7 +34,6 @@ public class ColorButtons extends JPanel {
         for (int i = 0; i < availableTileColors.size(); i++){
             JButton button = new JButton(availableTileColors.get(i).name());
             button.setBackground(availableTileColors.get(i).getColor());
-            button.setOpaque(false);
             button.addActionListener(play);
             this.add(button);
 

@@ -159,10 +159,6 @@ public class Game extends Observable{
 
     public void updateBoard(int tileX, int tileY, Player player) {
         board.update(tileX, tileY, player);
-
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
 

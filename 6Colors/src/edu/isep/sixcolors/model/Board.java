@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * Board model : represents the board of the game.
  */
-public class Board extends Observable {
+public class Board {
 
     private int width;
 
@@ -32,9 +32,6 @@ public class Board extends Observable {
                 tiles[i][j] = new Tile(TileColor.random());
             }
         }
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
 
@@ -48,42 +45,45 @@ public class Board extends Observable {
     private void updateBoard(int tileX, int tileY, Player player) {
         Tile tile = getTile(tileX, tileY);
         boolean updateNeighbours = false;
+        int[][] neighboursCoords = getNeighboursCoords(tileX, tileY);
+        int neighbourCounter = 0;
 
         // The tile being updated is *always* neighbouring the current player's territory.
         if (tile.getTileColor() == player.getTileColor() && tile.getOwner() != player) {
             tile.setOwner(player);
             updateNeighbours = true;
             player.addPoints();
-            setChanged();
         }
         // updating color of conquered tiles
         else if (tile.getTileColor() == player.getPreviousTileColor() && tile.getOwner() == player) {
             tile.setTileColor(player.getTileColor());
             tile.setOwner(player);
             updateNeighbours = true;
-            setChanged();
         }
 
-        if (updateNeighbours) {
-            int[][] neighboursCoords = getNeighboursCoords(tileX, tileY);
-            for (int[] coords : neighboursCoords) {
 
-                if (
-                        getTile(coords[0], coords[1]).getOwner() != player ||    // not in my territory
-                                getTile(coords[0], coords[1]).getTileColor() != player.getTileColor()    //
-                        ) {
+
+        for (int[] coords : neighboursCoords) {
+            if (
+                getTile(coords[0], coords[1]).getOwner() != player ||    // not in my territory
+                getTile(coords[0], coords[1]).getTileColor() != player.getTileColor()    //
+            ) {
+                if (updateNeighbours) {
                     updateBoard(coords[0], coords[1], player);
                 }
+            }else {
+                neighbourCounter++;
             }
+
+        }
+        if(neighbourCounter == neighboursCoords.length){
+            tile.setTileColor(player.getTileColor());
+            tile.setOwner(player);
         }
     }
 
     public void update(int tileX, int tileY, Player player){
         updateBoard(tileX, tileY, player);
-        if(hasChanged()) {
-            notifyObservers();
-            clearChanged();
-        }
     }
 
     /**

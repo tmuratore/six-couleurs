@@ -23,4 +23,6 @@ public class Config {
     public static final int [] max = {GRID_MAX, PLAYER_NB_MAX};
     public static final int [] min = {GRID_MIN, PLAYER_NB_MIN};
 
+    public static String WINNER_SPLASH(String winner){return "Game is over, winner is " + winner + " !"; }
+
 }
