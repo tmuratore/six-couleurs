@@ -2,7 +2,7 @@ package edu.isep.sixcolors.controller;
 
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.model.AI.AIInterface;
-import edu.isep.sixcolors.model.AI.RandomAI;
+import edu.isep.sixcolors.model.AI.DumbAI;
 import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.entity.Player;
 import edu.isep.sixcolors.model.entity.Players;
@@ -107,7 +107,7 @@ public class Play implements ActionListener {
                 players.setPlayer(i, new Player(playerName));
                 players.getPlayer(i).setAi(playersAi);
                 if (playersAi) {
-                    AIInterface AI = new RandomAI();
+                    AIInterface AI = new DumbAI();
                     players.getPlayer(i).setAIInstance(AI);
                 }
             }
@@ -154,9 +154,11 @@ public class Play implements ActionListener {
         if(game.getCurrentPlayer().isAi()) {
             // If it's an AI, then we wait for the ai to send back a choice
             chosenColor = currentPlayer.getAIInstance().colorChoice(game);
+
         } else {
             // If it's not an AI, then we wait for the physical player to make a choice in the view
             String buttonText = ((JButton) e.getSource()).getText();
+
 
             //Parse the color choice of the player :
             try {
@@ -188,4 +190,5 @@ public class Play implements ActionListener {
 
         game.nextPlayer();
     }
+
 }
