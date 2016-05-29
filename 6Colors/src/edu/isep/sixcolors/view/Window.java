@@ -158,6 +158,9 @@ public class Window extends JFrame implements Observer {
 
 
     public void showPlayersSetup() {
+
+        String[] playerTypes = {"Human", "Dumb AI", "Greedy AI", "Machiavelic AI", "Clever AI"};
+
         // main container of this interface :
         JPanel pan = new JPanel();
         JPanel inputContainer = new JPanel();
@@ -166,12 +169,16 @@ public class Window extends JFrame implements Observer {
         JButton randomBoardButton = new JButton(Config.RANDOM_BOARD_BUTTON_TEXT);
 
         Players players = game.getPlayers();
+
+
+
         for(int i=0; i < players.getPlayerNumber(); i++) {
             inputContainer.add(new JLabel(Config.PLAYER_NAME_PROMPT_MESSAGE(i)));
             inputContainer.add(new JTextField());
-            inputContainer.add(new JCheckBox());
-            inputContainer.add(new JLabel("AI ? "));
+            inputContainer.add(new JComboBox(playerTypes));
         }
+
+
 
         // Layout and borders :
         pan.setLayout(new GridLayout(2, 1));

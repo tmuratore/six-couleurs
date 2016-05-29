@@ -23,12 +23,14 @@ public class Grid extends JPanel {
         Board board = game.getBoard();
         int boardWidth = board.getWidth();
 
+        boolean small = (boardWidth > 13);
+
         for (int i = 0; i < boardWidth; i++){
             gbc.gridy = i;
             for (int j = 0; j < boardWidth; j++){
                 gbc.gridx = j;
                 this.add(
-                        makeColorPane(board.getTile(i,j).getTileColor(), (board.getTile(i,j).getOwner()!=null)),
+                        makeColorPane(board.getTile(i,j).getTileColor(), (board.getTile(i,j).getOwner()!=null), small),
                         gbc
                 );
             }
@@ -38,10 +40,14 @@ public class Grid extends JPanel {
 
     }
 
-    public JPanel makeColorPane(TileColor color, boolean owned){
+    public JPanel makeColorPane(TileColor color, boolean owned, boolean small){
         JPanel tilePane = new JPanel();
         tilePane.setBackground(color.getColor());
-        tilePane.setPreferredSize(new Dimension(40,40));
+        if (small) {
+            tilePane.setPreferredSize(new Dimension(20, 20));
+        } else {
+            tilePane.setPreferredSize(new Dimension(40, 40));
+        }
 
         if(owned) {
             tilePane.setBorder(BorderFactory.createLineBorder(Color.BLACK));

@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * This AI makes a tradeoff between the gains prevented by the MachiavelicAI, and the best gain prpoposed by the GreedyAI.
  */
-public class CleverIA implements AIInterface, Serializable {
+public class CleverAI implements AIInterface, Serializable {
     @Override
     public TileColor colorChoice(Game game) {
         TileColor chosenColor = null;
@@ -33,10 +33,25 @@ public class CleverIA implements AIInterface, Serializable {
         TileColor machiavelicTileColor = (TileColor) machiavelicTileColors.toArray()[0];
         int machiavelicGain = machiavelicCCWG.get(machiavelicTileColor);
 
-        if(greedyGain >= machiavelicGain) {
+        // factor defining how much the greedy choice will be privileged against the machiavelic choice :
+        float fac = 0.7f;
+
+        /*
+        // debug messages to understand the AI decision process :
+        System.out.println("Greedy color " + greedyTileColor.name());
+        System.out.println("greedyGain " + greedyGain);
+        System.out.println("Machiavelic color" + machiavelicTileColor.name());
+        System.out.println("machiavelicGain " + machiavelicGain);
+        System.out.println("0.7 * machiavelicGain " + (fac*machiavelicGain));
+        System.out.println();
+        */
+
+        if(greedyGain >= fac * machiavelicGain) {
+            // System.out.println("Picking " + greedyTileColor.name());
             return greedyTileColor;
         }
         else {
+            // System.out.println("Picking " + machiavelicTileColor.name());
             return machiavelicTileColor;
         }
 

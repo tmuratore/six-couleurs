@@ -138,8 +138,11 @@ public class Play implements ActionListener {
         boolean emptyName = false;
         for (int i = 0; i < playerNb; i++) {
 
-            String playerName = ((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(4 * i + 1)).getText();
-            boolean playersAi = ((JCheckBox) ((JPanel) contentPane.getComponent(0)).getComponent(4 * i + 2)).isSelected();
+            // Automagic :
+
+            String playerName = ((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(3 * i + 1)).getText();
+            String playerType = (String) ((JComboBox)  ((JPanel) contentPane.getComponent(0)).getComponent(3 * i + 2)).getSelectedItem();
+
             if (playerName == null || playerName.equals("")) {
                 emptyName = true;
                 new WarningPopup(Config.EMPTY_PLAYER_NAME_MESSAGE, Config.INVALID_ENTRY_TITLE);
@@ -147,13 +150,27 @@ public class Play implements ActionListener {
             } else {
 
                 players.setPlayer(i, new Player(playerName));
-                players.getPlayer(i).setAi(playersAi);
-                if (playersAi) {
-                    // AIInterface AI = new DumbAI();
-                    // AIInterface AI = new GreedyAI();
-                    // AIInterface AI = new MachiavelicAI();
-                    AIInterface AI = new CleverIA();
+                AIInterface AI = null;
 
+                switch(playerType) {
+                    case "Human":
+                        break;
+                    case "Dumb AI":
+                        AI = new DumbAI();
+                        break;
+                    case "Greedy AI":
+                        AI = new GreedyAI();
+                        break;
+                    case "Machiavelic AI":
+                        AI = new DumbAI();
+                        break;
+                    case "Clever AI":
+                        AI = new CleverAI();
+                        break;
+                }
+
+                if(AI != null) {
+                    players.getPlayer(i).setAi(true);
                     players.getPlayer(i).setAIInstance(AI);
                 }
             }
