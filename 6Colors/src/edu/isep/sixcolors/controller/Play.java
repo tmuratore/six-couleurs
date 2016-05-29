@@ -1,9 +1,7 @@
 package edu.isep.sixcolors.controller;
 
 import edu.isep.sixcolors.model.*;
-import edu.isep.sixcolors.model.AI.AIInterface;
-import edu.isep.sixcolors.model.AI.DumbAI;
-import edu.isep.sixcolors.model.AI.GreedyAI;
+import edu.isep.sixcolors.model.AI.*;
 import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.entity.Player;
 import edu.isep.sixcolors.model.entity.Players;
@@ -115,8 +113,11 @@ public class Play implements ActionListener {
                 players.setPlayer(i, new Player(playerName));
                 players.getPlayer(i).setAi(playersAi);
                 if (playersAi) {
-                    //AIInterface AI = new DumbAI();
-                    AIInterface AI = new GreedyAI();
+                    // AIInterface AI = new DumbAI();
+                    // AIInterface AI = new GreedyAI();
+                    // AIInterface AI = new MachiavelicAI();
+                    AIInterface AI = new CleverIA();
+
                     players.getPlayer(i).setAIInstance(AI);
                 }
             }
