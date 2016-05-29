@@ -5,7 +5,7 @@ import edu.isep.sixcolors.model.entity.Player;
 import edu.isep.sixcolors.model.entity.Players;
 import edu.isep.sixcolors.model.entity.TileColor;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
@@ -14,12 +14,10 @@ import java.util.Random;
 public class Game extends Observable implements Serializable{
 
     private static final long serialVersionUID = Config.GAME_VERSION_UNIQUE_ID;
-
     private Players players;
     private Board board;
     private GameState State = GameState.Menu;
     private int currentPlayerId;
-
     private Player winner;
 
     // Brute force game loading : used to load saved games :
@@ -195,5 +193,29 @@ public class Game extends Observable implements Serializable{
         notifyObservers();
         clearChanged();
     }
+
+    /**
+     * Deep copy by serialization
+     * Used to create guinea pigs to allow IA's to test their moves.
+     * Uses serialization tools in the apache.common library.
+     */
+    public Game deepCopy() throws Exception
+    {
+        //Serialization of object
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(bos);
+        out.writeObject(this);
+
+        //De-serialization of object
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+        InputStream buffer = new BufferedInputStream(bis);
+        ObjectInputStream in = new ObjectInputStream(buffer);
+
+        //
+        Game copied = (Game) in.readObject();
+
+        return copied;
+    }
+
 
 }
