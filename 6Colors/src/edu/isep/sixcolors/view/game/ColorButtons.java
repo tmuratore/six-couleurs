@@ -35,6 +35,8 @@ public class ColorButtons extends JPanel {
             JButton button = new JButton(availableTileColors.get(i).name());
             button.setBackground(availableTileColors.get(i).getColor());
             button.addActionListener(play);
+            button.setOpaque(true);
+            button.setBorderPainted(false);
             this.add(button);
 
         }

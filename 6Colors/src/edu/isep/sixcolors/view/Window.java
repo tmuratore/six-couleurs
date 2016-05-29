@@ -4,6 +4,8 @@ import edu.isep.sixcolors.controller.Play;
 import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.entity.Players;
+import edu.isep.sixcolors.view.customGrid.ColorPicker;
+import edu.isep.sixcolors.view.customGrid.CustomGrid;
 import edu.isep.sixcolors.view.game.ColorButtons;
 import edu.isep.sixcolors.view.game.Grid;
 import edu.isep.sixcolors.view.game.PlayerList;
@@ -62,6 +64,7 @@ public class Window extends JFrame implements Observer {
                 showPlayersSetup();
                 break;
             case CustomGrid:
+                showCustomGridSetup();
                 break;
             case Game:
                 if (game.getCurrentPlayer().isAi()){
@@ -117,17 +120,13 @@ public class Window extends JFrame implements Observer {
         // main container of this interface :
         JPanel pan = new JPanel();
         JPanel inputContainer = new JPanel();
-        JPanel actionContainer = new JPanel();
+        JButton okButton = new JButton(Config.ONTO_PLAYER_NAMES_BUTTON_TEXT);
 
         // Text fields :
         JLabel gridLabel = new JLabel(Config.GRID_PROMPT_MESSAGE);
         JTextField gridSizeInput = new JTextField(Config.GRID_MIN);
         JLabel playerLabel = new JLabel(Config.PLAYER_NB_PROMPT_MESSAGE);
         JTextField playerNamesInput = new JTextField(Config.PLAYER_NB_MIN);
-
-        // buttons :
-        JButton randomButton = new JButton(Config.RANDOM_BOARD_BUTTON_TEXT);
-        JButton customGameButton = new JButton(Config.CUSTOM_BOARD_BUTTON_TEXT);
 
         // Layout and borders :
         pan.setLayout(new GridLayout(2, 1));
@@ -139,11 +138,8 @@ public class Window extends JFrame implements Observer {
         gridSizeInput.setPreferredSize(d);
         playerNamesInput.setSize(d);
 
-        actionContainer.setLayout(new FlowLayout());
-
         // Action Listeners :
-        randomButton.addActionListener(play);
-        customGameButton.addActionListener(play);
+        okButton.addActionListener(play);
 
         // Building interface :
         inputContainer.add(gridLabel);
@@ -151,12 +147,9 @@ public class Window extends JFrame implements Observer {
         inputContainer.add(playerLabel);
         inputContainer.add(playerNamesInput);
 
-        actionContainer.add(randomButton);
-        actionContainer.add(customGameButton);
-
         // Adding to buttons panel :
         pan.add(inputContainer);
-        pan.add(actionContainer);
+        pan.add(okButton);
 
         this.setContentPane(pan);
         this.pack();
@@ -168,7 +161,9 @@ public class Window extends JFrame implements Observer {
         // main container of this interface :
         JPanel pan = new JPanel();
         JPanel inputContainer = new JPanel();
-        JButton okButton = new JButton(Config.PLAY_BUTTON_TEXT);
+        JPanel actionContainer = new JPanel();
+        JButton customBoardButton = new JButton(Config.CUSTOM_BOARD_BUTTON_TEXT);
+        JButton randomBoardButton = new JButton(Config.RANDOM_BOARD_BUTTON_TEXT);
 
         Players players = game.getPlayers();
         for(int i=0; i < players.getPlayerNumber(); i++) {
@@ -184,18 +179,81 @@ public class Window extends JFrame implements Observer {
         inputContainer.setLayout(new GridLayout(players.getPlayerNumber(), 4));
         inputContainer.setBorder(BorderFactory.createTitledBorder(Config.PLAYERS_NAMES_ZONE_TITLE));
 
+        actionContainer.setLayout(new FlowLayout());
+
         // Action Listeners :
-        okButton.addActionListener(play);
+        randomBoardButton.addActionListener(play);
+        customBoardButton.addActionListener(play);
 
         // Building interface :
 
+        actionContainer.add(randomBoardButton);
+        actionContainer.add(customBoardButton);
+
+
         pan.add(inputContainer);
-        pan.add(okButton);
+        pan.add(actionContainer);
 
         this.setContentPane(pan);
 
         this.pack();
         this.repaint();
+    }
+
+    private void showCustomGridSetup(){
+        JPanel pan = new JPanel();
+        JPanel grid = new CustomGrid(game, play);
+        JPanel ColorButtons = new ColorPicker(play);
+        JPanel gameActionContainer = new JPanel();
+        JPanel actionContainer = new JPanel();
+
+        JButton okButton = new JButton("Play");
+        JButton saveButton = new JButton("Save");
+
+        Save save = new Save(game);
+        Load load = new Load(game);
+        Exit exit = new Exit();
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenuItem saveItem = new JMenuItem("Save");
+        saveItem.setAccelerator(KeyStroke.getKeyStroke('s'));
+
+        JMenuItem loadItem = new JMenuItem("Load");
+        loadItem.setAccelerator(KeyStroke.getKeyStroke('l'));
+
+        JMenuItem exitItem = new JMenuItem("Exit");
+        exitItem.setAccelerator(KeyStroke.getKeyStroke('e'));
+
+        saveItem.addActionListener(save);
+        loadItem.addActionListener(load);
+        exitItem.addActionListener(exit);
+
+        saveButton.addActionListener(save);
+        okButton.addActionListener(play);
+
+        menuBar.add(saveItem);
+        menuBar.add(loadItem);
+        menuBar.add(exitItem);
+
+        this.setJMenuBar(menuBar);
+
+        pan.setLayout(new BorderLayout());
+        actionContainer.setLayout(new GridLayout(3,1));
+        gameActionContainer.setLayout(new FlowLayout());
+
+        gameActionContainer.add(okButton);
+        gameActionContainer.add(saveButton);
+
+        actionContainer.add(ColorButtons);
+        actionContainer.add(gameActionContainer);
+
+        pan.add(grid, BorderLayout.CENTER);
+        pan.add(actionContainer, BorderLayout.SOUTH);
+
+        this.setContentPane(pan);
+        this.pack();
+        this.repaint();
+
     }
 
     public void showGame(){
@@ -238,8 +296,6 @@ public class Window extends JFrame implements Observer {
         this.setContentPane(pan);
         this.pack();
         this.repaint();
-        //this.revalidate();
-
     }
 
     private void showEnd(){
@@ -262,6 +318,7 @@ public class Window extends JFrame implements Observer {
         this.pack();
         this.repaint();
     }
+
 
     /**
      * FakeButton to force an immediate update of the view when the player is an AI

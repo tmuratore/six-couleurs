@@ -1,5 +1,6 @@
 package edu.isep.sixcolors.view.game;
 
+import edu.isep.sixcolors.controller.Play;
 import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.entity.TileColor;
@@ -13,6 +14,7 @@ public class Grid extends JPanel {
     public Grid(Game game) {
 
         this.game = game;
+
 
         this.setLayout(new GridBagLayout());
         this.setBorder(BorderFactory.createTitledBorder("Grid"));
