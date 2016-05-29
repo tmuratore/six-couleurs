@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class Tile implements Serializable {
 
+
     /**
      * Constructor taking the initial tileColor of the tile
      *
@@ -51,5 +52,5 @@ public class Tile implements Serializable {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
-
+    x
 }
