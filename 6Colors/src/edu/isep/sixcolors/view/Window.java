@@ -138,6 +138,7 @@ public class Window extends JFrame implements Observer {
         gridSizeInput.setPreferredSize(d);
         playerNamesInput.setSize(d);
 
+
         // Action Listeners :
         okButton.addActionListener(play);
 

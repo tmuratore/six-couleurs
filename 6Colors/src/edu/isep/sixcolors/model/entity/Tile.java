@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class Tile implements Serializable {
 
+
     /**
      * Constructor taking the initial tileColor of the tile
      *

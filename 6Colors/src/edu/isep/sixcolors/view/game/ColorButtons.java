@@ -23,13 +23,13 @@ public class ColorButtons extends JPanel {
         this.setBorder(BorderFactory.createTitledBorder("Color Buttons"));
 
         // TODO I've seen this a couple times, factorisation needed !
-        ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
-        for (int i = 0; i < players.getPlayerNumber(); i++ ){
+        ArrayList<TileColor> availableTileColors = game.getAvailableTileColors();
+        /*for (int i = 0; i < players.getPlayerNumber(); i++ ){
             TileColor tileColor = players.getPlayer(i).getTileColor();
             if (availableTileColors.contains(tileColor)){
                 availableTileColors.remove(tileColor);
             }
-        }
+        }*/
 
         for (int i = 0; i < availableTileColors.size(); i++){
             JButton button = new JButton(availableTileColors.get(i).name());
