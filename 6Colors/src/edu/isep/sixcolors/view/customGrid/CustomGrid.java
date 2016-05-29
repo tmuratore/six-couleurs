@@ -27,17 +27,23 @@ public class CustomGrid extends JPanel {
             for (int j = 0; j < boardWidth; j++){
                 gbc.gridx = j;
 
+                boolean small = (game.getBoard().getWidth() > 13);
+
                 if (game.getBoard().getTile(i,j).getOwner() == null) {
-                    this.add(makeColorButton(game.getBoard().getTile(i, j).getTileColor(), i, j), gbc);
+                    this.add(makeColorButton(game.getBoard().getTile(i, j).getTileColor(), i, j, small), gbc);
                 }else{
                     Player owner = game.getBoard().getTile(i,j).getOwner();
                     if (owner.getStartingTileCoords()[0] == i && owner.getStartingTileCoords()[1] == j){
                         JPanel pan = new JPanel();
                         pan.setBackground(Color.BLACK);
+                        if(small){
+                        pan.setPreferredSize(new Dimension(20,20));
+                        }else{
                         pan.setPreferredSize(new Dimension(40,40));
+                        }
                         this.add(pan, gbc);
                     }else{
-                        this.add(makeColorButton(game.getBoard().getTile(i, j).getTileColor(), i, j), gbc);
+                        this.add(makeColorButton(game.getBoard().getTile(i, j).getTileColor(), i, j, small), gbc);
                         game.getBoard().getTile(i, j).setOwner(null);
                     }
 
@@ -49,14 +55,18 @@ public class CustomGrid extends JPanel {
 
     }
 
-    public JButton makeColorButton(TileColor color, int i, int j){
+    public JButton makeColorButton(TileColor color, int i, int j, boolean small){
         JButton tileButton = new JButton();
 
 
         tileButton.setOpaque(true);
         tileButton.setBorderPainted(false);
 
-        tileButton.setPreferredSize(new Dimension(40,40));
+        if(small){
+            tileButton.setPreferredSize(new Dimension(20,20));
+        }else{
+            tileButton.setPreferredSize(new Dimension(40,40));
+        }
 
         tileButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
