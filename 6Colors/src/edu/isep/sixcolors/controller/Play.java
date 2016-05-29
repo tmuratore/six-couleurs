@@ -2,8 +2,12 @@ package edu.isep.sixcolors.controller;
 
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.model.AI.AIInterface;
-import edu.isep.sixcolors.model.AI.DumbAI;
-import edu.isep.sixcolors.model.entity.*;
+
+import edu.isep.sixcolors.model.AI.GreedyAI;
+import edu.isep.sixcolors.model.entity.Board;
+import edu.isep.sixcolors.model.entity.Player;
+import edu.isep.sixcolors.model.entity.Players;
+import edu.isep.sixcolors.model.entity.TileColor;
 import edu.isep.sixcolors.view.WarningPopup;
 
 import javax.swing.*;
@@ -145,7 +149,8 @@ public class Play implements ActionListener {
                 players.setPlayer(i, new Player(playerName));
                 players.getPlayer(i).setAi(playersAi);
                 if (playersAi) {
-                    AIInterface AI = new DumbAI();
+                    //AIInterface AI = new DumbAI();
+                    AIInterface AI = new GreedyAI();
                     players.getPlayer(i).setAIInstance(AI);
                 }
             }
@@ -197,7 +202,6 @@ public class Play implements ActionListener {
             // If it's not an AI, then we wait for the physical player to make a choice in the view
             String buttonText = ((JButton) e.getSource()).getText();
 
-
             //Parse the color choice of the player :
             try {
                 chosenColor = TileColor.parseTileColor(buttonText);
@@ -212,7 +216,7 @@ public class Play implements ActionListener {
 
 
         // 4. Update the board to apply the color choice :
-        game.updateBoard(
+        game.updateBoard (
                 currentPlayer.getStartingTileCoords()[0],
                 currentPlayer.getStartingTileCoords()[1],
                 currentPlayer
@@ -222,12 +226,11 @@ public class Play implements ActionListener {
         Player winner = checkForWinner();
 
         if (winner != null) {
-
             game.setWinner(winner);
             game.setState(GameState.End);
-        }else{
-            game.nextPlayer();
         }
+
+        game.nextPlayer();
     }
 
 }
