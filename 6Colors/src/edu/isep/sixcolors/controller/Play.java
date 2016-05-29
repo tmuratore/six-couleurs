@@ -125,7 +125,7 @@ public class Play implements ActionListener {
      */
 
     private Player checkForWinner() {
-        int winPoints = (int) Math.floor(Math.pow(game.getBoard().getWidth(), 2) / game.getPlayers().getPlayerNumber());
+        int winPoints = (int) Math.floor(Math.pow(game.getBoard().getWidth(), 2) / 2);
         int totalPoints = 0;
         int maxPoints = 0;
         int playerPoints;
