@@ -3,6 +3,7 @@ package edu.isep.sixcolors.view.listener;
 
 import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
+import edu.isep.sixcolors.model.GameState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,8 +31,16 @@ public class Load implements ActionListener {
                     InputStream buffer = new BufferedInputStream(inFile);
                     ObjectInput input = new ObjectInputStream(buffer);
                 ){
-                    game.setGame((Game) input.readObject());
-                    System.out.println(game.getState().toString());
+                    Game toBeLoaded = ((Game) input.readObject());
+                    /*
+                    if (game.getState() == GameState.CustomGrid) {
+                        toBeLoaded.setState(GameState.CustomGrid);
+                    }
+                    else if (game.getState() == GameState.Game) {
+                        toBeLoaded.setState(GameState.Game);
+                    }
+                    */
+                    this.game.setGame(toBeLoaded);
 
                 } catch (ClassNotFoundException | IOException e1) {
                     e1.printStackTrace();

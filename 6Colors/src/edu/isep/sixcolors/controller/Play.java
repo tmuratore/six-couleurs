@@ -3,10 +3,7 @@ package edu.isep.sixcolors.controller;
 import edu.isep.sixcolors.model.*;
 import edu.isep.sixcolors.model.AI.AIInterface;
 import edu.isep.sixcolors.model.AI.DumbAI;
-import edu.isep.sixcolors.model.entity.Board;
-import edu.isep.sixcolors.model.entity.Player;
-import edu.isep.sixcolors.model.entity.Players;
-import edu.isep.sixcolors.model.entity.TileColor;
+import edu.isep.sixcolors.model.entity.*;
 import edu.isep.sixcolors.view.WarningPopup;
 
 import javax.swing.*;
@@ -17,9 +14,13 @@ import java.awt.event.ActionListener;
 public class Play implements ActionListener {
 
     Game game;
+    TileColor currentSelectedColor = TileColor.Blue;
+    Player currentSelectedPlayer;
+
 
     public Play(Game game){
         this.game = game;
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -42,19 +43,49 @@ public class Play implements ActionListener {
                 }
                 break;
             case GridConfig:
-                switch(sourceText) {
-                    case Config.RANDOM_BOARD_BUTTON_TEXT:
-                        // check inputs, init the grid and set game state to NameConfig
-                        initGrid(contentPane);
-                        break;
-                    case Config.CUSTOM_BOARD_BUTTON_TEXT:
-                        break;
-                }
+                initGrid(contentPane);
                 break;
             case NameConfig:
-                initPlayers(contentPane);
-                break;
+                boolean emptyName = initPlayers(contentPane);
+                if (!emptyName) {
+                    switch (sourceText) {
+                        case Config.RANDOM_BOARD_BUTTON_TEXT:
+                            game.setState(GameState.Game);
+                            break;
+                        case Config.CUSTOM_BOARD_BUTTON_TEXT:
+                            game.setState(GameState.CustomGrid);
+                            break;
+                    }
+                    break;
+                }
             case CustomGrid:
+                TileColor[] colors = TileColor.values();
+                currentSelectedPlayer = game.getCurrentPlayer();
+                String sourceActionCommand = ((JButton) e.getSource()).getActionCommand();
+                switch (sourceText) {
+                    case "Play":
+                         game.setState(GameState.Game);
+                        break;
+
+                    default:
+                        if (sourceActionCommand.contains(":")){
+                            int[] coords = new int[2];
+                            int i = 0;
+                            for (String str : sourceActionCommand.split(":")) {
+                                coords[i] = Integer.parseInt(str);
+                                i++;
+                            }
+                            game.getBoard().getTile(coords).setTileColor(currentSelectedColor);
+                            game.customNotify();
+                        } else{
+                            try {
+                                currentSelectedColor = TileColor.parseTileColor(sourceText);
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        break;
+                }
                 break;
             case Game:
                 colorButtonPressed(e);
@@ -97,7 +128,7 @@ public class Play implements ActionListener {
         }
     }
 
-    public void initPlayers(JPanel contentPane){
+    public boolean initPlayers(JPanel contentPane){
         int playerNb = game.getPlayers().getPlayerNumber();
         Players players = game.getPlayers();
         boolean emptyName = false;
@@ -121,8 +152,8 @@ public class Play implements ActionListener {
         }
         if (!emptyName){
                 game.initGame();
-                game.setState(GameState.Game);
         }
+        return emptyName;
     }
 
     /**
