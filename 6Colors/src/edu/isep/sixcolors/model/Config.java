@@ -6,7 +6,14 @@ public class Config  implements Serializable {
 
     public static final String newLine = System.getProperty("line.separator");
 
-    public static final String GAME_TITLE = "Six Colors Game";
+    public static final String GAME_NAME = "Six Colors";
+    public static final String GAME_WINDOW_TITLE = "Six Colors Game";
+
+
+    public static final String NEW_LOCAL_GAME_BUTTON_TEXT = "New local game";
+    public static final String LOAD_GAME_BUTTON_TEXT = "Load saved game";
+    public static final String EXIT_BUTTON_TEXT = "Exit";
+
 
     public static final String GRID_PROMPT_MESSAGE = "Size of the board : ";
     public static final int GRID_MIN = 5;
@@ -36,7 +43,6 @@ public class Config  implements Serializable {
     //public static final String PARAM
     public static final String RANDOM_BOARD_BUTTON_TEXT = "Random Board";
     public static final String CUSTOM_BOARD_BUTTON_TEXT = "Custom Board";
-    public static final String LOAD_GAME_BUTTON_TEXT = "Load Game";
 
     public static final String PLAY_BUTTON_TEXT = "Play";
 

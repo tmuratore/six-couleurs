@@ -32,7 +32,14 @@ public class Play implements ActionListener {
         switch(game.getState()) {
 
             case Menu:
-                // TODO
+                switch(sourceText) {
+                    case Config.NEW_LOCAL_GAME_BUTTON_TEXT:
+                        game.setState(GameState.GridConfig);
+                        break;
+                    case Config.EXIT_BUTTON_TEXT:
+                        System.exit(0);
+                        break;
+                }
                 break;
             case GridConfig:
                 switch(sourceText) {

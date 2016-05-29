@@ -17,18 +17,20 @@ public class Game extends Observable implements Serializable{
 
     private Players players;
     private Board board;
-    private GameState State = GameState.GridConfig;
+    private GameState State = GameState.Menu;
     private int currentPlayerId;
 
     private Player winner;
 
     // Brute force game loading : used to load saved games :
+    // Notifies the view !
     public void setGame(Game game){
         this.players = game.getPlayers();
         this.board = game.getBoard();
         this.State = game.getState();
         this.currentPlayerId = game.getCurrentPlayerId();
         this.winner = game.getWinner();
+
         setChanged();
         notifyObservers();
         clearChanged();

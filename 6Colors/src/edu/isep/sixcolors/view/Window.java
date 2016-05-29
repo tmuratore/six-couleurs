@@ -11,6 +11,7 @@ import edu.isep.sixcolors.view.listener.Load;
 import edu.isep.sixcolors.view.listener.Save;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,14 +31,12 @@ public class Window extends JFrame implements Observer {
         this.play = play;
 
         // general parameters :
-        this.setTitle(Config.GAME_TITLE);
+        this.setTitle(Config.GAME_WINDOW_TITLE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
-        showLocalGameSetup();
-
-        // minimal size around containers :
-        this.pack();
+        // initial state :
+        showMainMenu();
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -53,6 +52,8 @@ public class Window extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         switch (game.getState()) {
             case Menu:
+                showMainMenu();
+                break;
             case GridConfig:
                 showLocalGameSetup();
                 break;
@@ -77,6 +78,41 @@ public class Window extends JFrame implements Observer {
 
     }
 
+    public void showMainMenu() {
+        // Main panel :
+        JPanel pan = new JPanel();
+        EmptyBorder border = new EmptyBorder(50,50,50,50);
+        pan.setBorder(border);
+
+        //this.setSize(700,500);
+        pan.setLayout(new GridLayout(4,1,50,50));
+
+        // Creating elements :
+        Font f = new Font("Roboto", Font.BOLD, 40);
+
+        JLabel title = new JLabel(Config.GAME_NAME, JLabel.CENTER);
+        title.setFont(f);
+
+        JButton newLocalGame = new JButton(Config.NEW_LOCAL_GAME_BUTTON_TEXT);
+        newLocalGame.addActionListener(play);
+
+        JButton loadSavedGame = new JButton(Config.LOAD_GAME_BUTTON_TEXT);
+        loadSavedGame.addActionListener(new Load(game));
+
+        JButton exit = new JButton(Config.EXIT_BUTTON_TEXT);
+        exit.addActionListener(play);
+
+        // building interface :
+        pan.add(title);
+        pan.add(newLocalGame);
+        pan.add(loadSavedGame);
+        pan.add(exit);
+
+        this.setContentPane(pan);
+        this.pack();
+        this.repaint();
+    }
+
     public void showLocalGameSetup() {
         // main container of this interface :
         JPanel pan = new JPanel();
@@ -95,7 +131,7 @@ public class Window extends JFrame implements Observer {
         // buttons :
         JButton randomButton = new JButton(Config.RANDOM_BOARD_BUTTON_TEXT);
         JButton customGameButton = new JButton(Config.CUSTOM_BOARD_BUTTON_TEXT);
-        JButton fromSaveButton = new JButton(Config.LOAD_GAME_BUTTON_TEXT);
+        //JButton fromSaveButton = new JButton(Config.LOAD_GAME_BUTTON_TEXT);
 
         // Layout and borders :
         pan.setLayout(new GridLayout(2, 1));
@@ -112,7 +148,7 @@ public class Window extends JFrame implements Observer {
         // Action Listeners :
         randomButton.addActionListener(play);
         customGameButton.addActionListener(play);
-        fromSaveButton.addActionListener(load);
+        //fromSaveButton.addActionListener(load);
 
         // Building interface :
         inputContainer.add(gridLabel);
@@ -122,7 +158,7 @@ public class Window extends JFrame implements Observer {
 
         actionContainer.add(randomButton);
         actionContainer.add(customGameButton);
-        actionContainer.add(fromSaveButton);
+        //actionContainer.add(fromSaveButton);
 
         // Adding to buttons panel :
         pan.add(inputContainer);
