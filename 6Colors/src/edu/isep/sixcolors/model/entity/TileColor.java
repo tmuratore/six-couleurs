@@ -18,11 +18,11 @@ import java.util.Random;
  */
 public enum TileColor implements Serializable {
     Blue('B', Color.BLUE),
-    Green('G', Color.GREEN),
+    Green('G', new Color(0,128,0)),
     Red('R', Color.RED),
     Yellow('Y', Color.YELLOW),
     Orange('O', Color.ORANGE),
-    Magenta('M', new Color(128,0,128));
+    Violet('V', new Color(128,0,128));
 
     private static Random random = new Random();
 
