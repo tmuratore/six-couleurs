@@ -31,13 +31,6 @@ public class Player extends Observable implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        setChanged();
-        notifyObservers();
-        clearChanged();
-    }
-
     public TileColor getTileColor() {
         return tileColor;
     }
@@ -68,9 +61,6 @@ public class Player extends Observable implements Serializable {
 
     public void setStartingTileCoords(int i, int j) {
         this.startingTileCoords = new int[]{i, j};
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
     public int getPoints() {
@@ -78,18 +68,11 @@ public class Player extends Observable implements Serializable {
     }
 
     public void setPoints(int points) {
-        setChanged();
-        notifyObservers();
-        clearChanged();
         this.points = points;
     }
 
     public void addPoints() {
-
         this.points++;
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
     public boolean isAi() {

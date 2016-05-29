@@ -102,10 +102,11 @@ public class Game extends Observable implements Serializable{
             players.getPlayer(0).setStartingTileCoords(0, 0);
             players.getPlayer(1).setStartingTileCoords(board.getWidth() - 1, board.getWidth() - 1);
         } else {
+            int max = board.getWidth() - 1;
             for (int i = 0; i < this.players.getPlayerNumber(); i++) {
                 // Computing starting tile abscissa and ordinate using the player's id :
-                int x = (i % 2 == 0) ? 0 : board.getWidth() - 1;
-                int y = (i > 0 && i < 3) ? board.getWidth() - 1 : 0;
+                int x = (i == 2 || i == 3) ? max : 0;
+                int y = (i == 1 || i == 2) ? max : 0;
                 players.getPlayer(i).setStartingTileCoords(x, y);
             }
         }
