@@ -189,13 +189,14 @@ public class Play implements ActionListener {
 
         //5. Checks if a player has won :
         Player winner = checkForWinner();
+
         if (winner != null) {
 
             game.setWinner(winner);
             game.setState(GameState.End);
+        }else{
+            game.nextPlayer();
         }
-
-        game.nextPlayer();
     }
 
 }

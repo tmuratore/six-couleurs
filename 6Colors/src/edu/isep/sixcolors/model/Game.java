@@ -71,9 +71,6 @@ public class Game extends Observable implements Serializable{
 
     public void setWinner(Player winner) {
         this.winner = winner;
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
     /**
@@ -191,6 +188,12 @@ public class Game extends Observable implements Serializable{
 
     public int getCurrentPlayerId() {
         return currentPlayerId;
+    }
+
+    public void customNotify(){
+        setChanged();
+        notifyObservers();
+        clearChanged();
     }
 
 }

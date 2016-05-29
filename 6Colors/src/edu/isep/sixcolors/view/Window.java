@@ -66,9 +66,8 @@ public class Window extends JFrame implements Observer {
             case Game:
                 if (game.getCurrentPlayer().isAi()){
                     fakeButton().doClick();
-                    System.out.println(game.getCurrentPlayerId() + "  " + game.getCurrentPlayer().getPoints());
-                    //showGame();
                 }else{
+                    // To you the adventurer who dares to try to display a game between AI only, your journey begins here. Good luck from all the team.
                     showGame();
                 }
                 break;
@@ -120,9 +119,6 @@ public class Window extends JFrame implements Observer {
         JPanel inputContainer = new JPanel();
         JPanel actionContainer = new JPanel();
 
-        // It's a magical unicorn flying through the sky :
-        Load load = new Load(game);
-
         // Text fields :
         JLabel gridLabel = new JLabel(Config.GRID_PROMPT_MESSAGE);
         JTextField gridSizeInput = new JTextField(Config.GRID_MIN);
@@ -132,7 +128,6 @@ public class Window extends JFrame implements Observer {
         // buttons :
         JButton randomButton = new JButton(Config.RANDOM_BOARD_BUTTON_TEXT);
         JButton customGameButton = new JButton(Config.CUSTOM_BOARD_BUTTON_TEXT);
-        //JButton fromSaveButton = new JButton(Config.LOAD_GAME_BUTTON_TEXT);
 
         // Layout and borders :
         pan.setLayout(new GridLayout(2, 1));
@@ -149,7 +144,6 @@ public class Window extends JFrame implements Observer {
         // Action Listeners :
         randomButton.addActionListener(play);
         customGameButton.addActionListener(play);
-        //fromSaveButton.addActionListener(load);
 
         // Building interface :
         inputContainer.add(gridLabel);
@@ -159,7 +153,6 @@ public class Window extends JFrame implements Observer {
 
         actionContainer.add(randomButton);
         actionContainer.add(customGameButton);
-        //actionContainer.add(fromSaveButton);
 
         // Adding to buttons panel :
         pan.add(inputContainer);
@@ -245,6 +238,7 @@ public class Window extends JFrame implements Observer {
         this.setContentPane(pan);
         this.pack();
         this.repaint();
+        //this.revalidate();
 
     }
 
