@@ -190,4 +190,5 @@ public class Game extends Observable implements Serializable{
     public int getCurrentPlayerId() {
         return currentPlayerId;
     }
+
 }

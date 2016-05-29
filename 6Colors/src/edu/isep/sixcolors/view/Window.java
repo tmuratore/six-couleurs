@@ -62,9 +62,16 @@ public class Window extends JFrame implements Observer {
             case CustomGrid:
                 break;
             case Game:
-                showGame();
+                if (game.getCurrentPlayer().isAi()){
+                    fakeButton().doClick();
+                    System.out.println(game.getCurrentPlayerId() + "  " + game.getCurrentPlayer().getPoints());
+                    //showGame();
+                }else{
+                    showGame();
+                }
                 break;
             case End:
+                System.exit(0);
                 break;
         }
 
@@ -156,8 +163,7 @@ public class Window extends JFrame implements Observer {
         pan.add(okButton);
 
         this.setContentPane(pan);
-        // this.invalidate();
-        // this.revalidate();
+
         this.pack();
         this.repaint();
     }
@@ -183,7 +189,6 @@ public class Window extends JFrame implements Observer {
 
         this.setJMenuBar(menuBar);
 
-
         JPanel playerList = new PlayerList(game);
         JPanel colorButtons = new ColorButtons(game, play);
 
@@ -198,5 +203,16 @@ public class Window extends JFrame implements Observer {
         this.pack();
         this.repaint();
 
+    }
+
+    /**
+     * FakeButton to force an immediate update of the view when the player is an AI
+     * @return button the fake button
+     */
+    private JButton fakeButton() {
+        JButton button = new JButton();
+        button.addActionListener(play);
+        this.add(button);
+        return button;
     }
 }
