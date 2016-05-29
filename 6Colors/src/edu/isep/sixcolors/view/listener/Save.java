@@ -37,7 +37,7 @@ public class Save implements ActionListener {
             int option = jop.showConfirmDialog(
                     null,
                     Config.EXIT_AFTER_SAVE_MESSAGE,
-                    Config.EXIT_AFTER_SAVE_TITLE,
+                    Config.EXIT_TITLE,
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE
             );

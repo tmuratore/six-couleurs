@@ -7,6 +7,7 @@ import edu.isep.sixcolors.model.entity.Players;
 import edu.isep.sixcolors.view.game.ColorButtons;
 import edu.isep.sixcolors.view.game.Grid;
 import edu.isep.sixcolors.view.game.PlayerList;
+import edu.isep.sixcolors.view.listener.Exit;
 import edu.isep.sixcolors.view.listener.Load;
 import edu.isep.sixcolors.view.listener.Save;
 
@@ -72,7 +73,7 @@ public class Window extends JFrame implements Observer {
                 }
                 break;
             case End:
-                System.exit(0);
+                showEnd();
                 break;
         }
 
@@ -207,6 +208,7 @@ public class Window extends JFrame implements Observer {
     public void showGame(){
         Save save = new Save(game);
         Load load = new Load(game);
+        Exit exit = new Exit();
         JPanel pan = new JPanel();
 
         JPanel grid = new Grid(game);
@@ -217,11 +219,16 @@ public class Window extends JFrame implements Observer {
         JMenuItem loadItem = new JMenuItem("Load");
         loadItem.setAccelerator(KeyStroke.getKeyStroke('l'));
 
+        JMenuItem exitItem = new JMenuItem("Exit");
+        exitItem.setAccelerator(KeyStroke.getKeyStroke('e'));
+
         saveItem.addActionListener(save);
         loadItem.addActionListener(load);
+        exitItem.addActionListener(exit);
 
         menuBar.add(saveItem);
         menuBar.add(loadItem);
+        menuBar.add(exitItem);
 
         this.setJMenuBar(menuBar);
 
@@ -239,6 +246,27 @@ public class Window extends JFrame implements Observer {
         this.pack();
         this.repaint();
 
+    }
+
+    private void showEnd(){
+        JLabel label = new JLabel(Config.WINNER_SPLASH(game.getWinner().getName()));
+        Exit exit = new Exit();
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenuItem exitItem = new JMenuItem("Exit");
+        exitItem.setAccelerator(KeyStroke.getKeyStroke('e'));
+        exitItem.addActionListener(exit);
+        menuBar.add(exitItem);
+
+        Font font = new Font("Roboto", Font.BOLD, 26);
+        EmptyBorder border = new EmptyBorder(20,10,20,10);
+        label.setBorder(border);
+        label.setFont(font);
+
+        this.setJMenuBar(menuBar);
+        this.setContentPane(label);
+        this.pack();
+        this.repaint();
     }
 
     /**

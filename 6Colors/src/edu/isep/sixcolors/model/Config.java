@@ -48,8 +48,9 @@ public class Config  implements Serializable {
 
     public static final String LOAD_SAVE_ACTION_NAME = "Select";
 
-    public static final String EXIT_AFTER_SAVE_MESSAGE = "Your game has been saved, would you like to exit ?";
-    public static final String EXIT_AFTER_SAVE_TITLE = "Exit Six Colors";
+    public static final String EXIT_MESSAGE = "Would you like to exit ?";
+    public static final String EXIT_AFTER_SAVE_MESSAGE = "Your game has been saved" + newLine + EXIT_MESSAGE;
+    public static final String EXIT_TITLE = "Exit Six Colors";
 
     public static final long GAME_VERSION_UNIQUE_ID = 1337L + 42L;
 
