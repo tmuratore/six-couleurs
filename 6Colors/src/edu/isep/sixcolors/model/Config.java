@@ -33,7 +33,6 @@ public class Config  implements Serializable {
 
     public static String WINNER_SPLASH(String winner){return "Game is over, winner is " + winner + " !"; }
 
-    //public static final String PARAM
     public static final String RANDOM_BOARD_BUTTON_TEXT = "Random Board";
     public static final String CUSTOM_BOARD_BUTTON_TEXT = "Custom Board";
     public static final String LOAD_GAME_BUTTON_TEXT = "Load Game";
