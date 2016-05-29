@@ -52,5 +52,5 @@ public class Tile implements Serializable {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
-    x
+
 }
