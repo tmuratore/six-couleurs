@@ -14,17 +14,8 @@ public class GreedyAI implements AIInterface, Serializable {
     @Override
     public TileColor colorChoice(Game game) {
 
-        // 1. Build a list of all tileColors available :
-        ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
-        for (int i = 0; i < game.getPlayers().getPlayerNumber(); i++ ) {
-            TileColor tileColor = game.getPlayers().getPlayer(i).getTileColor();
-            if (availableTileColors.contains(tileColor)){
-                availableTileColors.remove(tileColor);
-            }
-            else {
-                // an exception could be thrown here, bc running this else body would mean the model is broken
-            }
-        }
+        // 1. Get a list of all tileColors available :
+        ArrayList<TileColor> availableTileColors = game.getAvailableTileColors();
 
         // 2. Evaluate the best tileColor to pick :
         TileColor chosenColor = availableTileColors.get(0);

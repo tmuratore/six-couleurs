@@ -217,5 +217,22 @@ public class Game extends Observable implements Serializable{
         return copied;
     }
 
+    /**
+     * Get available colors
+     */
+    public ArrayList<TileColor> getAvailableTileColors() {
+        ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
+        for (int i = 0; i < getPlayers().getPlayerNumber(); i++ ){
+            TileColor tileColor = getPlayers().getPlayer(i).getTileColor();
+            if (availableTileColors.contains(tileColor)){
+                availableTileColors.remove(tileColor);
+            }
+            else {
+                // an exception could be thrown here, bc running this else body would mean the model is broken
+            }
+        }
+        return availableTileColors;
+    }
+
 
 }
