@@ -41,6 +41,7 @@ public class Board implements Serializable {
      * @param tileX  Abscissa of the first tile to update
      * @param tileY  Ordinate of the first tile to update
      */
+    // Todo fetch start tile from the player passed
     public void update(int tileX, int tileY, Player player) {
         Tile tile = getTile(tileX, tileY);
         boolean updateNeighbours = false;
