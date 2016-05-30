@@ -97,6 +97,9 @@ public class Play implements ActionListener {
                 // TODO put this to config (here and in Window.java:322)
                 if(sourceText == "Main Menu") {
                     // this.game = new Game();
+
+                    // this could *maybe* induce a bug where the new grid is polluted by the remainings of
+                    // the old one ; declare a Game.clean() method and invoke it here in case it happens.
                     game.setState(GameState.Menu);
                 }
                 break;
