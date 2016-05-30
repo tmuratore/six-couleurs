@@ -3,7 +3,6 @@ package edu.isep.sixcolors.view.listener;
 
 import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
-import edu.isep.sixcolors.model.GameState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,10 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+/**
+ * A popup proposing to load a serialized Six Colors game and launches the imported save.
+ */
 public class Load implements ActionListener {
 
-    final JFileChooser fc = new JFileChooser();
-    private Game game;
+    private final JFileChooser fc = new JFileChooser();
+    private final Game game;
 
     public Load(Game game){
         this.game = game;
@@ -29,17 +31,9 @@ public class Load implements ActionListener {
                 try (
                     InputStream inFile = new FileInputStream(file.getAbsolutePath());
                     InputStream buffer = new BufferedInputStream(inFile);
-                    ObjectInput input = new ObjectInputStream(buffer);
+                    ObjectInput input = new ObjectInputStream(buffer)
                 ){
                     Game toBeLoaded = ((Game) input.readObject());
-                    /*
-                    if (game.getState() == GameState.CustomGrid) {
-                        toBeLoaded.setState(GameState.CustomGrid);
-                    }
-                    else if (game.getState() == GameState.Game) {
-                        toBeLoaded.setState(GameState.Game);
-                    }
-                    */
                     this.game.setGame(toBeLoaded);
 
                 } catch (ClassNotFoundException | IOException e1) {

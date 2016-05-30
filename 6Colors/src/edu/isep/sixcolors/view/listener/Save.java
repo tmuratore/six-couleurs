@@ -10,10 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+/**
+ * A popup proposing to save the current state of the game into an external file for ulterior import
+ */
 public class Save implements ActionListener {
 
-    final JFileChooser fc = new JFileChooser();
-    private Game game;
+    private final JFileChooser fc = new JFileChooser();
+    private final Game game;
 
     public Save(Game game){
         this.game = game;
@@ -34,7 +37,7 @@ public class Save implements ActionListener {
             }
 
             JOptionPane jop = new JOptionPane();
-            int option = jop.showConfirmDialog(
+            int option = JOptionPane.showConfirmDialog(
                     null,
                     Config.EXIT_AFTER_SAVE_MESSAGE,
                     Config.EXIT_TITLE,

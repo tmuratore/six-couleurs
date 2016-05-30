@@ -7,7 +7,7 @@ import edu.isep.sixcolors.model.entity.TileColor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GeniusAI implements AIInterface,Serializable {
+public class GeniusAI implements AIInterface, Serializable {
 
     public static final int DEPTH = 4;
 
@@ -61,11 +61,13 @@ public class GeniusAI implements AIInterface,Serializable {
         return res;
     }
 
-    public TileColorChoiceNode[] computeSons(Game game, int depth, int myId) {
-
+    /**
+     * Recursive function used build the possible moves tree
+     *
+     */
+    private TileColorChoiceNode[] computeSons(Game game, int depth, int myId) {
         ArrayList<TileColor> availableTileColors = game.getAvailableTileColors();
         TileColorChoiceNode[] sons = new TileColorChoiceNode[availableTileColors.size()];
-        // TileColorChoiceNode son = new TileColorChoiceNode();
 
         for(int i = 0; i<availableTileColors.size(); i++) {
             sons[i] = new TileColorChoiceNode();

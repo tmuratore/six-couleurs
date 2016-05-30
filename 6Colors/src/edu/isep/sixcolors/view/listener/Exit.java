@@ -6,12 +6,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A popup window asking if the player want's to exit Six Colors
+ */
 public class Exit implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane jop = new JOptionPane();
-        int option = jop.showConfirmDialog(
+        int option = JOptionPane.showConfirmDialog(
                 null,
                 Config.EXIT_MESSAGE,
                 Config.EXIT_TITLE,

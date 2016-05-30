@@ -7,8 +7,8 @@ import edu.isep.sixcolors.model.entity.TileColor;
  */
 public class TileColorWithGain {
 
-    private TileColor tileColorChoice;
-    private int gain;
+    private final TileColor tileColorChoice;
+    private final int gain;
 
     public TileColorWithGain(TileColor tileColorChoice, int gain) {
         this.tileColorChoice = tileColorChoice;

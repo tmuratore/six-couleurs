@@ -2,7 +2,11 @@ package edu.isep.sixcolors.model;
 
 import java.io.Serializable;
 
-public class Config  implements Serializable {
+/**
+ * The config file of the game,
+ * it contains all the constants of the game
+ */
+public class Config implements Serializable {
 
     public static final String newLine = System.getProperty("line.separator");
 
@@ -19,7 +23,7 @@ public class Config  implements Serializable {
     public static final int GRID_MIN = 5;
     public static final int GRID_MAX = 50;
 
-    public static final String GAME_PARAMETERS_ZONE_TITLE =  "Game parameters";
+    public static final String GAME_PARAMETERS_ZONE_TITLE = "Game parameters";
     public static final String PLAYER_NB_PROMPT_MESSAGE = "Number of players : ";
     public static final int PLAYER_NB_MIN = 2;
     public static final int PLAYER_NB_MAX = 4;
@@ -32,13 +36,17 @@ public class Config  implements Serializable {
 
 
     public static final String PLAYERS_NAMES_ZONE_TITLE = "Players names";
-    public static String PLAYER_NAME_PROMPT_MESSAGE(int number){
-        return "Player " + (number+1) + "'s Name : ";
+
+    public static String PLAYER_NAME_PROMPT_MESSAGE(int number) {
+        return "Player " + (number + 1) + "'s Name : ";
     }
+
     public static final String EMPTY_PLAYER_NAME_MESSAGE = "Please input a name for each player";
 
 
-    public static String WINNER_SPLASH(String winner){return "Game is over, winner is " + winner + " !"; }
+    public static String WINNER_SPLASH(String winner) {
+        return "Game is over, winner is " + winner + " !";
+    }
 
     public static final String ONTO_PLAYER_NAMES_BUTTON_TEXT = "Set Player Names";
 

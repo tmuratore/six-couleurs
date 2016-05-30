@@ -1,6 +1,6 @@
 package edu.isep.sixcolors.view;
 
-import edu.isep.sixcolors.controller.Play;
+import edu.isep.sixcolors.controller.OutputInfo;
 import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.entity.Players;
@@ -16,6 +16,7 @@ import edu.isep.sixcolors.view.listener.Save;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,13 +26,13 @@ import java.util.Observer;
 public class Window extends JFrame implements Observer {
 
 
-    private Play play; // Controller interactions
-    private Game game; // Model interactions
+    private final ActionListener outputInfo; // Controller interactions
+    private final Game game; // Model interactions
 
-    public Window(Play play, Game game) {
+    public Window(OutputInfo outputInfo, Game game) {
         // accesses to the controller and model
         this.game = game;
-        this.play = play;
+        this.outputInfo = (ActionListener) outputInfo;
 
         // general parameters :
         this.setTitle(Config.GAME_WINDOW_TITLE);
@@ -48,8 +49,8 @@ public class Window extends JFrame implements Observer {
     /**
      * This method is called when the Game model (this.game) is modified :
      *
-     * @param o
-     * @param arg
+     * @param o   the object that called this method
+     * @param arg the arguments the object passed when calling the method
      */
     @Override
     public void update(Observable o, Object arg) {
@@ -67,9 +68,9 @@ public class Window extends JFrame implements Observer {
                 showCustomGridSetup();
                 break;
             case Game:
-                if (game.getCurrentPlayer().isAi()){
+                if (game.getCurrentPlayer().isAi()) {
                     fakeButton().doClick();
-                }else{
+                } else {
                     // To you the adventurer who dares to try to display a game between AI only, your journey begins here. Good luck from all the team.
                     showGame();
                 }
@@ -81,14 +82,17 @@ public class Window extends JFrame implements Observer {
 
     }
 
-    public void showMainMenu() {
+    /**
+     * Show the Main Menu view
+     */
+    private void showMainMenu() {
         // Main panel :
         JPanel pan = new JPanel();
-        EmptyBorder border = new EmptyBorder(50,50,50,50);
+        EmptyBorder border = new EmptyBorder(50, 50, 50, 50);
         pan.setBorder(border);
 
         //this.setSize(700,500);
-        pan.setLayout(new GridLayout(4,1,50,50));
+        pan.setLayout(new GridLayout(4, 1, 50, 50));
 
         // Creating elements :
         Font f = new Font("Roboto", Font.BOLD, 40);
@@ -97,13 +101,13 @@ public class Window extends JFrame implements Observer {
         title.setFont(f);
 
         JButton newLocalGame = new JButton(Config.NEW_LOCAL_GAME_BUTTON_TEXT);
-        newLocalGame.addActionListener(play);
+        newLocalGame.addActionListener(outputInfo);
 
         JButton loadSavedGame = new JButton(Config.LOAD_GAME_BUTTON_TEXT);
         loadSavedGame.addActionListener(new Load(game));
 
         JButton exit = new JButton(Config.EXIT_BUTTON_TEXT);
-        exit.addActionListener(play);
+        exit.addActionListener(outputInfo);
 
         // building interface :
         pan.add(title);
@@ -116,7 +120,10 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
-    public void showLocalGameSetup() {
+    /**
+     * Shows the Setup view of a Local Game
+     */
+    private void showLocalGameSetup() {
         // main container of this interface :
         JPanel pan = new JPanel();
         JPanel inputContainer = new JPanel();
@@ -140,7 +147,7 @@ public class Window extends JFrame implements Observer {
 
 
         // Action Listeners :
-        okButton.addActionListener(play);
+        okButton.addActionListener(outputInfo);
 
         // Building interface :
         inputContainer.add(gridLabel);
@@ -157,8 +164,10 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
-
-    public void showPlayersSetup() {
+    /**
+     * Shows the player name and type setup view
+     */
+    private void showPlayersSetup() {
 
         String[] playerTypes = {"Human", "Dumb AI", "Greedy AI", "Machiavelic AI", "Clever AI", "Genius AI"};
 
@@ -172,13 +181,11 @@ public class Window extends JFrame implements Observer {
         Players players = game.getPlayers();
 
 
-
-        for(int i=0; i < players.getPlayerNumber(); i++) {
+        for (int i = 0; i < players.getPlayerNumber(); i++) {
             inputContainer.add(new JLabel(Config.PLAYER_NAME_PROMPT_MESSAGE(i)));
             inputContainer.add(new JTextField());
-            inputContainer.add(new JComboBox(playerTypes));
+            inputContainer.add(new JComboBox<>(playerTypes));
         }
-
 
 
         // Layout and borders :
@@ -190,8 +197,8 @@ public class Window extends JFrame implements Observer {
         actionContainer.setLayout(new FlowLayout());
 
         // Action Listeners :
-        randomBoardButton.addActionListener(play);
-        customBoardButton.addActionListener(play);
+        randomBoardButton.addActionListener(outputInfo);
+        customBoardButton.addActionListener(outputInfo);
 
         // Building interface :
 
@@ -208,10 +215,13 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
-    private void showCustomGridSetup(){
+    /**
+     * Shows the Custom Grid Setup view
+     */
+    private void showCustomGridSetup() {
         JPanel pan = new JPanel();
-        JPanel grid = new CustomGrid(game, play);
-        JPanel ColorButtons = new ColorPicker(play);
+        JPanel grid = new CustomGrid(game, outputInfo);
+        JPanel ColorButtons = new ColorPicker(outputInfo);
         JPanel gameActionContainer = new JPanel();
         JPanel actionContainer = new JPanel();
 
@@ -237,7 +247,7 @@ public class Window extends JFrame implements Observer {
         exitItem.addActionListener(exit);
 
         saveButton.addActionListener(save);
-        okButton.addActionListener(play);
+        okButton.addActionListener(outputInfo);
 
         menuBar.add(saveItem);
         menuBar.add(loadItem);
@@ -246,7 +256,7 @@ public class Window extends JFrame implements Observer {
         this.setJMenuBar(menuBar);
 
         pan.setLayout(new BorderLayout());
-        actionContainer.setLayout(new GridLayout(3,1));
+        actionContainer.setLayout(new GridLayout(3, 1));
         gameActionContainer.setLayout(new FlowLayout());
 
         gameActionContainer.add(okButton);
@@ -264,7 +274,10 @@ public class Window extends JFrame implements Observer {
 
     }
 
-    public void showGame(){
+    /**
+     * Shows the game view
+     */
+    private void showGame() {
         Save save = new Save(game);
         Load load = new Load(game);
         Exit exit = new Exit();
@@ -292,7 +305,7 @@ public class Window extends JFrame implements Observer {
         this.setJMenuBar(menuBar);
 
         JPanel playerList = new PlayerList(game);
-        JPanel colorButtons = new ColorButtons(game, play);
+        JPanel colorButtons = new ColorButtons(game, outputInfo);
 
         pan.setLayout(new BorderLayout());
 
@@ -306,6 +319,9 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
+    /**
+     * Shows the end game splash and the winner's name
+     */
     private void showEnd() {
         JPanel pan = new JPanel();
         pan.setLayout(new GridLayout(2, 1, 20, 20));
@@ -323,13 +339,13 @@ public class Window extends JFrame implements Observer {
 
         Font font = new Font("Roboto", Font.BOLD, 26);
 
-        mainMenuButton.addActionListener(play);
+        mainMenuButton.addActionListener(outputInfo);
         pan.add(mainMenuButton);
 
         JLabel label = new JLabel(Config.WINNER_SPLASH(game.getWinner().getName()));
         label.setFont(font);
 
-        EmptyBorder border = new EmptyBorder(20,20,20,20);
+        EmptyBorder border = new EmptyBorder(20, 20, 20, 20);
         pan.add(label);
         pan.add(mainMenuButton);
         pan.setBorder(border);
@@ -343,11 +359,12 @@ public class Window extends JFrame implements Observer {
 
     /**
      * FakeButton to force an immediate update of the view when the player is an AI
+     *
      * @return button the fake button
      */
     private JButton fakeButton() {
         JButton button = new JButton();
-        button.addActionListener(play);
+        button.addActionListener(outputInfo);
         this.add(button);
         return button;
     }

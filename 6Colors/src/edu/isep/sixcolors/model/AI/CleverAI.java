@@ -14,7 +14,7 @@ public class CleverAI implements AIInterface, Serializable {
      * Factor defining how much the machiavelic AI is privileged
      * Higher => more weight to machiavelic AI
      */
-    public static final float FAC = 0.8f;
+    private static final float FAC = 0.8f;
 
 
     @Override
@@ -49,11 +49,10 @@ public class CleverAI implements AIInterface, Serializable {
         System.out.println();
         */
 
-        if(greedyGain >= FAC * machiavelicGain) {
+        if (greedyGain >= FAC * machiavelicGain) {
             // System.out.println("Picking " + greedyTileColor.name());
             return greedyTileColor;
-        }
-        else {
+        } else {
             // System.out.println("Picking " + machiavelicTileColor.name());
             return machiavelicTileColor;
         }
