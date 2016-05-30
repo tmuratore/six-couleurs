@@ -14,7 +14,8 @@ public class Player extends Observable implements Serializable {
     private String name;
     private TileColor tileColor;
     private TileColor previousTileColor;
-    private int[] startingTileCoords = new int[2];
+
+    private Tile startingTile;
     private int points;
 
     private boolean ai = false;
@@ -51,6 +52,7 @@ public class Player extends Observable implements Serializable {
         this.previousTileColor = previousTileColor;
     }
 
+    /*
     public int[] getStartingTileCoords() {
         return startingTileCoords;
     }
@@ -61,6 +63,15 @@ public class Player extends Observable implements Serializable {
 
     public void setStartingTileCoords(int i, int j) {
         this.startingTileCoords = new int[]{i, j};
+    }
+    */
+
+    public Tile getStartingTile() {
+        return startingTile;
+    }
+
+    public void setStartingTile(Tile startingTile) {
+        this.startingTile = startingTile;
     }
 
     public int getPoints() {
@@ -91,5 +102,6 @@ public class Player extends Observable implements Serializable {
     public void setAIInstance(AIInterface AIInstance) {
         this.AIInstance = AIInstance;
     }
+
 
 }

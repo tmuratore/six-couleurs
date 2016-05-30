@@ -23,12 +23,16 @@ public class Board implements Serializable {
 
         this.width = width;
 
-        Random random = new Random();
-
         //Random Map Generation picking tiles colors from the TileColor enum
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
                 tiles[i][j] = new Tile(TileColor.random());
+            }
+        }
+        // TODO Could be cleaner
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                insertNeighbours(i, j);
             }
         }
     }
@@ -42,10 +46,9 @@ public class Board implements Serializable {
      * @param tileY  Ordinate of the first tile to update
      */
     // Todo fetch start tile from the player passed
-    public void update(int tileX, int tileY, Player player) {
-        Tile tile = getTile(tileX, tileY);
+    public void update(Tile tile, Player player) {
         boolean updateNeighbours = false;
-        int[][] neighboursCoords = getNeighboursCoords(tileX, tileY);
+
         int neighbourCounter = 0;
 
         // The tile being updated is *always* neighbouring the current player's territory.
@@ -61,22 +64,22 @@ public class Board implements Serializable {
             updateNeighbours = true;
         }
 
-
-
-        for (int[] coords : neighboursCoords) {
+        for (Tile nTile : tile.getNeighbors()) {
             if (
-                getTile(coords[0], coords[1]).getOwner() != player ||    // not in my territory
-                getTile(coords[0], coords[1]).getTileColor() != player.getTileColor()    //
-            ) {
+                    nTile.getOwner() != player ||    // not in my territory
+                    nTile.getTileColor() != player.getTileColor()
+                    ) {
                 if (updateNeighbours) {
-                    update(coords[0], coords[1], player);
+                    update(nTile, player);
                 }
-            }else {
-                neighbourCounter++;
+            } else {
+                if (nTile.getOwner() != null){
+                    neighbourCounter++;
+                }
             }
 
         }
-        if(neighbourCounter == neighboursCoords.length){
+        if(neighbourCounter == tile.getNeighbors().length){
             tile.setTileColor(player.getTileColor());
             tile.setOwner(player);
             player.addPoints();
@@ -142,6 +145,26 @@ public class Board implements Serializable {
 
         // Returning array because the neighbors list won't need to be edited later
         return neighbours.toArray(new int[neighbours.size()][2]);
+    }
+
+    public void insertNeighbours(int x, int y) {
+
+        // Using ArrayList because we're not sure how many neighbours actually exist
+        ArrayList<Tile> neighbours = new ArrayList<Tile>();
+
+        for (int k = -1; k <= 1; k++) {
+            for (int l = -1; l <= 1; l++) {
+                // Picking only direct neighbours (no diagonal neighbours)
+                if ((k == 0 && l != 0) || (l == 0 && k != 0)) {
+                    // Checking neighbour's existence
+                    if (x + k >= 0 && x + k < this.tiles.length && y + l >= 0 && y + l < this.tiles.length) {
+                        neighbours.add(this.getTile(x+k, y+l));
+                    }
+                }
+            }
+        }
+
+        this.getTile(x, y).setNeighbors(neighbours.toArray(new Tile[neighbours.size()]));
     }
 
 }

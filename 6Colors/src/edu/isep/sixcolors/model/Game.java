@@ -1,9 +1,6 @@
 package edu.isep.sixcolors.model;
 
-import edu.isep.sixcolors.model.entity.Board;
-import edu.isep.sixcolors.model.entity.Player;
-import edu.isep.sixcolors.model.entity.Players;
-import edu.isep.sixcolors.model.entity.TileColor;
+import edu.isep.sixcolors.model.entity.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -96,15 +93,15 @@ public class Game extends Observable implements Serializable{
     private void setStartCoords() {
 
         if (players.getPlayerNumber() == 2) {
-            players.getPlayer(0).setStartingTileCoords(0, 0);
-            players.getPlayer(1).setStartingTileCoords(board.getWidth() - 1, board.getWidth() - 1);
+            players.getPlayer(0).setStartingTile(board.getTile(0,0));
+            players.getPlayer(1).setStartingTile(board.getTile(board.getWidth() - 1, board.getWidth() - 1));
         } else {
             int max = board.getWidth() - 1;
             for (int i = 0; i < this.players.getPlayerNumber(); i++) {
                 // Computing starting tile abscissa and ordinate using the player's id :
                 int x = (i == 2 || i == 3) ? max : 0;
                 int y = (i == 1 || i == 2) ? max : 0;
-                players.getPlayer(i).setStartingTileCoords(x, y);
+                players.getPlayer(i).setStartingTile(board.getTile(x, y));
             }
         }
 
@@ -128,7 +125,7 @@ public class Game extends Observable implements Serializable{
             player.setTileColor(tileColor);
 
             // 2. Update the board accordingly :
-            board.getTile(player.getStartingTileCoords()).setTileColor(tileColor);
+            player.getStartingTile().setTileColor(tileColor);
 
             // 3. Pop this color from the list of available colors :
             availableTileColors.remove(tileColor);
@@ -137,9 +134,8 @@ public class Game extends Observable implements Serializable{
 
     public void setStartOwnership() {
         for (int i = 0; i < this.players.getPlayerNumber(); i++) {
-            int[] startingTile = players.getPlayer(i).getStartingTileCoords();
-            board.getTile(startingTile).setOwner(players.getPlayer(i));
-            board.update(startingTile[0], startingTile[1], players.getPlayer(i));
+            players.getPlayer(i).getStartingTile().setOwner(players.getPlayer(i));
+            board.update(players.getPlayer(i).getStartingTile(), players.getPlayer(i));
         }
     }
 
@@ -150,13 +146,12 @@ public class Game extends Observable implements Serializable{
 
         // Setting current, previous colors and initial points of the players :
         for (int i = 0; i < this.players.getPlayerNumber(); i++) {
-            int[] startingTile = players.getPlayer(i).getStartingTileCoords();
-            TileColor tileColor = board.getTile(startingTile[0], startingTile[1]).getTileColor();
+            TileColor tileColor = players.getPlayer(i).getStartingTile().getTileColor();
             players.getPlayer(i).setTileColor(tileColor);
             players.getPlayer(i).setPoints(1);
 
             // Updating board to give the players ownership of the tiles of their colors next to their starting point.
-            board.update(startingTile[0], startingTile[1], players.getPlayer(i));
+            board.update(players.getPlayer(i).getStartingTile(), players.getPlayer(i));
         }
 
     }
@@ -178,8 +173,8 @@ public class Game extends Observable implements Serializable{
         clearChanged();
     }
 
-    public void updateBoard(int tileX, int tileY, Player player) {
-        board.update(tileX, tileY, player);
+    public void updateBoard(Tile tile, Player player) {
+        board.update(tile , player);
     }
 
 
