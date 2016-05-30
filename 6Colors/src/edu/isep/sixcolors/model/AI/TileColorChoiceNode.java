@@ -3,7 +3,7 @@ package edu.isep.sixcolors.model.AI;
 import edu.isep.sixcolors.model.entity.TileColor;
 
 /**
- * TODO used by genius
+ * This data structure is used by the Genius AI to build the tree on which the MinMax reduction is performed.
  */
 public class TileColorChoiceNode {
 

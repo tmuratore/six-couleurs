@@ -3,7 +3,8 @@ package edu.isep.sixcolors.model.AI;
 import edu.isep.sixcolors.model.entity.TileColor;
 
 /**
- * Used by AIs to return a TileColor choice and the associated gain
+ * Data structure used by AIs to return a TileColor choice and the associated gain
+ * for example in methods called by Clever
  */
 public class TileColorWithGain {
 

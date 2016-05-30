@@ -8,8 +8,16 @@ import edu.isep.sixcolors.model.entity.TileColor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Greedy AI : this AI picks the color allowing the highest gain for the current turn
+ */
 public class GreedyAI implements AIInterface, Serializable {
 
+    /**
+     * Pick a color !
+     * @param game the game in progress
+     * @return TileColor the chosen color
+     */
     @Override
     public TileColor colorChoice(Game game) {
         TileColorWithGain tcwg = colorChoiceWithGain(game);

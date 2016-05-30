@@ -7,8 +7,17 @@ import edu.isep.sixcolors.model.entity.TileColor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Machiavelic AI : picks the most annoying color for the opponents
+ * This could go directly to the trash bin :-(
+ */
 public class MachiavelicAI implements AIInterface, Serializable {
 
+    /**
+     * Pick a color !
+     * @param game the game in progress
+     * @return TileColor the chosen color
+     */
     @Override
     public TileColor colorChoice(Game game) {
         TileColorWithGain tcwg = colorChoiceWithGain(game);

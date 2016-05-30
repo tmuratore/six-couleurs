@@ -7,14 +7,27 @@ import edu.isep.sixcolors.model.entity.TileColor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Genius AI : Based on the min / max algorithm
+ */
 public class GeniusAI implements AIInterface, Serializable {
 
+    /**
+     * Param defining the depth of the tree built by the algorithm
+     */
     public static final int DEPTH = 4;
 
+    /**
+     * Pick a color !
+     * @param game the game in progress
+     * @return TileColor the chosen color
+     */
     @Override
     public TileColor colorChoice(Game game) {
         TileColorChoiceNode tree = new TileColorChoiceNode();
         tree.setSons(computeSons(game, DEPTH, game.getCurrentPlayerId()));
+
+        reduce(tree.getSons());
 
         int max = tree.getSons()[0].getGain();
         TileColor tc = tree.getSons()[0].getTileColorChoice();

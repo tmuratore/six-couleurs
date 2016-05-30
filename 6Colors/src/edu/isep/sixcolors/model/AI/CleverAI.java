@@ -16,7 +16,11 @@ public class CleverAI implements AIInterface, Serializable {
      */
     private static final float FAC = 0.8f;
 
-
+    /**
+     * Pick a color !
+     * @param game the game in progress
+     * @return TileColor the chosen color
+     */
     @Override
     public TileColor colorChoice(Game game) {
         // factor defining how much the greedy choice will be privileged against the machiavelic choice :
