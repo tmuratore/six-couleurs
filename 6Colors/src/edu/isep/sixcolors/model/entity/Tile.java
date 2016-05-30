@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class Tile implements Serializable {
 
+    private Tile[] neighbors;
 
     /**
      * Constructor taking the initial tileColor of the tile
@@ -51,6 +52,14 @@ public class Tile implements Serializable {
      */
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    public Tile[] getNeighbors() {
+        return neighbors;
+    }
+
+    public void setNeighbors(Tile[] neighbors) {
+        this.neighbors = neighbors;
     }
 
 }

@@ -33,7 +33,7 @@ public class CustomGrid extends JPanel {
                     this.add(makeColorButton(game.getBoard().getTile(i, j).getTileColor(), i, j, small), gbc);
                 }else{
                     Player owner = game.getBoard().getTile(i,j).getOwner();
-                    if (owner.getStartingTileCoords()[0] == i && owner.getStartingTileCoords()[1] == j){
+                    if (owner.getStartingTile() == game.getBoard().getTile(i,j)){
                         JPanel pan = new JPanel();
                         pan.setBackground(Color.BLACK);
                         if(small){

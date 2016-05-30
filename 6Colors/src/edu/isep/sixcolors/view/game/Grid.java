@@ -1,6 +1,5 @@
 package edu.isep.sixcolors.view.game;
 
-import edu.isep.sixcolors.controller.Play;
 import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.entity.TileColor;

@@ -42,8 +42,7 @@ public class GreedyAI implements AIInterface, Serializable {
 
             me.setTileColor(possibleChoice);
             guineaPig.updateBoard(
-                    me.getStartingTileCoords()[0],
-                    me.getStartingTileCoords()[1],
+                    me.getStartingTile(),
                     me
             );
 

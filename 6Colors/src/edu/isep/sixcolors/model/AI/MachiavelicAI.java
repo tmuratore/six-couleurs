@@ -42,8 +42,7 @@ public class MachiavelicAI implements AIInterface, Serializable {
 
                     p.setTileColor(tc);
                     guineaPig.updateBoard(
-                            p.getStartingTileCoords()[0],
-                            p.getStartingTileCoords()[1],
+                            p.getStartingTile(),
                             p
                     );
 

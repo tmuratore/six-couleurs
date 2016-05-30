@@ -247,8 +247,7 @@ public class Play implements ActionListener {
 
         // 4. Update the board to apply the color choice :
         game.updateBoard (
-                currentPlayer.getStartingTileCoords()[0],
-                currentPlayer.getStartingTileCoords()[1],
+                currentPlayer.getStartingTile(),
                 currentPlayer
         );
 
