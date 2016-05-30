@@ -3,6 +3,7 @@ package edu.isep.sixcolors.model.AI;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.entity.Player;
 import edu.isep.sixcolors.model.entity.TileColor;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class MachiavelicAI implements AIInterface, Serializable {
         // 2. Picking the best color :
         for (int i = 0; i < game.getPlayers().getPlayerNumber(); i++) {
             // test against other players than me :
-            if(i != game.getCurrentPlayerId()) {
+            if (i != game.getCurrentPlayerId()) {
                 for (TileColor tc : availableTileColor) {
                     try {
                         guineaPig = game.deepCopy();

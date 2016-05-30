@@ -26,7 +26,7 @@ public class GreedyAI implements AIInterface, Serializable {
         TileColor chosenColor = availableTileColors.get(0);
         int bestGain = 0;
 
-        for(TileColor possibleChoice : availableTileColors) {
+        for (TileColor possibleChoice : availableTileColors) {
             // creating a guinea pig to test my moves :
             Game guineaPig = null;
             try {
@@ -49,7 +49,7 @@ public class GreedyAI implements AIInterface, Serializable {
             int pointsAfter = me.getPoints();
 
             // Optimize gain :
-            if(pointsAfter - pointsBefore >= bestGain) {
+            if (pointsAfter - pointsBefore >= bestGain) {
                 chosenColor = possibleChoice;
                 bestGain = pointsAfter - pointsBefore;
             }

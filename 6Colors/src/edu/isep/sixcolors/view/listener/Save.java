@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+/**
+ * A popup proposing to save the current state of the game into an external file for ulterior import
+ */
 public class Save implements ActionListener {
 
     private final JFileChooser fc = new JFileChooser();

@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Observable;
 
 /**
- * Player model : Represents a player of the current game
+ * Player model : Represents a player of the game
  */
-public class Player extends Observable implements Serializable {
+public class Player implements Serializable {
 
     private final String name;
     private TileColor tileColor;
@@ -20,11 +20,12 @@ public class Player extends Observable implements Serializable {
     private boolean ai = false;
     private AIInterface AIInstance;
 
+    /**
+     * Constructor
+     * @param name the name of the player
+     */
     public Player(String name){
         this.name = name;
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
     public String getName() {
@@ -38,9 +39,6 @@ public class Player extends Observable implements Serializable {
     public void setTileColor(TileColor controlledTileColor) {
         setPreviousTileColor(this.tileColor);
         this.tileColor = controlledTileColor;
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
     public TileColor getPreviousTileColor() {
@@ -50,20 +48,6 @@ public class Player extends Observable implements Serializable {
     private void setPreviousTileColor(TileColor previousTileColor) {
         this.previousTileColor = previousTileColor;
     }
-
-    /*
-    public int[] getStartingTileCoords() {
-        return startingTileCoords;
-    }
-
-    public void setStartingTileCoords(int[] startingTileCoords) {
-        this.startingTileCoords = startingTileCoords;
-    }
-
-    public void setStartingTileCoords(int i, int j) {
-        this.startingTileCoords = new int[]{i, j};
-    }
-    */
 
     public Tile getStartingTile() {
         return startingTile;
@@ -92,7 +76,6 @@ public class Player extends Observable implements Serializable {
     public void setAi(boolean ai) {
         this.ai = ai;
     }
-
 
     public AIInterface getAIInstance() {
         return AIInstance;

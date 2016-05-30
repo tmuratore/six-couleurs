@@ -8,27 +8,37 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Random;
 
-public class Game extends Observable implements Serializable{
+/**
+ * Parent model class, regrouping all the necessary elements to reflect a games state.
+ * It extends Observable so the view can update itself when the game has been modified
+ * It implements Serializable to be able to create saves
+ */
+public class Game extends Observable implements Serializable {
 
     private static final long serialVersionUID = Config.GAME_VERSION_UNIQUE_ID;
     private Players players;
     private Board board;
-    private GameState State = GameState.Menu;
+    private GameState state = GameState.Menu;
     private int currentPlayerId;
     private Player winner;
 
-    private String[] error;
-
-    public Game(){
-        State = GameState.Menu;
+    /**
+     * Constructor
+     */
+    public Game() {
+        state = GameState.Menu;
     }
 
-    // Brute force game loading : used to load saved games :
-    // Notifies the view !
-    public void setGame(Game game){
+    /**
+     * Brute force resetting of the game, used when a serialized game is loaded
+     * Notifies the view
+     *
+     * @param game the game that is to override the current one
+     */
+    public void setGame(Game game) {
         this.players = game.getPlayers();
         this.board = game.getBoard();
-        this.State = game.getState();
+        this.state = game.getState();
         this.currentPlayerId = game.getCurrentPlayerId();
         this.winner = game.getWinner();
 
@@ -37,28 +47,53 @@ public class Game extends Observable implements Serializable{
         clearChanged();
     }
 
+    /**
+     * Get the Players of Game
+     *
+     * @return the Players of the Game
+     */
     public Players getPlayers() {
         return this.players;
     }
 
+    /**
+     * Set the Players of Game
+     */
     public void setPlayers(Players players) {
         this.players = players;
     }
 
+    /**
+     * Get the Board of Game
+     *
+     * @return the Board of the Game
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Set the Board of Game
+     */
     public void setBoard(Board board) {
         this.board = board;
     }
 
+    /**
+     * Get the State of Game
+     *
+     * @return the State of the Game
+     */
     public GameState getState() {
-        return State;
+        return this.state;
     }
 
+    /**
+     * Set the State of Game
+     * Notifies the View
+     */
     public void setState(GameState state) {
-        State = state;
+        this.state = state;
 
         // Used to update the view :
         setChanged();
@@ -66,10 +101,18 @@ public class Game extends Observable implements Serializable{
         clearChanged();
     }
 
+    /**
+     * Get the winner of Game
+     *
+     * @return the winner of the Game
+     */
     public Player getWinner() {
         return winner;
     }
 
+    /**
+     * Set the winner of Game
+     */
     public void setWinner(Player winner) {
         this.winner = winner;
     }
@@ -78,9 +121,9 @@ public class Game extends Observable implements Serializable{
      * Initialises the game for game loops
      * Only executed when in Game state.
      */
-    public void initGame(){
+    public void initGame() {
 
-        if (players.getPlayerNumber() > 0 && board.getWidth() > 0 && players.getPlayer(0).getName() != null){
+        if (players.getPlayerNumber() > 0 && board.getWidth() > 0 && players.getPlayer(0).getName() != null) {
 
             setStartCoords();
 
@@ -95,10 +138,14 @@ public class Game extends Observable implements Serializable{
         }
     }
 
+    /**
+     * Sets the starting coordinates of each Player in Players
+     * accordingly to the number of player
+     */
     private void setStartCoords() {
 
         if (players.getPlayerNumber() == 2) {
-            players.getPlayer(0).setStartingTile(board.getTile(0,0));
+            players.getPlayer(0).setStartingTile(board.getTile(0, 0));
             players.getPlayer(1).setStartingTile(board.getTile(board.getWidth() - 1, board.getWidth() - 1));
         } else {
             int max = board.getWidth() - 1;
@@ -112,13 +159,16 @@ public class Game extends Observable implements Serializable{
 
     }
 
-    private void setStartColors(){
+    /**
+     * Sets the starting TileColors of each Player in Players
+     */
+    private void setStartColors() {
 
         // 1. Create a list of available colors and a random generator
         ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
         Random random = new Random();
 
-        for(int i = 0; i < players.getPlayerNumber(); i++) {
+        for (int i = 0; i < players.getPlayerNumber(); i++) {
 
             // Get the player being iterated over :
             Player player = players.getPlayer(i);
@@ -137,6 +187,9 @@ public class Game extends Observable implements Serializable{
         }
     }
 
+    /**
+     * Initialises the ownership on the starting tiles of each Player of Players
+     */
     private void setStartOwnership() {
         for (int i = 0; i < this.players.getPlayerNumber(); i++) {
             players.getPlayer(i).getStartingTile().setOwner(players.getPlayer(i));
@@ -145,7 +198,8 @@ public class Game extends Observable implements Serializable{
     }
 
     /**
-     * Initialises the game
+     * Initialises the current, previous colors and initial points of each Player in Players
+     * Runs a round of update to add the neighboring tiles of the same color
      */
     private void setOther() {
 
@@ -161,58 +215,61 @@ public class Game extends Observable implements Serializable{
 
     }
 
-
-    public Player getCurrentPlayer() {
-        return this.getPlayers().getPlayer(currentPlayerId);
-    }
-
-    public void nextPlayer() {
-        if(currentPlayerId == players.getPlayerNumber() - 1) {
-            currentPlayerId = 0;
-        }
-        else {
-            currentPlayerId ++;
-        }
-        setChanged();
-        notifyObservers();
-        clearChanged();
-    }
-
-    public void updateBoard(Tile tile, Player player) {
-        board.update(tile , player);
-    }
-
-
-
+    /**
+     * @return the current Player's Id
+     */
     public int getCurrentPlayerId() {
         return currentPlayerId;
     }
 
-    public void customNotify(){
+    /**
+     * @return the current Player in the Game
+     */
+    public Player getCurrentPlayer() {
+        return this.getPlayers().getPlayer(currentPlayerId);
+    }
+
+    /**
+     * Changes the currentPlayerId to the next one
+     */
+    public void nextPlayer() {
+        if (currentPlayerId == players.getPlayerNumber() - 1) {
+            currentPlayerId = 0;
+        } else {
+            currentPlayerId++;
+        }
         setChanged();
         notifyObservers();
         clearChanged();
     }
 
-    public String[] getError() {
-        return error;
+    /**
+     * Calls the update method of the Board model
+     *
+     * @param tile   the starting tile to update from
+     * @param player the player who it is updating for
+     */
+    public void updateBoard(Tile tile, Player player) {
+        board.update(tile, player);
     }
 
-    public void setError(String[] error) {
-        this.error = error;
-    }
-
-    public void resetError(){
-        this.error = null;
+    /**
+     * A method to call when there is a need to update the view when the game is not modified
+     */
+    public void customNotify() {
+        setChanged();
+        notifyObservers();
+        clearChanged();
     }
 
     /**
      * Deep copy by serialization
      * Used to create guinea pigs to allow IA's to test their moves.
      * Uses serialization tools in the apache.common library.
+     *
+     * @throws Exception when the Serialization fails
      */
-    public Game deepCopy() throws Exception
-    {
+    public Game deepCopy() throws Exception {
         //Serialization of object
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(bos);
@@ -233,12 +290,11 @@ public class Game extends Observable implements Serializable{
      */
     public ArrayList<TileColor> getAvailableTileColors() {
         ArrayList<TileColor> availableTileColors = new ArrayList<>(Arrays.asList(TileColor.values()));
-        for (int i = 0; i < getPlayers().getPlayerNumber(); i++ ){
+        for (int i = 0; i < getPlayers().getPlayerNumber(); i++) {
             TileColor tileColor = getPlayers().getPlayer(i).getTileColor();
-            if (availableTileColors.contains(tileColor)){
+            if (availableTileColors.contains(tileColor)) {
                 availableTileColors.remove(tileColor);
-            }
-            else {
+            } else {
                 // an exception could be thrown here, bc running this else body would mean the model is broken
             }
         }

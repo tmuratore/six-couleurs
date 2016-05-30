@@ -49,8 +49,8 @@ public class Window extends JFrame implements Observer {
     /**
      * This method is called when the Game model (this.game) is modified :
      *
-     * @param o
-     * @param arg
+     * @param o   the object that called this method
+     * @param arg the arguments the object passed when calling the method
      */
     @Override
     public void update(Observable o, Object arg) {
@@ -68,9 +68,9 @@ public class Window extends JFrame implements Observer {
                 showCustomGridSetup();
                 break;
             case Game:
-                if (game.getCurrentPlayer().isAi()){
+                if (game.getCurrentPlayer().isAi()) {
                     fakeButton().doClick();
-                }else{
+                } else {
                     // To you the adventurer who dares to try to display a game between AI only, your journey begins here. Good luck from all the team.
                     showGame();
                 }
@@ -82,14 +82,17 @@ public class Window extends JFrame implements Observer {
 
     }
 
+    /**
+     * Show the Main Menu view
+     */
     private void showMainMenu() {
         // Main panel :
         JPanel pan = new JPanel();
-        EmptyBorder border = new EmptyBorder(50,50,50,50);
+        EmptyBorder border = new EmptyBorder(50, 50, 50, 50);
         pan.setBorder(border);
 
         //this.setSize(700,500);
-        pan.setLayout(new GridLayout(4,1,50,50));
+        pan.setLayout(new GridLayout(4, 1, 50, 50));
 
         // Creating elements :
         Font f = new Font("Roboto", Font.BOLD, 40);
@@ -117,6 +120,9 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
+    /**
+     * Shows the Setup view of a Local Game
+     */
     private void showLocalGameSetup() {
         // main container of this interface :
         JPanel pan = new JPanel();
@@ -158,7 +164,9 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
-
+    /**
+     * Shows the player name and type setup view
+     */
     private void showPlayersSetup() {
 
         String[] playerTypes = {"Human", "Dumb AI", "Greedy AI", "Machiavelic AI", "Clever AI", "Genius AI"};
@@ -173,13 +181,11 @@ public class Window extends JFrame implements Observer {
         Players players = game.getPlayers();
 
 
-
-        for(int i=0; i < players.getPlayerNumber(); i++) {
+        for (int i = 0; i < players.getPlayerNumber(); i++) {
             inputContainer.add(new JLabel(Config.PLAYER_NAME_PROMPT_MESSAGE(i)));
             inputContainer.add(new JTextField());
             inputContainer.add(new JComboBox<>(playerTypes));
         }
-
 
 
         // Layout and borders :
@@ -209,7 +215,10 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
-    private void showCustomGridSetup(){
+    /**
+     * Shows the Custom Grid Setup view
+     */
+    private void showCustomGridSetup() {
         JPanel pan = new JPanel();
         JPanel grid = new CustomGrid(game, outputInfo);
         JPanel ColorButtons = new ColorPicker(outputInfo);
@@ -247,7 +256,7 @@ public class Window extends JFrame implements Observer {
         this.setJMenuBar(menuBar);
 
         pan.setLayout(new BorderLayout());
-        actionContainer.setLayout(new GridLayout(3,1));
+        actionContainer.setLayout(new GridLayout(3, 1));
         gameActionContainer.setLayout(new FlowLayout());
 
         gameActionContainer.add(okButton);
@@ -265,7 +274,10 @@ public class Window extends JFrame implements Observer {
 
     }
 
-    private void showGame(){
+    /**
+     * Shows the game view
+     */
+    private void showGame() {
         Save save = new Save(game);
         Load load = new Load(game);
         Exit exit = new Exit();
@@ -307,6 +319,9 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
+    /**
+     * Shows the end game splash and the winner's name
+     */
     private void showEnd() {
         JPanel pan = new JPanel();
         pan.setLayout(new GridLayout(2, 1, 20, 20));
@@ -330,7 +345,7 @@ public class Window extends JFrame implements Observer {
         JLabel label = new JLabel(Config.WINNER_SPLASH(game.getWinner().getName()));
         label.setFont(font);
 
-        EmptyBorder border = new EmptyBorder(20,20,20,20);
+        EmptyBorder border = new EmptyBorder(20, 20, 20, 20);
         pan.add(label);
         pan.add(mainMenuButton);
         pan.setBorder(border);
@@ -344,6 +359,7 @@ public class Window extends JFrame implements Observer {
 
     /**
      * FakeButton to force an immediate update of the view when the player is an AI
+     *
      * @return button the fake button
      */
     private JButton fakeButton() {

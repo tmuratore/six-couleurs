@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+/**
+ * A popup proposing to load a serialized Six Colors game and launches the imported save.
+ */
 public class Load implements ActionListener {
 
     private final JFileChooser fc = new JFileChooser();
@@ -31,14 +34,6 @@ public class Load implements ActionListener {
                     ObjectInput input = new ObjectInputStream(buffer)
                 ){
                     Game toBeLoaded = ((Game) input.readObject());
-                    /*
-                    if (game.getState() == GameState.CustomGrid) {
-                        toBeLoaded.setState(GameState.CustomGrid);
-                    }
-                    else if (game.getState() == GameState.Game) {
-                        toBeLoaded.setState(GameState.Game);
-                    }
-                    */
                     this.game.setGame(toBeLoaded);
 
                 } catch (ClassNotFoundException | IOException e1) {

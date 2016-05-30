@@ -27,7 +27,7 @@ public class Board implements Serializable {
                 tiles[i][j] = new Tile(TileColor.random());
             }
         }
-        // TODO Could be cleaner
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
                 insertNeighbours(i, j);
@@ -115,35 +115,10 @@ public class Board implements Serializable {
     }
 
     /**
-     * Returns a list of the neighbours' coordinates of a given tile
-     *
+     * Inserts a list of the tile's neighbors into it
      * @param x Abscissa of the tile whose neighbours are wanted
      * @param y Ordinates of the tile whose neighbours are wanted
-     * @return List of the neighbours' coordinates {0 : {neigh0x, neigh0y}, 1 : {neigh1x, neigh1y}}
      */
-    public int[][] getNeighboursCoords(int x, int y) {
-
-        // Using ArrayList because we're not sure how many neighbours actually exist
-        ArrayList<int[]> neighbours = new ArrayList<>();
-        int[] coords;
-
-        for (int k = -1; k <= 1; k++) {
-            for (int l = -1; l <= 1; l++) {
-                // Picking only direct neighbours (no diagonal neighbours)
-                if ((k == 0 && l != 0) || (l == 0 && k != 0)) {
-                    // Checking neighbour's existence
-                    if (x + k >= 0 && x + k < this.tiles.length && y + l >= 0 && y + l < this.tiles.length) {
-                        coords = new int[]{x + k, y + l};
-                        neighbours.add(coords);
-                    }
-                }
-            }
-        }
-
-        // Returning array because the neighbors list won't need to be edited later
-        return neighbours.toArray(new int[neighbours.size()][2]);
-    }
-
     private void insertNeighbours(int x, int y) {
 
         // Using ArrayList because we're not sure how many neighbours actually exist

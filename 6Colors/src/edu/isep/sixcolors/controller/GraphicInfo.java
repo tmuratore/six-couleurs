@@ -9,16 +9,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * GraphicInfo gets the necessary information for the main controller Play from the Graphic (swing) View and passes it onto Play.
+ * It implements ActionListener so it's called on a button press.
+ * It also implements OutputInfo to be able to be used in Play
+ */
+
 public class GraphicInfo implements ActionListener, OutputInfo {
 
     private final Game game;
     private final Play play;
 
+    /**
+     * Constructor creates an instance of Play to use.
+     *
+     * @param game the current game model
+     */
     public GraphicInfo(Game game) {
         this.game = game;
         this.play = new Play(game);
     }
 
+    /**
+     * Called whenever a button linked to this class is pushed in the graphic view
+     * It picks the necessary information off the view to pass it onto Play.
+     *
+     * @param e the ActionEvent triggering the method
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -67,12 +84,23 @@ public class GraphicInfo implements ActionListener, OutputInfo {
                         break;
                     }
                 }
-            }
+        }
         returnGameParamSet(sourceText, boardSize, playerNb, playerName, playerType, sourceActionCommand);
     }
 
+    /**
+     * Function from the Interface OutputInfo, that sends the information from actionPerformed to the main controller
+     * Necessary step to assure a generic input to Play
+     *
+     * @param sourceText          The text of the pressed button
+     * @param boardSize           The size of the board
+     * @param playerNb            The number of players
+     * @param playerName          A table of the player's names
+     * @param playerType          A table of the player' what the player is (what AI or human)
+     * @param sourceActionCommand The text sent as an Action Command through the button, must not be mixed up with sourceText
+     */
     @Override
-    public void returnGameParamSet(String sourceText, int boardSize, int playerNb, String[] playerName, String[] playerType, String sourceActionCommand){
+    public void returnGameParamSet(String sourceText, int boardSize, int playerNb, String[] playerName, String[] playerType, String sourceActionCommand) {
         play.control(sourceText, boardSize, playerNb, playerName, playerType, sourceActionCommand);
     }
 

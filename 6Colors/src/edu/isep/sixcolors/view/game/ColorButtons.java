@@ -9,9 +9,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * A pane of registered buttons, representing all the currently available colors to choose from in the current configuration
+ */
 public class ColorButtons extends JPanel {
 
-    public ColorButtons(Game game, ActionListener outputInfo){
+    public ColorButtons(Game game, ActionListener outputInfo) {
 
         this.setLayout(new FlowLayout());
         this.setBorder(BorderFactory.createTitledBorder("Color Buttons"));

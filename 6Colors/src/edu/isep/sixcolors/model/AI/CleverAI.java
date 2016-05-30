@@ -49,11 +49,10 @@ public class CleverAI implements AIInterface, Serializable {
         System.out.println();
         */
 
-        if(greedyGain >= FAC * machiavelicGain) {
+        if (greedyGain >= FAC * machiavelicGain) {
             // System.out.println("Picking " + greedyTileColor.name());
             return greedyTileColor;
-        }
-        else {
+        } else {
             // System.out.println("Picking " + machiavelicTileColor.name());
             return machiavelicTileColor;
         }
