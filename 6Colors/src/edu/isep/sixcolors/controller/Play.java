@@ -8,14 +8,8 @@ import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.entity.Player;
 import edu.isep.sixcolors.model.entity.Players;
 import edu.isep.sixcolors.model.entity.TileColor;
-import edu.isep.sixcolors.view.WarningPopup;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class Play implements ActionListener {
+public class Play {
 
     Game game;
     TileColor currentSelectedColor = TileColor.Blue;
@@ -26,17 +20,12 @@ public class Play implements ActionListener {
         this.game = game;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        // Fetch the text of the button :
-        String sourceText = ((JButton) e.getSource()).getText();
-
-        // Fetch the content pane of the window that triggered the
-        JPanel contentPane = (JPanel) ((JFrame) SwingUtilities.getRoot((Component) e.getSource())).getContentPane();
+    public void control(String sourceText, int boardSize, int playerNb, String[] playerName, String[] playerType, String sourceActionCommand) {
 
         switch(game.getState()) {
 
             case Menu:
-                switch(sourceText) {
+                switch(sourceActionCommand) {
                     case Config.NEW_LOCAL_GAME_BUTTON_TEXT:
                         game.setState(GameState.GridConfig);
                         break;
@@ -46,12 +35,12 @@ public class Play implements ActionListener {
                 }
                 break;
             case GridConfig:
-                initGrid(contentPane);
+                initGrid(boardSize, playerNb);
                 break;
             case NameConfig:
-                boolean emptyName = initPlayers(contentPane);
+                boolean emptyName = initPlayers(playerName, playerType);
                 if (!emptyName) {
-                    switch (sourceText) {
+                    switch (sourceActionCommand) {
                         case Config.RANDOM_BOARD_BUTTON_TEXT:
                             game.setState(GameState.Game);
                             break;
@@ -62,10 +51,8 @@ public class Play implements ActionListener {
                     break;
                 }
             case CustomGrid:
-                TileColor[] colors = TileColor.values();
                 currentSelectedPlayer = game.getCurrentPlayer();
-                String sourceActionCommand = ((JButton) e.getSource()).getActionCommand();
-                switch (sourceText) {
+                switch (sourceActionCommand) {
                     case "Play":
                          game.setState(GameState.Game);
                         break;
@@ -91,14 +78,14 @@ public class Play implements ActionListener {
                 }
                 break;
             case Game:
-                colorButtonPressed(e);
+                colorButtonPressed(sourceActionCommand);
                 break;
             case End:
                 // TODO put this to config (here and in Window.java:322)
-                if(sourceText == "Main Menu") {
+                if(sourceActionCommand == "Main Menu") {
                     // this.game = new Game();
 
-                    // this could *maybe* induce a bug where the new grid is polluted by the remainings of
+                    // this could *maybe* induce a bug where the new grid is polluted by the remainder of
                     // the old one ; declare a Game.clean() method and invoke it here in case it happens.
                     game.setState(GameState.Menu);
                 }
@@ -106,12 +93,7 @@ public class Play implements ActionListener {
         }
     }
 
-    public void initGrid(JPanel contentPane){
-        // Try parsing the number input
-        try {
-            // If the order of the texts fields is changed, this could break :
-            int boardSize = Integer.parseInt(((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(1)).getText());
-            int playerNb = Integer.parseInt(((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(3)).getText());
+    public void initGrid(int boardSize, int playerNb){
 
             // Check if the inputs are within boundaries :
             if (boardSize >= Config.GRID_MIN && boardSize <= Config.GRID_MAX && playerNb >= Config.PLAYER_NB_MIN && playerNb <= Config.PLAYER_NB_MAX){
@@ -126,40 +108,33 @@ public class Play implements ActionListener {
                 game.setState(GameState.NameConfig);
             }
             else { // input out of bounds
-                new WarningPopup(
+                String[] error = {
                         Config.OUT_OF_BOUNDS_GRID_CONFIG_MESSAGE + Config.newLine + Config.OUT_OF_BOUNDS_PLAYER_NB_CONFIG_MESSAGE,
                         Config.INVALID_ENTRY_TITLE
-                );
+                };
+                game.setError(error);
             }
-        } catch (NumberFormatException x) {
-            new WarningPopup (
-                    Config.NUMBER_FORMAT_CONFIG_MESSAGE,
-                    Config.INVALID_ENTRY_TITLE
-            );
-        }
+
     }
 
-    public boolean initPlayers(JPanel contentPane){
+    public boolean initPlayers(String[] playerName, String[] playerType){
         int playerNb = game.getPlayers().getPlayerNumber();
         Players players = game.getPlayers();
         boolean emptyName = false;
         for (int i = 0; i < playerNb; i++) {
-
-            // Automagic :
-
-            String playerName = ((JTextField) ((JPanel) contentPane.getComponent(0)).getComponent(3 * i + 1)).getText();
-            String playerType = (String) ((JComboBox)  ((JPanel) contentPane.getComponent(0)).getComponent(3 * i + 2)).getSelectedItem();
-
-            if (playerName == null || playerName.equals("")) {
+            if (playerName[i] == null || playerName[i].equals("")) {
                 emptyName = true;
-                new WarningPopup(Config.EMPTY_PLAYER_NAME_MESSAGE, Config.INVALID_ENTRY_TITLE);
+                String[] error = {
+                        Config.EMPTY_PLAYER_NAME_MESSAGE,
+                        Config.INVALID_ENTRY_TITLE
+                };
+                game.setError(error);
                 break;
             } else {
-
-                players.setPlayer(i, new Player(playerName));
+                players.setPlayer(i, new Player(playerName[i]));
                 AIInterface AI = null;
 
-                switch(playerType) {
+                switch(playerType[i]) {
                     case "Human":
                         break;
                     case "Dumb AI":
@@ -215,7 +190,7 @@ public class Play implements ActionListener {
 
     }
 
-    public void colorButtonPressed(ActionEvent e){
+    public void colorButtonPressed(String sourceActionCommand){
         // 1. Fetch the current player & declare choice to catch :
         Player currentPlayer = game.getCurrentPlayer();
         TileColor chosenColor = null;
@@ -227,11 +202,9 @@ public class Play implements ActionListener {
 
         } else {
             // If it's not an AI, then we wait for the physical player to make a choice in the view
-            String buttonText = ((JButton) e.getSource()).getText();
-
             //Parse the color choice of the player :
             try {
-                chosenColor = TileColor.parseTileColor(buttonText);
+                chosenColor = TileColor.parseTileColor(sourceActionCommand);
 
             } catch (Exception e1) {
                 e1.printStackTrace();

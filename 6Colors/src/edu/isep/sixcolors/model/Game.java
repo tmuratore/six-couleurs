@@ -17,6 +17,12 @@ public class Game extends Observable implements Serializable{
     private int currentPlayerId;
     private Player winner;
 
+    private String[] error;
+
+    public Game(){
+        State = GameState.Menu;
+    }
+
     // Brute force game loading : used to load saved games :
     // Notifies the view !
     public void setGame(Game game){
@@ -187,6 +193,21 @@ public class Game extends Observable implements Serializable{
         setChanged();
         notifyObservers();
         clearChanged();
+    }
+
+    public String[] getError() {
+        return error;
+    }
+
+    public void setError(String[] error) {
+        this.error = error;
+        setChanged();
+        notifyObservers();
+        clearChanged();
+    }
+
+    public void resetError(){
+        this.error = null;
     }
 
     /**

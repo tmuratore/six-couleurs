@@ -1,12 +1,9 @@
 package edu.isep.sixcolors;
 
-import edu.isep.sixcolors.controller.Play;
+import edu.isep.sixcolors.controller.GraphicInfo;
+import edu.isep.sixcolors.controller.OutputInfo;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.view.Window;
-
-import java.io.FileOutputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 
 public class SixColors {
 
@@ -17,10 +14,12 @@ public class SixColors {
         Game game = new Game();
 
         // Controller
-        Play play = new Play(game);
+        OutputInfo controller = new GraphicInfo(game);
+        // The Interface OutputInfo was created to make the main controller Play independent of the display method.
+        // So if the ConsoleInfo Class was developed hinging on a Console view class, Play should work anyway.
 
         // View
-        Window window = new Window(play, game);
+        Window window = new Window(controller, game);
 
         /*** BOOTSTRAPPING THE VIEW ***/
 

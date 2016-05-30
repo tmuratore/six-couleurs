@@ -41,9 +41,8 @@ public class Board implements Serializable {
     /**
      * Updates the board for a players turn
      *
+     * @param tile tile from which to update
      * @param player Player who just picked a new color
-     * @param tileX  Abscissa of the first tile to update
-     * @param tileY  Ordinate of the first tile to update
      */
     // Todo fetch start tile from the player passed
     public void update(Tile tile, Player player) {

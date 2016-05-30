@@ -8,12 +8,13 @@ import edu.isep.sixcolors.model.entity.TileColor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CustomGrid extends JPanel {
-    Play play;
+    ActionListener outputInfo;
 
-    public CustomGrid(Game game, Play play){
-        this.play = play;
+    public CustomGrid(Game game, ActionListener outputInfo){
+        this.outputInfo = outputInfo;
 
         this.setLayout(new GridBagLayout());
         this.setBorder(BorderFactory.createTitledBorder("Grid"));
@@ -74,7 +75,7 @@ public class CustomGrid extends JPanel {
 
         tileButton.setActionCommand(i + ":" + j);
 
-        tileButton.addActionListener(play);
+        tileButton.addActionListener(outputInfo);
 
         return tileButton;
     }
