@@ -46,8 +46,6 @@ public class Board implements Serializable {
     public void update(Tile tile, Player player) {
         boolean updateNeighbours = false;
 
-        int neighbourCounter = 0;
-
         // The tile being updated is *always* neighbouring the current player's territory.
         if (tile.getTileColor() == player.getTileColor() && tile.getOwner() != player) {
             tile.setOwner(player);
@@ -60,7 +58,6 @@ public class Board implements Serializable {
             tile.setOwner(player);
             updateNeighbours = true;
         }
-
         for (Tile nTile : tile.getNeighbors()) {
             if (
                     nTile.getOwner() != player ||    // not in my territory
@@ -69,17 +66,7 @@ public class Board implements Serializable {
                 if (updateNeighbours) {
                     update(nTile, player);
                 }
-            } else {
-                if (nTile.getOwner() != null){
-                    neighbourCounter++;
-                }
             }
-
-        }
-        if(neighbourCounter == tile.getNeighbors().length){
-            tile.setTileColor(player.getTileColor());
-            tile.setOwner(player);
-            player.addPoints();
         }
     }
     /**
