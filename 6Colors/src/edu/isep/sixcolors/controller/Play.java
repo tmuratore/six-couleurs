@@ -149,6 +149,8 @@ public class Play {
                     case "Clever AI":
                         AI = new CleverAI();
                         break;
+                    case "Genius AI":
+                        AI = new GeniusAI();
                 }
 
                 if(AI != null) {
