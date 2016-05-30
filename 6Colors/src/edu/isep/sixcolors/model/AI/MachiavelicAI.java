@@ -2,32 +2,24 @@ package edu.isep.sixcolors.model.AI;
 
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.entity.Player;
-import edu.isep.sixcolors.model.entity.Tile;
 import edu.isep.sixcolors.model.entity.TileColor;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
 public class MachiavelicAI implements AIInterface, Serializable {
 
     @Override
     public TileColor colorChoice(Game game) {
-        HashMap<TileColor, Integer> ccwg = colorChoiceWithGain(game);
+        TileColorWithGain tcwg = colorChoiceWithGain(game);
 
-        Set<TileColor> tileColors = ccwg.keySet();
-        TileColor chosenColor = (TileColor) tileColors.toArray()[0];
-
-        return chosenColor;
-
+        return tcwg.getTileColorChoice();
     }
 
 
-    public HashMap<TileColor, Integer> colorChoiceWithGain(Game game) {
+    public TileColorWithGain colorChoiceWithGain(Game game) {
         // 1. Fetching resources :
         ArrayList<TileColor> availableTileColor = game.getAvailableTileColors();
         Game guineaPig = null;
-        HashMap<TileColor, Integer> res = new HashMap<>();
 
         // the color to be picked :
         TileColor chosenColor = availableTileColor.get(0);
@@ -75,8 +67,8 @@ public class MachiavelicAI implements AIInterface, Serializable {
                     System.out.println();
                     System.out.println(); */
 
-                    // KILL ALL HUMANS !
-                    if (gain > gainPrevented && !p.isAi()) {
+                    // KILL ALL HUMANS MODE : add condition "&& !p.isAi()"
+                    if (gain > gainPrevented) {
                         chosenColor = tc;
                         gainPrevented = gain;
                     }
@@ -84,7 +76,7 @@ public class MachiavelicAI implements AIInterface, Serializable {
             }
         }
 
-        res.put(chosenColor, gainPrevented);
+        TileColorWithGain res = new TileColorWithGain(chosenColor, gainPrevented);
 
         return res;
     }

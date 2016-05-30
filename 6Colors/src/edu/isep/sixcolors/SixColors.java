@@ -12,6 +12,7 @@ public class SixColors {
 
     public static void main(String[] args) {
 
+        /*** CREATING OBJECTS ***/
         // Model
         Game game = new Game();
 
@@ -21,8 +22,10 @@ public class SixColors {
         // View
         Window window = new Window(play, game);
 
-        /***************************************/
-        /***/   game.addObserver(window);   /***/
-        /***************************************/
+        /*** BOOTSTRAPPING THE VIEW ***/
+
+        game.addObserver(window);
+
+        /*** HAVE FUN ! ***/
     }
 }

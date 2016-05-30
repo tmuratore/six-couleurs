@@ -7,25 +7,17 @@ import edu.isep.sixcolors.model.entity.TileColor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
 
 public class GreedyAI implements AIInterface, Serializable {
 
     @Override
     public TileColor colorChoice(Game game) {
-        HashMap<TileColor, Integer> ccwg = colorChoiceWithGain(game);
+        TileColorWithGain tcwg = colorChoiceWithGain(game);
 
-        Set<TileColor> tileColors = ccwg.keySet();
-        TileColor tc = (TileColor) tileColors.toArray()[0];
-
-        return tc;
+        return tcwg.getTileColorChoice();
     }
 
-    public HashMap<TileColor, Integer> colorChoiceWithGain(Game game) {
-
-        HashMap<TileColor, Integer> map = new HashMap<>();
+    public TileColorWithGain colorChoiceWithGain(Game game) {
 
         // 1. Get a list of all tileColors available :
         ArrayList<TileColor> availableTileColors = game.getAvailableTileColors();
@@ -64,7 +56,6 @@ public class GreedyAI implements AIInterface, Serializable {
         }
 
         // 3. Go live !
-        map.put(chosenColor, bestGain);
-        return map;
+        return new TileColorWithGain(chosenColor, bestGain);
     }
 }
