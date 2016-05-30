@@ -160,7 +160,7 @@ public class Window extends JFrame implements Observer {
 
     public void showPlayersSetup() {
 
-        String[] playerTypes = {"Human", "Dumb AI", "Greedy AI", "Machiavelic AI", "Clever AI"};
+        String[] playerTypes = {"Human", "Dumb AI", "Greedy AI", "Machiavelic AI", "Clever AI", "Genius AI"};
 
         // main container of this interface :
         JPanel pan = new JPanel();

@@ -91,6 +91,7 @@ public class Play implements ActionListener {
                 }
                 break;
             case Game:
+
                 colorButtonPressed(e);
                 break;
             case End:
@@ -174,6 +175,8 @@ public class Play implements ActionListener {
                     case "Clever AI":
                         AI = new CleverAI();
                         break;
+                    case "Genius AI":
+                        AI = new GeniusAI();
                 }
 
                 if(AI != null) {
