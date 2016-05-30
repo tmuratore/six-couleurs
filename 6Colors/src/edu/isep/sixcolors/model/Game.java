@@ -80,7 +80,6 @@ public class Game extends Observable implements Serializable{
      */
     public void initGame(){
 
-        // TODO Cleaner condition ?
         if (players.getPlayerNumber() > 0 && board.getWidth() > 0 && players.getPlayer(0).getName() != null){
 
             setStartCoords();
@@ -138,7 +137,7 @@ public class Game extends Observable implements Serializable{
         }
     }
 
-    public void setStartOwnership() {
+    private void setStartOwnership() {
         for (int i = 0; i < this.players.getPlayerNumber(); i++) {
             players.getPlayer(i).getStartingTile().setOwner(players.getPlayer(i));
             board.update(players.getPlayer(i).getStartingTile(), players.getPlayer(i));
@@ -148,7 +147,7 @@ public class Game extends Observable implements Serializable{
     /**
      * Initialises the game
      */
-    public void setOther() {
+    private void setOther() {
 
         // Setting current, previous colors and initial points of the players :
         for (int i = 0; i < this.players.getPlayerNumber(); i++) {
@@ -201,9 +200,6 @@ public class Game extends Observable implements Serializable{
 
     public void setError(String[] error) {
         this.error = error;
-        setChanged();
-        notifyObservers();
-        clearChanged();
     }
 
     public void resetError(){
@@ -228,9 +224,8 @@ public class Game extends Observable implements Serializable{
         ObjectInputStream in = new ObjectInputStream(buffer);
 
         //
-        Game copied = (Game) in.readObject();
 
-        return copied;
+        return (Game) in.readObject();
     }
 
     /**

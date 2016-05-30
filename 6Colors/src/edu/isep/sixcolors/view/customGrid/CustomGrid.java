@@ -1,6 +1,5 @@
 package edu.isep.sixcolors.view.customGrid;
 
-import edu.isep.sixcolors.controller.Play;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.model.entity.Board;
 import edu.isep.sixcolors.model.entity.Player;
@@ -11,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class CustomGrid extends JPanel {
-    ActionListener outputInfo;
+    private final ActionListener outputInfo;
 
     public CustomGrid(Game game, ActionListener outputInfo){
         this.outputInfo = outputInfo;
@@ -56,7 +55,7 @@ public class CustomGrid extends JPanel {
 
     }
 
-    public JButton makeColorButton(TileColor color, int i, int j, boolean small){
+    private JButton makeColorButton(TileColor color, int i, int j, boolean small){
         JButton tileButton = new JButton();
 
 

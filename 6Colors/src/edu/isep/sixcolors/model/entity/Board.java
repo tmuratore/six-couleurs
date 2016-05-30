@@ -2,19 +2,17 @@ package edu.isep.sixcolors.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Board model : represents the board of the game.
  */
 public class Board implements Serializable {
 
-    private int width;
+    private final int width;
 
 
     /**
      * Initialises a square board filled with random colors
-     * TODO decide if the board is square or if it can be rectangular
      *
      * @param width of the board
      */
@@ -44,7 +42,7 @@ public class Board implements Serializable {
      * @param tile tile from which to update
      * @param player Player who just picked a new color
      */
-    // Todo fetch start tile from the player passed
+
     public void update(Tile tile, Player player) {
         boolean updateNeighbours = false;
 
@@ -87,7 +85,7 @@ public class Board implements Serializable {
     /**
      * Squares of the board
      */
-    private Tile[][] tiles;
+    private final Tile[][] tiles;
 
     /**
      * Get a tile of the board
@@ -126,7 +124,7 @@ public class Board implements Serializable {
     public int[][] getNeighboursCoords(int x, int y) {
 
         // Using ArrayList because we're not sure how many neighbours actually exist
-        ArrayList<int[]> neighbours = new ArrayList<int[]>();
+        ArrayList<int[]> neighbours = new ArrayList<>();
         int[] coords;
 
         for (int k = -1; k <= 1; k++) {
@@ -146,10 +144,10 @@ public class Board implements Serializable {
         return neighbours.toArray(new int[neighbours.size()][2]);
     }
 
-    public void insertNeighbours(int x, int y) {
+    private void insertNeighbours(int x, int y) {
 
         // Using ArrayList because we're not sure how many neighbours actually exist
-        ArrayList<Tile> neighbours = new ArrayList<Tile>();
+        ArrayList<Tile> neighbours = new ArrayList<>();
 
         for (int k = -1; k <= 1; k++) {
             for (int l = -1; l <= 1; l++) {

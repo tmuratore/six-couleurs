@@ -5,7 +5,7 @@ import edu.isep.sixcolors.controller.OutputInfo;
 import edu.isep.sixcolors.model.Game;
 import edu.isep.sixcolors.view.Window;
 
-public class SixColors {
+class SixColors {
 
     public static void main(String[] args) {
 

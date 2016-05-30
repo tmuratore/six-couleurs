@@ -24,7 +24,7 @@ public enum TileColor implements Serializable {
     Orange('O', Color.ORANGE),
     Violet('V', new Color(128,0,128));
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     /**
      * First letter of the color :
@@ -59,7 +59,7 @@ public enum TileColor implements Serializable {
         return color;
     }
 
-    public void setColor(Color color) {
+    private void setColor(Color color) {
         this.color = color;
     }
 

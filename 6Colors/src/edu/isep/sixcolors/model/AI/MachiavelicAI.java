@@ -76,8 +76,6 @@ public class MachiavelicAI implements AIInterface, Serializable {
             }
         }
 
-        TileColorWithGain res = new TileColorWithGain(chosenColor, gainPrevented);
-
-        return res;
+        return new TileColorWithGain(chosenColor, gainPrevented);
     }
 }

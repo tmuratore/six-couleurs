@@ -7,11 +7,10 @@ import java.util.Observable;
 
 /**
  * Player model : Represents a player of the current game
- * TODO abstract to be extended (local player OR DumbAI OR distant player)
  */
 public class Player extends Observable implements Serializable {
 
-    private String name;
+    private final String name;
     private TileColor tileColor;
     private TileColor previousTileColor;
 

@@ -9,5 +9,6 @@ public enum GameState implements Serializable {
     CustomGrid,
     NameConfig,
     Game,
-    End,
+    End
+
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Observable;
 
 public class Players extends Observable implements Serializable {
-    private Player[] playerList;
+    private final Player[] playerList;
     private int playerNumber = 0;
 
     public Players(int number){

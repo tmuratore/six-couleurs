@@ -14,7 +14,7 @@ public class CleverAI implements AIInterface, Serializable {
      * Factor defining how much the machiavelic AI is privileged
      * Higher => more weight to machiavelic AI
      */
-    public static final float FAC = 0.8f;
+    private static final float FAC = 0.8f;
 
 
     @Override

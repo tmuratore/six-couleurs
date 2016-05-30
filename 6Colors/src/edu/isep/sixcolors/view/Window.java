@@ -26,8 +26,8 @@ import java.util.Observer;
 public class Window extends JFrame implements Observer {
 
 
-    private ActionListener outputInfo; // Controller interactions
-    private Game game; // Model interactions
+    private final ActionListener outputInfo; // Controller interactions
+    private final Game game; // Model interactions
 
     public Window(OutputInfo outputInfo, Game game) {
         // accesses to the controller and model
@@ -82,7 +82,7 @@ public class Window extends JFrame implements Observer {
 
     }
 
-    public void showMainMenu() {
+    private void showMainMenu() {
         // Main panel :
         JPanel pan = new JPanel();
         EmptyBorder border = new EmptyBorder(50,50,50,50);
@@ -117,7 +117,7 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
-    public void showLocalGameSetup() {
+    private void showLocalGameSetup() {
         // main container of this interface :
         JPanel pan = new JPanel();
         JPanel inputContainer = new JPanel();
@@ -159,7 +159,7 @@ public class Window extends JFrame implements Observer {
     }
 
 
-    public void showPlayersSetup() {
+    private void showPlayersSetup() {
 
         String[] playerTypes = {"Human", "Dumb AI", "Greedy AI", "Machiavelic AI", "Clever AI", "Genius AI"};
 
@@ -177,7 +177,7 @@ public class Window extends JFrame implements Observer {
         for(int i=0; i < players.getPlayerNumber(); i++) {
             inputContainer.add(new JLabel(Config.PLAYER_NAME_PROMPT_MESSAGE(i)));
             inputContainer.add(new JTextField());
-            inputContainer.add(new JComboBox(playerTypes));
+            inputContainer.add(new JComboBox<>(playerTypes));
         }
 
 
@@ -265,7 +265,7 @@ public class Window extends JFrame implements Observer {
 
     }
 
-    public void showGame(){
+    private void showGame(){
         Save save = new Save(game);
         Load load = new Load(game);
         Exit exit = new Exit();

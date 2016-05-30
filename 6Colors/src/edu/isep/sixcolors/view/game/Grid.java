@@ -8,11 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Grid extends JPanel {
-    private Game game;
 
     public Grid(Game game) {
-
-        this.game = game;
 
 
         this.setLayout(new GridBagLayout());
@@ -39,7 +36,7 @@ public class Grid extends JPanel {
 
     }
 
-    public JPanel makeColorPane(TileColor color, boolean owned, boolean small){
+    private JPanel makeColorPane(TileColor color, boolean owned, boolean small){
         JPanel tilePane = new JPanel();
         tilePane.setBackground(color.getColor());
         if (small) {

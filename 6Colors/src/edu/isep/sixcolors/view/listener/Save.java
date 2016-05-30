@@ -12,8 +12,8 @@ import java.io.*;
 
 public class Save implements ActionListener {
 
-    final JFileChooser fc = new JFileChooser();
-    private Game game;
+    private final JFileChooser fc = new JFileChooser();
+    private final Game game;
 
     public Save(Game game){
         this.game = game;
@@ -34,7 +34,7 @@ public class Save implements ActionListener {
             }
 
             JOptionPane jop = new JOptionPane();
-            int option = jop.showConfirmDialog(
+            int option = JOptionPane.showConfirmDialog(
                     null,
                     Config.EXIT_AFTER_SAVE_MESSAGE,
                     Config.EXIT_TITLE,

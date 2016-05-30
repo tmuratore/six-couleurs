@@ -17,7 +17,7 @@ public class GeniusAI implements AIInterface,Serializable {
         return TileColor.Blue;
     }
 
-    public TileColorChoiceNode[] computeSons(Game game, int depth, Player me) {
+    private TileColorChoiceNode[] computeSons(Game game, int depth, Player me) {
         // is passing "me" really useful ?
 
         ArrayList<TileColor> availableTileColors = game.getAvailableTileColors();

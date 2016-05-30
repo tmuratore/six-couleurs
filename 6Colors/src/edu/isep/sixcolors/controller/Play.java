@@ -9,11 +9,10 @@ import edu.isep.sixcolors.model.entity.Player;
 import edu.isep.sixcolors.model.entity.Players;
 import edu.isep.sixcolors.model.entity.TileColor;
 
-public class Play {
+class Play {
 
-    Game game;
-    TileColor currentSelectedColor = TileColor.Blue;
-    Player currentSelectedPlayer;
+    private final Game game;
+    private TileColor currentSelectedColor = TileColor.Blue;
 
 
     public Play(Game game){
@@ -48,13 +47,12 @@ public class Play {
                             game.setState(GameState.CustomGrid);
                             break;
                     }
-                    break;
                 }
+                break;
             case CustomGrid:
-                currentSelectedPlayer = game.getCurrentPlayer();
                 switch (sourceActionCommand) {
                     case "Play":
-                         game.setState(GameState.Game);
+                        game.setState(GameState.Game);
                         break;
 
                     default:
@@ -82,7 +80,7 @@ public class Play {
                 break;
             case End:
                 // TODO put this to config (here and in Window.java:322)
-                if(sourceActionCommand == "Main Menu") {
+                if(sourceActionCommand.equals("Main Menu")) {
                     // this.game = new Game();
 
                     // this could *maybe* induce a bug where the new grid is polluted by the remainder of
@@ -93,7 +91,7 @@ public class Play {
         }
     }
 
-    public void initGrid(int boardSize, int playerNb){
+    private void initGrid(int boardSize, int playerNb){
 
             // Check if the inputs are within boundaries :
             if (boardSize >= Config.GRID_MIN && boardSize <= Config.GRID_MAX && playerNb >= Config.PLAYER_NB_MIN && playerNb <= Config.PLAYER_NB_MAX){
@@ -107,29 +105,15 @@ public class Play {
                 // Set game state :
                 game.setState(GameState.NameConfig);
             }
-            else { // input out of bounds
-                String[] error = {
-                        Config.OUT_OF_BOUNDS_GRID_CONFIG_MESSAGE + Config.newLine + Config.OUT_OF_BOUNDS_PLAYER_NB_CONFIG_MESSAGE,
-                        Config.INVALID_ENTRY_TITLE
-                };
-                game.setError(error);
-            }
-
     }
 
-    public boolean initPlayers(String[] playerName, String[] playerType){
+    private boolean initPlayers(String[] playerName, String[] playerType){
         int playerNb = game.getPlayers().getPlayerNumber();
         Players players = game.getPlayers();
         boolean emptyName = false;
         for (int i = 0; i < playerNb; i++) {
             if (playerName[i] == null || playerName[i].equals("")) {
                 emptyName = true;
-                String[] error = {
-                        Config.EMPTY_PLAYER_NAME_MESSAGE,
-                        Config.INVALID_ENTRY_TITLE
-                };
-                game.setError(error);
-                break;
             } else {
                 players.setPlayer(i, new Player(playerName[i]));
                 AIInterface AI = null;
@@ -192,7 +176,7 @@ public class Play {
 
     }
 
-    public void colorButtonPressed(String sourceActionCommand){
+    private void colorButtonPressed(String sourceActionCommand){
         // 1. Fetch the current player & declare choice to catch :
         Player currentPlayer = game.getCurrentPlayer();
         TileColor chosenColor = null;

@@ -104,6 +104,7 @@
     <pathelement location="${basedir}/6Colors/assets/jansi-1.4.jar"/>
   </path>
   <!-- Register Custom Compiler Taskdefs -->
+  <property name="idea.home" value=""/>
   <property name="javac2.home" value="${idea.home}/lib"/>
   <path id="javac2.classpath">
     <pathelement location="${javac2.home}/javac2.jar"/>
@@ -140,12 +141,14 @@
   <path id="six-couleurs.module.production.classpath">
     <path refid="${module.jdk.classpath.six-couleurs}"/>
     <path refid="library.jansi-1.4.classpath"/>
+    <property name="idea.home" value=""/>
     <pathelement location="${idea.home}/lib/annotations.jar"/>
   </path>
   
   <path id="six-couleurs.runtime.production.module.classpath">
     <pathelement location="${six-couleurs.output.dir}"/>
     <path refid="library.jansi-1.4.classpath"/>
+    <property name="idea.home" value=""/>
     <pathelement location="${idea.home}/lib/annotations.jar"/>
   </path>
   
@@ -153,6 +156,7 @@
     <path refid="${module.jdk.classpath.six-couleurs}"/>
     <pathelement location="${six-couleurs.output.dir}"/>
     <path refid="library.jansi-1.4.classpath"/>
+    <property name="idea.home" value=""/>
     <pathelement location="${idea.home}/lib/annotations.jar"/>
   </path>
   
@@ -160,6 +164,7 @@
     <pathelement location="${six-couleurs.testoutput.dir}"/>
     <pathelement location="${six-couleurs.output.dir}"/>
     <path refid="library.jansi-1.4.classpath"/>
+    <property name="idea.home" value=""/>
     <pathelement location="${idea.home}/lib/annotations.jar"/>
   </path>
   

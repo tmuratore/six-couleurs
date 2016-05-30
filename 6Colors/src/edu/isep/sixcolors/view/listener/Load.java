@@ -3,7 +3,6 @@ package edu.isep.sixcolors.view.listener;
 
 import edu.isep.sixcolors.model.Config;
 import edu.isep.sixcolors.model.Game;
-import edu.isep.sixcolors.model.GameState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +12,8 @@ import java.io.*;
 
 public class Load implements ActionListener {
 
-    final JFileChooser fc = new JFileChooser();
-    private Game game;
+    private final JFileChooser fc = new JFileChooser();
+    private final Game game;
 
     public Load(Game game){
         this.game = game;
@@ -29,7 +28,7 @@ public class Load implements ActionListener {
                 try (
                     InputStream inFile = new FileInputStream(file.getAbsolutePath());
                     InputStream buffer = new BufferedInputStream(inFile);
-                    ObjectInput input = new ObjectInputStream(buffer);
+                    ObjectInput input = new ObjectInputStream(buffer)
                 ){
                     Game toBeLoaded = ((Game) input.readObject());
                     /*
