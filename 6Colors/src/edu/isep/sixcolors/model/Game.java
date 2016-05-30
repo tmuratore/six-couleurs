@@ -196,17 +196,16 @@ public class Game extends Observable implements Serializable{
      */
     public Game deepCopy() throws Exception
     {
-        //Serialization of object
+        // Serialization of object
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(bos);
         out.writeObject(this);
 
-        //De-serialization of object
+        // De-serialization of object
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         InputStream buffer = new BufferedInputStream(bis);
         ObjectInputStream in = new ObjectInputStream(buffer);
 
-        //
         Game copied = (Game) in.readObject();
 
         return copied;
