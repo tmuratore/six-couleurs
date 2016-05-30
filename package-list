@@ -1,0 +1,9 @@
+edu.isep.sixcolors
+edu.isep.sixcolors.controller
+edu.isep.sixcolors.model
+edu.isep.sixcolors.model.AI
+edu.isep.sixcolors.model.entity
+edu.isep.sixcolors.view
+edu.isep.sixcolors.view.customGrid
+edu.isep.sixcolors.view.game
+edu.isep.sixcolors.view.listener
