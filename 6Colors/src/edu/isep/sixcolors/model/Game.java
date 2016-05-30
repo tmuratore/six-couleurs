@@ -275,12 +275,10 @@ public class Game extends Observable implements Serializable {
         ObjectOutputStream out = new ObjectOutputStream(bos);
         out.writeObject(this);
 
-        //De-serialization of object
+        // De-serialization of object
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         InputStream buffer = new BufferedInputStream(bis);
         ObjectInputStream in = new ObjectInputStream(buffer);
-
-        //
 
         return (Game) in.readObject();
     }

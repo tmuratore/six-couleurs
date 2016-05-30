@@ -2,11 +2,15 @@ package edu.isep.sixcolors.model.AI;
 
 import edu.isep.sixcolors.model.entity.TileColor;
 
+/**
+ * TODO used by genius
+ */
 public class TileColorChoiceNode {
 
     private TileColor tileColorChoice;
     private int gain;
     private TileColorChoiceNode[] sons;
+    private boolean maximize;
 
     public TileColor getTileColorChoice() {
         return tileColorChoice;
@@ -30,5 +34,13 @@ public class TileColorChoiceNode {
 
     public void setSons(TileColorChoiceNode[] sons) {
         this.sons = sons;
+    }
+
+    public void setMaximize(boolean maximize) {
+        this.maximize = maximize;
+    }
+
+    public boolean getMaximize() {
+        return maximize;
     }
 }
