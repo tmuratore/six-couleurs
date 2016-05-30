@@ -1,30 +1,37 @@
 package edu.isep.sixcolors;
-import edu.isep.sixcolors.controller.*;
-import edu.isep.sixcolors.view.*;
+
+import edu.isep.sixcolors.controller.GraphicInfo;
+import edu.isep.sixcolors.controller.OutputInfo;
+import edu.isep.sixcolors.model.Game;
+import edu.isep.sixcolors.view.Window;
 
 /**
- * Main class of the game : manages inputs and chooses the right controller to launch
+ * Main of the <strong>Six Color</strong> game
+ * <strong>[II.1202 Algorithms & Programming]</strong> Engineering School Group project at ISEP 2015-2016
+ *
+ * @author Tristan Muratore & Aurélien Schiltz
+ * @version 1.0
  */
-public class SixColors {
+class SixColors {
 
-	/**
-	 * Main method of the game (currently)
-	 *
-	 * @param args
-	 */
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		// TODO make the output type be decided on the content of main's args
-		// Creates the output
-		Output output = new Console();
+        /*** CREATING OBJECTS ***/
+        // Model
+        Game game = new Game();
 
-		// Creating the game controller :
-		Game game = new Game(output);
+        // Controller
+        OutputInfo controller = new GraphicInfo(game);
+        // The Interface OutputInfo was created to make the main controller Play independent of the display method.
+        // So if the ConsoleInfo Class was developed hinging on a Console view class, Play should work anyway.
 
-		game.init();
+        // View
+        Window window = new Window(controller, game);
 
-		game.play();
+        /*** BOOTSTRAPPING THE VIEW ***/
 
-	}
+        game.addObserver(window);
 
+        /*** HAVE FUN ! ***/
+    }
 }
