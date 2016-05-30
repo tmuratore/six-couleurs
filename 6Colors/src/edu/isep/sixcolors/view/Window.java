@@ -306,9 +306,12 @@ public class Window extends JFrame implements Observer {
         this.repaint();
     }
 
-    private void showEnd(){
-        JLabel label = new JLabel(Config.WINNER_SPLASH(game.getWinner().getName()));
+    private void showEnd() {
+        JPanel pan = new JPanel();
+        pan.setLayout(new GridLayout(2, 1, 20, 20));
+
         Exit exit = new Exit();
+
         JMenuBar menuBar = new JMenuBar();
 
         JMenuItem exitItem = new JMenuItem("Exit");
@@ -316,13 +319,23 @@ public class Window extends JFrame implements Observer {
         exitItem.addActionListener(exit);
         menuBar.add(exitItem);
 
+        JButton mainMenuButton = new JButton("Main Menu");
+
         Font font = new Font("Roboto", Font.BOLD, 26);
-        EmptyBorder border = new EmptyBorder(20,10,20,10);
-        label.setBorder(border);
+
+        mainMenuButton.addActionListener(play);
+        pan.add(mainMenuButton);
+
+        JLabel label = new JLabel(Config.WINNER_SPLASH(game.getWinner().getName()));
         label.setFont(font);
 
+        EmptyBorder border = new EmptyBorder(20,20,20,20);
+        pan.add(label);
+        pan.add(mainMenuButton);
+        pan.setBorder(border);
+
         this.setJMenuBar(menuBar);
-        this.setContentPane(label);
+        this.setContentPane(pan);
         this.pack();
         this.repaint();
     }

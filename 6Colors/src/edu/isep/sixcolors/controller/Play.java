@@ -24,7 +24,6 @@ public class Play implements ActionListener {
 
     public Play(Game game){
         this.game = game;
-
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -95,6 +94,11 @@ public class Play implements ActionListener {
                 colorButtonPressed(e);
                 break;
             case End:
+                // TODO put this to config (here and in Window.java:322)
+                if(sourceText == "Main Menu") {
+                    // this.game = new Game();
+                    game.setState(GameState.Menu);
+                }
                 break;
         }
     }
