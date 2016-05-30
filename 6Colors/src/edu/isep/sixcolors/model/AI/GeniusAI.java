@@ -38,8 +38,7 @@ public class GeniusAI implements AIInterface,Serializable {
 
             gP.getCurrentPlayer().setTileColor(availableTileColors.get(i));
             gP.updateBoard(
-                    gP.getCurrentPlayer().getStartingTileCoords()[0],
-                    gP.getCurrentPlayer().getStartingTileCoords()[1],
+                    gP.getCurrentPlayer().getStartingTile(),
                     gP.getCurrentPlayer()
             );
 
