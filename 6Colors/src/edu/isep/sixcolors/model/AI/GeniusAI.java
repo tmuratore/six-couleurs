@@ -26,8 +26,10 @@ public class GeniusAI implements AIInterface, Serializable {
     public TileColor colorChoice(Game game) {
         TileColorChoiceNode tree = new TileColorChoiceNode();
         tree.setSons(computeSons(game, DEPTH, game.getCurrentPlayerId()));
-
+        // hDisp(tree);
+        // System.out.print("Reducing");
         reduce(tree.getSons());
+        // hDisp(tree);
 
         int max = tree.getSons()[0].getGain();
         TileColor tc = tree.getSons()[0].getTileColorChoice();
@@ -37,18 +39,35 @@ public class GeniusAI implements AIInterface, Serializable {
                 max = tree.getSons()[i].getGain();
             }
         }
-        System.out.println("Picking "+tc.name()+"; estimated gain : "+max);
+        // System.out.println("Picking "+tc.name()+"; estimated gain : "+max);
         return tc;
     }
 
     private void reduce(TileColorChoiceNode[] sons) {
         for(int i = 0; i < sons.length; i++) {
             if(sons[i].getSons()[0].getSons() == null) {
-                sons[i].setGain(minMax(sons[i].getSons()));
+                sons[i].setGain(sons[i].getGain() + minMax(sons[i].getSons()));
                 sons[i].setSons(null);
             }
             else {
                 reduce(sons[i].getSons());
+            }
+        }
+    }
+
+    private void hDisp(TileColorChoiceNode tree) {
+        if(tree.getSons() != null) {
+            if(tree.getSons()[0].getMaximize()) {
+                System.out.print("My possible choices : ");
+            } else {
+                System.out.print("Opponent's p choices: ");
+            }
+            for (TileColorChoiceNode son : tree.getSons()) {
+                System.out.print(son.getTileColorChoice().name() + ";" + son.getGain() + " | ");
+            }
+            System.out.println();
+            for (int i=0; i< tree.getSons().length; i++) {
+                hDisp(tree.getSons()[i]);
             }
         }
     }
@@ -116,7 +135,7 @@ public class GeniusAI implements AIInterface, Serializable {
 
             // Recursive call :
             gP.nextPlayer();
-            if(depth > 0) {
+            if(depth > 1) {
                 sons[i].setSons(computeSons(gP, depth-1, myId));
             }
         }
